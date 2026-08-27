@@ -50,7 +50,7 @@ export function Hero({
           alt="N & A monogram"
           width={112}
           height={112}
-          className="mx-auto mb-8 h-24 w-24 sm:h-28 sm:w-28"
+          className="mx-auto mb-8 h-24 w-24 sm:h-28 sm:w-28 brightness-0 invert"
           priority
         />
       </motion.div>
@@ -59,7 +59,7 @@ export function Hero({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.35, duration: 0.9 }}
-        className="kicker text-base sm:text-lg text-gold-300"
+        className="kicker text-base sm:text-lg text-cream-100"
       >
         We&rsquo;re getting married
       </motion.p>
