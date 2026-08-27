@@ -25,6 +25,27 @@ export default function OurStoryPage() {
         <Reveal delay={0.15} className="mt-14">
           <Gallery items={photos} />
         </Reveal>
+
+        <Reveal delay={0.1} className="mt-24 text-center">
+          <p className="text-xs tracking-[0.3em] uppercase text-olive-700 mb-3">
+            Every love story
+          </p>
+          <h2 className="font-display text-2xl sm:text-3xl text-burgundy-800">
+            Has a third wheel
+          </h2>
+          <p className="mt-4 leading-relaxed text-burgundy-700/80 max-w-lg mx-auto">
+            Ours happens to have four legs and a very good sense for when
+            someone needs cheering up.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2} className="mt-10 max-w-md mx-auto">
+          <Gallery
+            items={[
+              { type: "image", src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day" },
+              { type: "image", src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden" },
+            ]}
+          />
+        </Reveal>
       </div>
     </main>
   );
