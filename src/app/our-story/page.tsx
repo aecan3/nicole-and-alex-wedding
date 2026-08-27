@@ -3,21 +3,27 @@ import { Reveal } from "@/components/reveal";
 import { Gallery } from "@/components/gallery";
 
 const photos = [
-  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal" },
-  { type: "image" as const, src: "/gallery/couple-rooftop.jpg", alt: "Nicole and Alex laughing together" },
-  { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "Nicole and Alex sharing a toast" },
-  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset" },
-  { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden" },
-  { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach" },
-  { type: "image" as const, src: "/gallery/couple-christmas.jpg", alt: "Nicole and Alex at Christmas" },
+  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
+  { type: "image" as const, src: "/gallery/couple-rooftop.jpg", alt: "Nicole and Alex laughing together", width: 2400, height: 1596 },
+  { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "Nicole and Alex sharing a toast", width: 720, height: 1280 },
+  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
+  { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden", width: 2000, height: 2692 },
+  { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
+  { type: "image" as const, src: "/gallery/couple-christmas.jpg", alt: "Nicole and Alex at Christmas", width: 1180, height: 1572 },
+];
+
+const dogPhotos = [
+  { type: "image" as const, src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day", width: 1600, height: 2133 },
+  { type: "image" as const, src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden", width: 1600, height: 2133 },
+  { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
 ];
 
 export default function OurStoryPage() {
   return (
     <main className="flex-1">
       <PageHeader kicker="Coming soon" title="Our Story" />
-      <div className="mx-auto max-w-2xl px-6 pb-24">
-        <Reveal className="text-center">
+      <div className="mx-auto max-w-4xl px-6 pb-24">
+        <Reveal className="text-center max-w-xl mx-auto">
           <p className="leading-relaxed text-burgundy-600/80">
             We&rsquo;re writing this one ourselves — check back soon. Tap the first
             tile below for how it actually happened.
@@ -39,14 +45,8 @@ export default function OurStoryPage() {
             someone needs cheering up.
           </p>
         </Reveal>
-        <Reveal delay={0.2} className="mt-10 max-w-md mx-auto">
-          <Gallery
-            items={[
-              { type: "image", src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day" },
-              { type: "image", src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden" },
-              { type: "image", src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach" },
-            ]}
-          />
+        <Reveal delay={0.2} className="mt-10 max-w-lg mx-auto">
+          <Gallery items={dogPhotos} />
         </Reveal>
       </div>
     </main>

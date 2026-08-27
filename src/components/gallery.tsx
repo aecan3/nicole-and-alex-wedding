@@ -8,11 +8,18 @@ export type MediaItem = {
   type: "image" | "video";
   src: string;
   alt?: string;
+  /** Real pixel dimensions of the file — required so each tile can sit at
+   * its own natural aspect ratio in the masonry layout instead of being
+   * cropped into a uniform square. */
+  width: number;
+  height: number;
 };
 
 /**
- * Responsive photo/video grid with a lightbox. Pass real assets via `items`
- * once they're uploaded to /public/gallery (or an external URL). Renders
+ * Editorial masonry grid (CSS columns) with a lightbox. Each tile keeps its
+ * own aspect ratio — portraits, landscapes and video sit together the way a
+ * curated photo spread would, rather than a uniform cropped grid. Pass real
+ * assets via `items` once they're uploaded to /public/gallery. Renders
  * nothing if the list is empty — pair with <GalleryPlaceholder /> for a
  * tasteful "coming soon" state instead of a blank page.
  */
@@ -22,29 +29,34 @@ export function Gallery({ items }: { items: MediaItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+      <div className="columns-2 sm:columns-3 gap-3 sm:gap-4 [&>*]:mb-3 sm:[&>*]:mb-4">
         {items.map((item, i) => (
           <button
             key={item.src + i}
             onClick={() => setOpen(i)}
-            className="relative aspect-[3/4] overflow-hidden rounded-sm bg-burgundy-900/5 group"
+            className="group relative block w-full break-inside-avoid overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
           >
             {item.type === "image" ? (
               <Image
                 src={item.src}
                 alt={item.alt ?? ""}
-                fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                width={item.width}
+                height={item.height}
+                sizes="(max-width: 640px) 50vw, 33vw"
+                className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             ) : (
               <>
                 <video
                   src={item.src}
+                  width={item.width}
+                  height={item.height}
                   muted
                   loop
                   autoPlay
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-cover"
+                  style={{ aspectRatio: `${item.width} / ${item.height}` }}
                 />
                 <span className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-burgundy-950/60 text-cream-100 text-xs backdrop-blur-sm">
                   ▶
@@ -68,16 +80,16 @@ export function Gallery({ items }: { items: MediaItem[] }) {
               <Image
                 src={items[open].src}
                 alt={items[open].alt ?? ""}
-                width={1400}
-                height={1400}
-                className="max-h-[85vh] w-auto object-contain"
+                width={items[open].width}
+                height={items[open].height}
+                className="max-h-[85vh] max-w-full w-auto h-auto object-contain"
               />
             ) : (
               <video
                 src={items[open].src}
                 controls
                 autoPlay
-                className="max-h-[85vh]"
+                className="max-h-[85vh] max-w-full"
                 onClick={(e) => e.stopPropagation()}
               />
             )}
