@@ -97,7 +97,7 @@ export function GalleryPlaceholder({ count = 6 }: { count?: number }) {
           key={i}
           className="aspect-[3/4] rounded-sm border border-gold-400/30 bg-gradient-to-br from-burgundy-800/10 via-olive-700/10 to-burgundy-800/5 flex items-center justify-center"
         >
-          <span className="text-[10px] tracking-[0.2em] uppercase text-burgundy-700/40">
+          <span className="text-[10px] tracking-[0.2em] uppercase text-burgundy-600/40">
             Photo soon
           </span>
         </div>

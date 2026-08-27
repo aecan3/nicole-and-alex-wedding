@@ -27,9 +27,9 @@ export default function WhereToStayPage() {
         <div className="mt-10 space-y-8">
           {stays.map((s) => (
             <div key={s.name} className="border-t border-gold-400/40 pt-6">
-              <h2 className="font-display text-xl text-burgundy-800">{s.name}</h2>
+              <h2 className="font-display text-xl text-burgundy-600">{s.name}</h2>
               <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
-              <p className="text-sm mt-2 text-burgundy-700/80">{s.note}</p>
+              <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
             </div>
           ))}
         </div>

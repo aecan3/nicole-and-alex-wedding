@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Parisienne, Cormorant_Garamond, Inter } from "next/font/google";
+import { Playfair_Display, Beau_Rivage, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/nav";
 
@@ -9,8 +9,9 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
-const parisienne = Parisienne({
-  variable: "--font-parisienne",
+// Matches the calligraphy on the printed invitations.
+const beauRivage = Beau_Rivage({
+  variable: "--font-beau-rivage",
   weight: "400",
   subsets: ["latin"],
 });
@@ -37,9 +38,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${parisienne.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${playfair.variable} ${beauRivage.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream-100 text-burgundy-900">
+      <body className="min-h-full flex flex-col bg-cream-100 text-burgundy-600">
         {/* Soft warm vignette, framing every screen like light falling across
             the invitation cardstock rather than a flat colour fill. */}
         <div
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           className="pointer-events-none fixed inset-0 z-[58] mix-blend-multiply"
           style={{
             background:
-              "radial-gradient(ellipse 120% 85% at 50% 30%, transparent 45%, rgba(58,15,24,0.07) 100%)",
+              "radial-gradient(ellipse 120% 85% at 50% 30%, transparent 38%, rgba(122,53,64,0.16) 100%)",
           }}
         />
         <SiteNav />

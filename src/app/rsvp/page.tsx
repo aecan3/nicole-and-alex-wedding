@@ -124,7 +124,7 @@ export default function RsvpPage() {
             )}
 
             {!configError && searched && matches.length === 0 && (
-              <p className="mt-6 text-sm text-burgundy-700/80">
+              <p className="mt-6 text-sm text-burgundy-600/80">
                 Couldn&rsquo;t find that name — try a different spelling, or get in
                 touch with Alex on 0423 340 677.
               </p>
@@ -132,7 +132,7 @@ export default function RsvpPage() {
 
             {matches.length > 0 && (
               <div className="mt-6 flex flex-col gap-2">
-                <p className="text-sm text-burgundy-700/80">That you?</p>
+                <p className="text-sm text-burgundy-600/80">That you?</p>
                 {matches.map((m) => (
                   <button
                     key={m.id}
@@ -149,12 +149,12 @@ export default function RsvpPage() {
 
         {party && (
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <p className="text-sm text-burgundy-700/80">
+            <p className="text-sm text-burgundy-600/80">
               Please respond for everyone in your party.
             </p>
             {party.map((m) => (
               <fieldset key={m.id} className="border-t border-gold-400/40 pt-4 flex flex-col gap-2">
-                <legend className="font-display text-lg text-burgundy-800">{m.full_name}</legend>
+                <legend className="font-display text-lg text-burgundy-600">{m.full_name}</legend>
                 <div className="flex gap-6 text-sm">
                   <label className="flex items-center gap-2">
                     <input

@@ -68,7 +68,7 @@ export function Hero({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="font-script text-7xl sm:text-9xl text-cream-100 leading-none mt-5"
+        className="font-script text-6xl sm:text-8xl text-cream-100 leading-[1.25] mt-5 px-2"
       >
         Nicole &amp; Alex
       </motion.h1>

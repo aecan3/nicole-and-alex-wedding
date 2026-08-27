@@ -32,14 +32,14 @@ export default function TimetablePage() {
           {events.map((e) => (
             <li key={e.title} className="border-l-2 border-gold-400 pl-6">
               <p className="text-xs uppercase tracking-[0.2em] text-olive-700">{e.time}</p>
-              <h2 className="font-display text-2xl text-burgundy-800 mt-1">{e.title}</h2>
+              <h2 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h2>
               <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
             </li>
           ))}
         </ol>
-        <p className="mt-12 text-sm text-burgundy-700/80 text-center">
+        <p className="mt-12 text-sm text-burgundy-600/80 text-center">
           A shuttle will run from pick-up points around Gisborne, New Gisborne and
-          Macedon &mdash; see the <a href="/travel" className="underline hover:text-burgundy-800">Travel</a> page for details.
+          Macedon &mdash; see the <a href="/travel" className="underline hover:text-burgundy-600">Travel</a> page for details.
         </p>
       </div>
     </main>

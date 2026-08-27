@@ -12,7 +12,7 @@ export default function Home() {
           <p className="kicker text-base sm:text-lg text-olive-700">
             Together with our families
           </p>
-          <p className="max-w-xl mx-auto mt-7 text-2xl sm:text-3xl leading-relaxed font-display italic text-burgundy-900">
+          <p className="max-w-xl mx-auto mt-7 text-2xl sm:text-3xl leading-relaxed font-display italic text-burgundy-600">
             We&rsquo;re absolutely thrilled to celebrate our big day with you at
             Alora Macedon, New Gisborne.
           </p>

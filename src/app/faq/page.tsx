@@ -46,7 +46,7 @@ export default function FaqPage() {
       <div className="mx-auto max-w-2xl px-6 pb-20 space-y-8">
         {faqs.map((f) => (
           <div key={f.q} className="border-t border-gold-400/40 pt-6">
-            <h2 className="font-display text-lg text-burgundy-800">{f.q}</h2>
+            <h2 className="font-display text-lg text-burgundy-600">{f.q}</h2>
             <p className="mt-2 leading-relaxed">{f.a}</p>
           </div>
         ))}

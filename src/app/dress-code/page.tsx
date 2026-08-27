@@ -19,7 +19,7 @@ export default function DressCodePage() {
             <p className="mt-2">A long, formal dress.</p>
           </div>
         </div>
-        <p className="text-sm text-burgundy-700/80">
+        <p className="text-sm text-burgundy-600/80">
           Our wedding is indoors, so no need to worry about grass or gravel underfoot.
         </p>
       </div>

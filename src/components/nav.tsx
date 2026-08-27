@@ -26,6 +26,15 @@ export function SiteNav() {
   const [manualScrolled, setManualScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Reset synchronously (during render, not in an effect) whenever the route
+  // changes, so landing back on the homepage always starts large — no flash
+  // of the old scrolled-in state left over from before you navigated away.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    if (isHome) setManualScrolled(false);
+  }
+
   useEffect(() => {
     if (!isHome) return;
     const onScroll = () => setManualScrolled(window.scrollY > 60);

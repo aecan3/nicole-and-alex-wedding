@@ -6,7 +6,7 @@ export default function TravelPage() {
       <PageHeader kicker="Getting to Alora Macedon" title="Travel" />
       <div className="mx-auto max-w-2xl px-6 pb-20 space-y-10">
         <div>
-          <h2 className="font-display text-2xl text-burgundy-800">Getting Here</h2>
+          <h2 className="font-display text-2xl text-burgundy-600">Getting Here</h2>
           <p className="mt-3 leading-relaxed">
             Alora Macedon sits at the foothills of Mount Macedon, about 45 minutes&rsquo;
             drive from Melbourne. If you&rsquo;re flying in, Melbourne Airport (Tullamarine)
@@ -14,7 +14,7 @@ export default function TravelPage() {
           </p>
         </div>
         <div>
-          <h2 className="font-display text-2xl text-burgundy-800">Shuttle Bus</h2>
+          <h2 className="font-display text-2xl text-burgundy-600">Shuttle Bus</h2>
           <p className="mt-3 leading-relaxed">
             We&rsquo;ll be running a shuttle bus from common pick-up points around
             Gisborne, New Gisborne and Macedon, straight to the venue and back again
@@ -23,7 +23,7 @@ export default function TravelPage() {
           </p>
         </div>
         <div>
-          <h2 className="font-display text-2xl text-burgundy-800">Parking</h2>
+          <h2 className="font-display text-2xl text-burgundy-600">Parking</h2>
           <p className="mt-3 leading-relaxed">
             If you&rsquo;d rather drive, there&rsquo;s plenty of free parking on site at
             Alora Macedon.
