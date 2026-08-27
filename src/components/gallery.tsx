@@ -37,14 +37,19 @@ export function Gallery({ items }: { items: MediaItem[] }) {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             ) : (
-              <video
-                src={item.src}
-                muted
-                loop
-                autoPlay
-                playsInline
-                className="w-full h-full object-cover"
-              />
+              <>
+                <video
+                  src={item.src}
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-burgundy-950/60 text-cream-100 text-xs backdrop-blur-sm">
+                  ▶
+                </span>
+              </>
             )}
           </button>
         ))}
