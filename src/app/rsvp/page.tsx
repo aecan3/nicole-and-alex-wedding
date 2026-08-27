@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/page-header";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 type Match = { id: string; party_id: string; full_name: string };
 type PartyMember = { id: string; full_name: string; rsvp_status: string };
@@ -22,27 +22,39 @@ export default function RsvpPage() {
   const [song, setSong] = useState("");
   const [message, setMessage] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [configError, setConfigError] = useState<string | null>(null);
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     if (!query.trim()) return;
     setSearching(true);
     setSearched(false);
-    const { data } = await supabase.rpc("search_invitees", { query });
-    setMatches(data ?? []);
-    setSearching(false);
-    setSearched(true);
+    setConfigError(null);
+    try {
+      const { data } = await getSupabase().rpc("search_invitees", { query });
+      setMatches(data ?? []);
+      setSearched(true);
+    } catch (err) {
+      setConfigError(err instanceof Error ? err.message : "Something went wrong — please try again shortly.");
+    } finally {
+      setSearching(false);
+    }
   }
 
   async function selectSelf(id: string) {
-    const { data } = await supabase.rpc("get_party", { invitee_id: id });
-    const members: PartyMember[] = data ?? [];
-    setParty(members);
-    const initial: Record<string, Response> = {};
-    members.forEach((m) => {
-      initial[m.id] = { attending: "", dietary: "" };
-    });
-    setResponses(initial);
+    setConfigError(null);
+    try {
+      const { data } = await getSupabase().rpc("get_party", { invitee_id: id });
+      const members: PartyMember[] = data ?? [];
+      setParty(members);
+      const initial: Record<string, Response> = {};
+      members.forEach((m) => {
+        initial[m.id] = { attending: "", dietary: "" };
+      });
+      setResponses(initial);
+    } catch (err) {
+      setConfigError(err instanceof Error ? err.message : "Something went wrong — please try again shortly.");
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -50,9 +62,10 @@ export default function RsvpPage() {
     if (!party) return;
     setSubmitStatus("submitting");
     try {
+      const sb = getSupabase();
       await Promise.all(
         party.map((m) =>
-          supabase.rpc("submit_rsvp", {
+          sb.rpc("submit_rsvp", {
             invitee_id: m.id,
             p_status: responses[m.id]?.attending === "yes" ? "attending" : "declined",
             p_dietary: responses[m.id]?.dietary || null,
@@ -106,7 +119,11 @@ export default function RsvpPage() {
               </button>
             </form>
 
-            {searched && matches.length === 0 && (
+            {configError && (
+              <p className="mt-6 text-sm text-red-700">{configError}</p>
+            )}
+
+            {!configError && searched && matches.length === 0 && (
               <p className="mt-6 text-sm text-burgundy-700/80">
                 Couldn&rsquo;t find that name — try a different spelling, or get in
                 touch with Alex on 0423 340 677.
