@@ -1,6 +1,11 @@
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
-import { GalleryPlaceholder } from "@/components/gallery";
+import { Gallery } from "@/components/gallery";
+
+const photos = [
+  { type: "image" as const, src: "/gallery/couple-rooftop.jpg", alt: "Nicole and Alex laughing together" },
+  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset" },
+];
 
 export default function OurStoryPage() {
   return (
@@ -13,7 +18,7 @@ export default function OurStoryPage() {
           </p>
         </Reveal>
         <Reveal delay={0.15} className="mt-14">
-          <GalleryPlaceholder />
+          <Gallery items={photos} />
         </Reveal>
       </div>
     </main>

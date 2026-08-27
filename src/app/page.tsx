@@ -5,7 +5,7 @@ import { Reveal } from "@/components/reveal";
 export default function Home() {
   return (
     <main className="flex-1">
-      <Hero />
+      <Hero photoSrc="/gallery/couple-rooftop.jpg" />
 
       <section className="px-6 py-24 sm:py-32 text-center">
         <Reveal>
