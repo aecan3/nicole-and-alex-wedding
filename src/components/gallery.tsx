@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -16,54 +16,76 @@ export type MediaItem = {
 };
 
 /**
- * Editorial masonry grid (CSS columns) with a lightbox. Each tile keeps its
- * own aspect ratio — portraits, landscapes and video sit together the way a
- * curated photo spread would, rather than a uniform cropped grid. Pass real
- * assets via `items` once they're uploaded to /public/gallery. Renders
- * nothing if the list is empty — pair with <GalleryPlaceholder /> for a
- * tasteful "coming soon" state instead of a blank page.
+ * Editorial masonry grid with a lightbox. Each tile keeps its own aspect
+ * ratio — portraits, landscapes and video sit together the way a curated
+ * photo spread would, rather than a uniform cropped grid.
+ *
+ * Columns are assigned explicitly here (round-robin by index) rather than
+ * via CSS `columns-N`, which auto-balances by each column's *current*
+ * height — a height that shifts unpredictably as items load, so which tile
+ * ends up next to which was effectively out of our hands (two videos, or
+ * two black-and-white shots, could land side by side by chance). With a
+ * fixed assignment, the order `items` is passed in IS the order they land
+ * in the grid: put a video every few slots and it'll never sit beside
+ * another one.
  */
 export function Gallery({ items }: { items: MediaItem[] }) {
   const [open, setOpen] = useState<number | null>(null);
+  const [cols, setCols] = useState(3);
+
+  useEffect(() => {
+    const update = () => setCols(window.innerWidth < 640 ? 2 : 3);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   if (items.length === 0) return null;
+
+  const columns: { item: MediaItem; i: number }[][] = Array.from({ length: cols }, () => []);
+  items.forEach((item, i) => columns[i % cols].push({ item, i }));
 
   return (
     <>
-      <div className="columns-2 sm:columns-3 gap-3 sm:gap-4 [&>*]:mb-3 sm:[&>*]:mb-4">
-        {items.map((item, i) => (
-          <button
-            key={item.src + i}
-            onClick={() => setOpen(i)}
-            className="group relative block w-full break-inside-avoid overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
-          >
-            {item.type === "image" ? (
-              <Image
-                src={item.src}
-                alt={item.alt ?? ""}
-                width={item.width}
-                height={item.height}
-                sizes="(max-width: 640px) 50vw, 33vw"
-                className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-            ) : (
-              <>
-                <video
-                  src={item.src}
-                  width={item.width}
-                  height={item.height}
-                  muted
-                  loop
-                  autoPlay
-                  playsInline
-                  className="w-full h-auto object-cover"
-                  style={{ aspectRatio: `${item.width} / ${item.height}` }}
-                />
-                <span className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-burgundy-950/60 text-cream-100 text-xs backdrop-blur-sm">
-                  ▶
-                </span>
-              </>
-            )}
-          </button>
+      <div className="flex gap-3 sm:gap-4">
+        {columns.map((col, ci) => (
+          <div key={ci} className="flex-1 flex flex-col gap-3 sm:gap-4">
+            {col.map(({ item, i }) => (
+              <button
+                key={item.src + i}
+                onClick={() => setOpen(i)}
+                className="group relative block w-full overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
+              >
+                {item.type === "image" ? (
+                  <Image
+                    src={item.src}
+                    alt={item.alt ?? ""}
+                    width={item.width}
+                    height={item.height}
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                ) : (
+                  <>
+                    <video
+                      src={item.src}
+                      width={item.width}
+                      height={item.height}
+                      muted
+                      loop
+                      autoPlay
+                      playsInline
+                      className="w-full h-auto object-cover"
+                      style={{ aspectRatio: `${item.width} / ${item.height}` }}
+                    />
+                    <span className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-burgundy-950/60 text-cream-100 text-xs backdrop-blur-sm">
+                      ▶
+                    </span>
+                  </>
+                )}
+              </button>
+            ))}
+          </div>
         ))}
       </div>
 
