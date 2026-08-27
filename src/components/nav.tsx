@@ -1,5 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/", label: "Welcome" },
@@ -14,13 +18,43 @@ const links = [
 ];
 
 export function SiteNav() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [scrolled, setScrolled] = useState(!isHome);
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(true);
+      return;
+    }
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  const floating = isHome && !scrolled;
+
   return (
-    <header className="bg-burgundy-800 text-cream-100">
-      <div className="mx-auto max-w-5xl px-6 py-8 flex flex-col items-center gap-6">
-        <Link href="/" className="font-script text-5xl sm:text-6xl text-cream-100">
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-500 ${
+        floating ? "bg-transparent" : "bg-burgundy-900/95 backdrop-blur-md shadow-[0_1px_0_rgba(201,168,118,0.25)]"
+      }`}
+    >
+      <div
+        className={`mx-auto max-w-5xl px-6 flex flex-col items-center transition-all duration-500 ${
+          floating ? "py-8" : "py-3"
+        }`}
+      >
+        <Link
+          href="/"
+          className={`font-script text-cream-100 transition-all duration-500 ${
+            floating ? "text-4xl sm:text-5xl mb-4" : "text-xl sm:text-2xl mb-1.5"
+          }`}
+        >
           Nicole &amp; Alex
         </Link>
-        <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm tracking-wide uppercase">
+        <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-cream-100/90">
           {links.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-gold-300 transition-colors">
               {link.label}
@@ -32,7 +66,7 @@ export function SiteNav() {
   );
 }
 
-export function Monogram({ className = "h-40 w-40 text-gold-300" }: { className?: string }) {
+export function Monogram({ className = "h-40 w-40" }: { className?: string }) {
   return (
     <Image
       src="/brand/monogram.svg"
