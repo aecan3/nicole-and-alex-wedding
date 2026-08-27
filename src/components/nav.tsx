@@ -71,12 +71,19 @@ export function SiteNav() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-burgundy-900/95 backdrop-blur-lg border-b border-gold-400/15">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-4 flex items-center justify-between">
+    // Solid colour, no backdrop-blur: blurring what scrolls behind a sticky
+    // element forces the browser to resample it on every scroll frame,
+    // which is the classic cause of a "janky" sticky header — far more
+    // costly than the open/close size transition itself.
+    <header className="sticky top-0 z-50 bg-burgundy-900 border-b border-gold-400/15">
+      <motion.div
+        animate={{ paddingTop: floating ? 32 : 16, paddingBottom: floating ? 32 : 16 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="mx-auto max-w-6xl px-6 sm:px-10 flex items-center justify-between"
+      >
         <Link href="/" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
-          {/* Scale, not padding/font-size/width — a transform is compositor-
-              only (no layout reflow per frame), which is what makes this
-              grow/shrink smooth instead of janky. */}
+          {/* Scale, not font-size/width — a transform is compositor-only (no
+              layout reflow per frame), so the logo itself grows smoothly. */}
           <motion.div
             animate={{ scale: floating ? 1.4 : 1 }}
             transition={{ duration: 0.5, ease: EASE }}
@@ -125,7 +132,7 @@ export function SiteNav() {
             className="block h-px w-6 bg-cream-100"
           />
         </button>
-      </div>
+      </motion.div>
 
       {/* Mobile full-screen menu */}
       <AnimatePresence>
