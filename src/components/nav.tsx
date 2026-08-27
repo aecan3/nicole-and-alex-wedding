@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -35,10 +35,26 @@ export function SiteNav() {
     if (isHome) setManualScrolled(false);
   }
 
+  // rAF-throttled with hysteresis (different enter/exit thresholds) so a
+  // scroll position that happens to sit right at the boundary doesn't
+  // flicker the nav back and forth between states.
+  const tickingRef = useRef(false);
   useEffect(() => {
     if (!isHome) return;
-    const onScroll = () => setManualScrolled(window.scrollY > 60);
-    onScroll();
+    const evaluate = () => {
+      tickingRef.current = false;
+      setManualScrolled((prev) => {
+        const y = window.scrollY;
+        if (prev) return y > 40;
+        return y > 80;
+      });
+    };
+    const onScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+      requestAnimationFrame(evaluate);
+    };
+    evaluate();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
@@ -55,29 +71,21 @@ export function SiteNav() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header
-      className="sticky top-0 z-50 bg-burgundy-900/95 backdrop-blur-lg border-b border-gold-400/15 transition-all duration-700"
-      style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
-    >
-      <div
-        className={`mx-auto max-w-6xl px-6 sm:px-10 flex items-center justify-between transition-all duration-700 ${
-          floating ? "py-8" : "py-4"
-        }`}
-        style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
-      >
+    <header className="sticky top-0 z-50 bg-burgundy-900/95 backdrop-blur-lg border-b border-gold-400/15">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-4 flex items-center justify-between">
         <Link href="/" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
-          <Monogram
-            className={`shrink-0 brightness-0 invert transition-all duration-700 ${
-              floating ? "h-11 w-11 sm:h-12 sm:w-12" : "h-8 w-8"
-            }`}
-          />
-          <span
-            className={`font-serif italic tracking-wide transition-all duration-700 ${
-              floating ? "text-xl sm:text-2xl" : "text-base sm:text-lg"
-            }`}
+          {/* Scale, not padding/font-size/width — a transform is compositor-
+              only (no layout reflow per frame), which is what makes this
+              grow/shrink smooth instead of janky. */}
+          <motion.div
+            animate={{ scale: floating ? 1.4 : 1 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            style={{ transformOrigin: "left center" }}
+            className="flex items-center gap-3"
           >
-            Nicole &amp; Alex
-          </span>
+            <Monogram className="h-8 w-8 shrink-0 brightness-0 invert" />
+            <span className="font-serif italic text-lg tracking-wide">Nicole &amp; Alex</span>
+          </motion.div>
         </Link>
 
         {/* Desktop nav */}
