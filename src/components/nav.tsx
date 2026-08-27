@@ -22,32 +22,25 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function SiteNav() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
-  const [manualScrolled, setManualScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  // Reset synchronously (during render, not in an effect) whenever the route
-  // changes, so landing back on the homepage always starts large — no flash
-  // of the old scrolled-in state left over from before you navigated away.
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (pathname !== prevPathname) {
-    setPrevPathname(pathname);
-    if (isHome) setManualScrolled(false);
-  }
-
-  // rAF-throttled with hysteresis (different enter/exit thresholds) so a
-  // scroll position that happens to sit right at the boundary doesn't
-  // flicker the nav back and forth between states.
+  // One rAF-throttled scroll listener drives two cheap, compositor-only
+  // outputs: a boolean for the shadow (a single CSS transition, not
+  // re-triggered per frame) and a 0–1 progress value painted via
+  // transform: scaleX on a fixed-height bar. Nothing here ever touches
+  // padding, font-size, or width/height, so there's no layout reflow on
+  // scroll — the header itself never resizes, which is what made the
+  // previous grow/shrink version feel janky no matter how it was tuned.
   const tickingRef = useRef(false);
   useEffect(() => {
-    if (!isHome) return;
     const evaluate = () => {
       tickingRef.current = false;
-      setManualScrolled((prev) => {
-        const y = window.scrollY;
-        if (prev) return y > 40;
-        return y > 80;
-      });
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(y > 8);
+      setProgress(max > 0 ? Math.min(1, Math.max(0, y / max)) : 0);
     };
     const onScroll = () => {
       if (tickingRef.current) return;
@@ -56,8 +49,12 @@ export function SiteNav() {
     };
     evaluate();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isHome]);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.documentElement.style.overflow = menuOpen ? "hidden" : "";
@@ -66,33 +63,23 @@ export function SiteNav() {
     };
   }, [menuOpen]);
 
-  const scrolled = isHome ? manualScrolled : true;
-  const floating = isHome && !scrolled;
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    // Solid colour, no backdrop-blur: blurring what scrolls behind a sticky
-    // element forces the browser to resample it on every scroll frame,
-    // which is the classic cause of a "janky" sticky header — far more
-    // costly than the open/close size transition itself.
-    <header className="sticky top-0 z-50 bg-burgundy-900 border-b border-gold-400/15">
-      <motion.div
-        animate={{ paddingTop: floating ? 32 : 16, paddingBottom: floating ? 32 : 16 }}
-        transition={{ duration: 0.5, ease: EASE }}
-        className="mx-auto max-w-6xl px-6 sm:px-10 flex items-center justify-between"
-      >
+    // Fixed size, always — no scroll-linked grow/shrink. The "dynamic" feel
+    // instead comes from the gold progress line at the base of the header
+    // (below) and a soft shadow that fades in once you've scrolled, both of
+    // which only ever animate transform/opacity — never layout — so they
+    // stay smooth regardless of scroll speed or device.
+    <header
+      className={`sticky top-0 z-50 bg-burgundy-900 border-b border-gold-400/15 transition-shadow duration-300 ${
+        scrolled ? "shadow-[0_8px_24px_rgba(58,15,24,0.18)]" : "shadow-none"
+      }`}
+    >
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-5 flex items-center justify-between">
         <Link href="/" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
-          {/* Scale, not font-size/width — a transform is compositor-only (no
-              layout reflow per frame), so the logo itself grows smoothly. */}
-          <motion.div
-            animate={{ scale: floating ? 1.4 : 1 }}
-            transition={{ duration: 0.5, ease: EASE }}
-            style={{ transformOrigin: "left center" }}
-            className="flex items-center gap-3"
-          >
-            <Monogram className="h-8 w-8 shrink-0 brightness-0 invert" />
-            <span className="font-serif italic text-lg tracking-wide">Nicole &amp; Alex</span>
-          </motion.div>
+          <Monogram className="h-8 w-8 shrink-0 brightness-0 invert" />
+          <span className="font-serif italic text-lg tracking-wide">Nicole &amp; Alex</span>
         </Link>
 
         {/* Desktop nav */}
@@ -132,7 +119,19 @@ export function SiteNav() {
             className="block h-px w-6 bg-cream-100"
           />
         </button>
-      </motion.div>
+      </div>
+
+      {/* Reading-progress hairline: the one continuously-updating element in
+          the header. transform: scaleX is compositor-only — the browser
+          never re-lays-out or repaints the surrounding bar to draw it, so it
+          stays smooth at any scroll speed. This is the "dynamic" motion the
+          header now relies on, in place of resizing itself. */}
+      <div className="h-[2px] w-full bg-gold-400/10 overflow-hidden">
+        <div
+          style={{ transform: `scaleX(${progress})` }}
+          className="h-full w-full origin-left bg-gold-300"
+        />
+      </div>
 
       {/* Mobile full-screen menu */}
       <AnimatePresence>
