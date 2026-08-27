@@ -27,7 +27,7 @@ export default function OurStoryPage() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-24 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-olive-700 mb-3">
+          <p className="kicker text-base sm:text-lg text-olive-700 mb-3">
             Every love story
           </p>
           <h2 className="font-display text-2xl sm:text-3xl text-burgundy-800">

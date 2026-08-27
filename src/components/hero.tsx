@@ -59,7 +59,7 @@ export function Hero({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.35, duration: 0.9 }}
-        className="text-[11px] sm:text-xs tracking-[0.45em] uppercase text-gold-300"
+        className="kicker text-base sm:text-lg text-gold-300"
       >
         We&rsquo;re getting married
       </motion.p>
@@ -67,8 +67,8 @@ export function Hero({
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        className="font-script text-6xl sm:text-8xl text-cream-100 leading-none mt-4"
+        transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="font-script text-7xl sm:text-9xl text-cream-100 leading-none mt-5"
       >
         Nicole &amp; Alex
       </motion.h1>
@@ -77,12 +77,18 @@ export function Hero({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.75, duration: 0.9 }}
-        className="mt-8"
+        className="mt-9 flex flex-col items-center gap-2"
       >
-        <p className="text-cream-100 tracking-[0.3em] uppercase text-sm">
-          Thursday, 11 March 2027
+        <div className="flex items-center gap-3 text-cream-100">
+          <span className="h-px w-8 bg-gold-300/50" />
+          <p className="tracking-[0.25em] uppercase text-xs sm:text-sm">
+            Thursday, 11 March 2027
+          </p>
+          <span className="h-px w-8 bg-gold-300/50" />
+        </div>
+        <p className="font-serif italic text-lg text-cream-200/75">
+          Alora Macedon, New Gisborne
         </p>
-        <p className="text-cream-200/70 mt-1">Alora Macedon, New Gisborne</p>
       </motion.div>
 
       <motion.div
@@ -92,18 +98,19 @@ export function Hero({
       >
         <Link
           href="/rsvp"
-          className="mt-10 inline-block rounded-full border border-gold-300/60 text-cream-100 px-10 py-3 text-sm tracking-[0.25em] uppercase hover:bg-cream-100 hover:text-burgundy-900 transition-colors duration-300"
+          className="mt-11 inline-block rounded-full border border-gold-300/60 text-cream-100 px-11 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-gold-300 hover:text-burgundy-950 hover:border-gold-300 hover:shadow-[0_0_30px_rgba(217,193,153,0.35)]"
         >
           RSVP
         </Link>
       </motion.div>
 
       <motion.div
-        className="absolute bottom-8 text-cream-100/60 text-xs tracking-[0.3em] uppercase"
+        className="absolute bottom-8 flex flex-col items-center gap-2 text-cream-100/50"
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
       >
-        Scroll
+        <span className="text-[10px] tracking-[0.35em] uppercase">Scroll</span>
+        <span className="h-6 w-px bg-cream-100/40" />
       </motion.div>
     </section>
   );

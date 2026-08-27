@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Parisienne, Inter } from "next/font/google";
+import { Playfair_Display, Parisienne, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/nav";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
 const parisienne = Parisienne({
   variable: "--font-parisienne",
   weight: "400",
+  subsets: ["latin"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
@@ -29,7 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${parisienne.variable} ${inter.variable} h-full antialiased`}
+      className={`${playfair.variable} ${parisienne.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream-100 text-burgundy-900">
         <SiteNav />

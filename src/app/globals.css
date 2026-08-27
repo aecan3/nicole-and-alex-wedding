@@ -37,6 +37,7 @@
   --color-foreground: var(--foreground);
   --font-display: var(--font-playfair);
   --font-script: var(--font-parisienne);
+  --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
 }
 
@@ -45,6 +46,18 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Georgia, serif;
   position: relative;
+}
+
+/* Kickers / eyebrows site-wide: a quiet italic serif instead of shouty sans caps. */
+.kicker {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+::selection {
+  background: var(--color-gold-300);
+  color: var(--color-burgundy-950);
 }
 
 /* Subtle film-grain texture layered over the whole site for depth. */
