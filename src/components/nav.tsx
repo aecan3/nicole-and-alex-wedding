@@ -47,11 +47,7 @@ export function SiteNav() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-700 ${
-        floating
-          ? "bg-transparent"
-          : "bg-burgundy-900/90 backdrop-blur-lg border-b border-gold-400/15"
-      }`}
+      className="sticky top-0 z-50 bg-burgundy-900/95 backdrop-blur-lg border-b border-gold-400/15 transition-all duration-700"
       style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
     >
       <div
@@ -62,7 +58,7 @@ export function SiteNav() {
       >
         <Link href="/" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
           <Monogram
-            className={`shrink-0 transition-all duration-700 ${
+            className={`shrink-0 brightness-0 invert transition-all duration-700 ${
               floating ? "h-11 w-11 sm:h-12 sm:w-12" : "h-8 w-8"
             }`}
           />
