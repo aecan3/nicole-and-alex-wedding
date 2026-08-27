@@ -1,0 +1,31 @@
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nicole and Alex monogram">
+  <g fill="none" stroke="#C9A876" stroke-width="1.4">
+    <circle cx="110" cy="110" r="86" />
+    <circle cx="110" cy="110" r="80" stroke-width="0.6" />
+  </g>
+  <g fill="#C9A876" stroke="none">
+    <!-- Left olive branch -->
+    <g>
+      <ellipse cx="42" cy="150" rx="6.5" ry="3" transform="rotate(-35 42 150)"/>
+      <ellipse cx="36" cy="136" rx="6.5" ry="3" transform="rotate(-15 36 136)"/>
+      <ellipse cx="34" cy="120" rx="6.5" ry="3" transform="rotate(5 34 120)"/>
+      <ellipse cx="36" cy="104" rx="6.5" ry="3" transform="rotate(25 36 104)"/>
+      <ellipse cx="42" cy="90" rx="6.5" ry="3" transform="rotate(45 42 90)"/>
+      <ellipse cx="52" cy="78" rx="6.5" ry="3" transform="rotate(62 52 78)"/>
+      <path d="M48 162 Q30 130 48 70" fill="none" stroke="#C9A876" stroke-width="1.2"/>
+    </g>
+    <!-- Right olive branch (mirrored) -->
+    <g>
+      <ellipse cx="178" cy="150" rx="6.5" ry="3" transform="rotate(35 178 150)"/>
+      <ellipse cx="184" cy="136" rx="6.5" ry="3" transform="rotate(15 184 136)"/>
+      <ellipse cx="186" cy="120" rx="6.5" ry="3" transform="rotate(-5 186 120)"/>
+      <ellipse cx="184" cy="104" rx="6.5" ry="3" transform="rotate(-25 184 104)"/>
+      <ellipse cx="178" cy="90" rx="6.5" ry="3" transform="rotate(-45 178 90)"/>
+      <ellipse cx="168" cy="78" rx="6.5" ry="3" transform="rotate(-62 168 78)"/>
+      <path d="M172 162 Q190 130 172 70" fill="none" stroke="#C9A876" stroke-width="1.2"/>
+    </g>
+  </g>
+  <text x="110" y="103" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="46" fill="#C9A876">N</text>
+  <line x1="86" y1="118" x2="134" y2="118" stroke="#C9A876" stroke-width="1" />
+  <text x="110" y="163" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="46" fill="#C9A876">A</text>
+</svg>
