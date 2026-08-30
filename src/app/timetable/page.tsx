@@ -1,4 +1,21 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { PageHeader } from "@/components/page-header";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const listVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.18, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: 80 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: EASE } },
+};
 
 const events = [
   {
@@ -28,15 +45,24 @@ export default function TimetablePage() {
     <main className="flex-1">
       <PageHeader kicker="Thursday 11 March 2027" title="Timetable" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
-        <ol className="space-y-10">
+        <motion.ol
+          className="space-y-10"
+          initial="hidden"
+          animate="show"
+          variants={listVariants}
+        >
           {events.map((e) => (
-            <li key={e.title} className="border-l-2 border-gold-400 pl-6">
+            <motion.li
+              key={e.title}
+              variants={itemVariants}
+              className="border-l-2 border-gold-400 pl-6"
+            >
               <p className="text-xs uppercase tracking-[0.2em] text-olive-700">{e.time}</p>
               <h2 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h2>
               <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
-            </li>
+            </motion.li>
           ))}
-        </ol>
+        </motion.ol>
         <p className="mt-12 text-sm text-burgundy-600/80 text-center">
           A shuttle will run from pick-up points around Gisborne, New Gisborne and
           Macedon &mdash; see the <a href="/travel" className="underline hover:text-burgundy-600">Travel</a> page for details.
