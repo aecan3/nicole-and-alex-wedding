@@ -7,7 +7,22 @@ export default function VenuePage() {
     <main className="flex-1">
       <PageHeader title="Alora Macedon" />
 
-      <div className="mx-auto max-w-3xl px-6 pb-4 text-center">
+      {/* Full-bleed line-art banner — a burgundy line drawing of the glass
+          atrium framed by trees on both sides, spanning edge to edge so it
+          reads as a wide landscape band rather than a boxed-in photo. */}
+      <Reveal className="w-full">
+        <div className="relative aspect-[1376/768] w-full">
+          <Image
+            src="/gallery/venue-atrium-banner.png"
+            alt="Line-art rendering of the Alora Macedon glass atrium, framed by trees"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+      </Reveal>
+
+      <div className="mx-auto max-w-3xl px-6 pt-10 pb-20 text-center">
         <Reveal>
           <p className="text-lg leading-relaxed">
             Our ceremony and reception will be held in the Glass Atrium at Alora Macedon,
@@ -30,21 +45,6 @@ export default function VenuePage() {
           </div>
         </Reveal>
       </div>
-
-      {/* The venue's own line-art rendering — a transparent PNG so it sits
-          directly on the page's cream background rather than in a photo
-          frame or black box. */}
-      <Reveal delay={0.2} className="mx-auto max-w-3xl px-6 pt-8 pb-20">
-        <div className="relative aspect-[1264/843] w-full">
-          <Image
-            src="/gallery/venue-atrium-line-art.png"
-            alt="Line-art rendering of the Alora Macedon glass atrium"
-            fill
-            priority
-            className="object-contain"
-          />
-        </div>
-      </Reveal>
     </main>
   );
 }

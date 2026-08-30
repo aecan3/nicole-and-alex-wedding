@@ -4,16 +4,12 @@ import { Gallery } from "@/components/gallery";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
-// left to right. The sold-sign video (a tall 9:16 clip) sits at index 5 —
-// column 3, row 1 on desktop ("up and right", not dangling at the bottom of
-// the middle column) and column 2, row 2 on mobile. With that video pinned
-// there, the four videos (0, 6, 5, 10) still can't land beside or under one
-// another on either the 2-column (mobile) or 3-column (desktop) layout, but
-// there wasn't room left to *also* keep all three black-and-white pieces
-// (1, 4, 10 — the toast-bw video is one of them) apart from each other: 1
-// and 4 end up stacked in the same column on desktop only (they stay clear
-// of each other on mobile). That's the trade-off for this placement — flag
-// it if it reads as two greyscale tiles too close together.
+// left to right. This arrangement keeps all four videos (0, 1, 5, 9) clear
+// of one another AND all three black-and-white pieces (3, 8, 9 — the
+// toast-bw video is one of them) clear of one another, on both the
+// 2-column (mobile) and 3-column (desktop) layouts — no relaxation needed
+// this time. The Christmas photo was dropped (it was the odd one out,
+// dangling alone below the other columns).
 //
 // couple-rooftop.jpg (also the homepage hero background) and
 // couple-garden-party.jpg (near-duplicate of couple-garden.jpg) were
@@ -21,22 +17,20 @@ import { Gallery } from "@/components/gallery";
 // sign video below.
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
-  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
-  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
-  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
-  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
+  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
+  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
+  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
+  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden", width: 2000, height: 2692 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
-  { type: "image" as const, src: "/gallery/couple-christmas.jpg", alt: "Nicole and Alex at Christmas", width: 1180, height: 1572 },
+  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
   { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
 ];
 
 const dogPhotos = [
   { type: "image" as const, src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day", width: 1600, height: 2133 },
   { type: "image" as const, src: "/gallery/dog-bed.jpg", alt: "Their dog curled up on the bed", width: 2400, height: 2000 },
-  { type: "image" as const, src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden", width: 1600, height: 2133 },
   { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
 ];
 
