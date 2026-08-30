@@ -1,10 +1,26 @@
 import { PageHeader } from "@/components/page-header";
+import { Reveal } from "@/components/reveal";
+import { SiteMap } from "@/components/site-map-loader";
+import type { MapMarker } from "@/components/site-map";
+
+const travelMarkers: MapMarker[] = [
+  { position: [-37.478, 144.612], label: "Alora Macedon", type: "venue" },
+  { position: [-37.4173, 144.5661], label: "Macedon", type: "label" },
+  { position: [-37.4883, 144.5936], label: "Gisborne", type: "label" },
+  { position: [-37.8136, 144.9631], label: "Melbourne", type: "label" },
+];
 
 export default function TravelPage() {
   return (
     <main className="flex-1">
       <PageHeader kicker="Getting to Alora Macedon" title="Travel" />
       <div className="mx-auto max-w-2xl px-6 pb-20 space-y-10">
+        <Reveal>
+          <SiteMap center={[-37.62, 144.79]} zoom={9} markers={travelMarkers} heightClassName="h-[380px]" />
+          <p className="mt-3 text-center text-xs text-burgundy-600/60">
+            Alora Macedon sits about 45 minutes north-west of Melbourne, just past Gisborne and Macedon.
+          </p>
+        </Reveal>
         <div>
           <h2 className="font-display text-2xl text-burgundy-600">Getting Here</h2>
           <p className="mt-3 leading-relaxed">
