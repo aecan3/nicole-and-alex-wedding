@@ -1,0 +1,35 @@
+<svg width="300" height="260" viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#4a1521" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- roof -->
+  <path d="M150 4 L72 46 L92 50 L150 20 L208 50 L228 46 Z"/>
+  <path d="M92 50 L92 62 M208 50 L208 62"/>
+
+  <!-- posts -->
+  <path d="M97 62 L97 136"/>
+  <path d="M203 62 L203 136"/>
+  <!-- crossbar / axle -->
+  <path d="M92 74 L208 74"/>
+  <circle cx="97" cy="74" r="4"/>
+  <circle cx="203" cy="74" r="4"/>
+
+  <!-- rope + bucket -->
+  <path d="M150 74 L150 162" stroke-width="1.4"/>
+  <path d="M136 162 L164 162 L160 184 L140 184 Z"/>
+
+  <!-- well rim (top opening) -->
+  <ellipse cx="150" cy="136" rx="66" ry="15"/>
+
+  <!-- well barrel -->
+  <path d="M84 136 Q80 174 88 208"/>
+  <path d="M216 136 Q220 174 212 208"/>
+  <path d="M88 208 Q150 224 212 208"/>
+
+  <!-- stone courses -->
+  <path d="M85 156 Q150 168 215 156" stroke-width="1.2" opacity="0.55"/>
+  <path d="M84 180 Q150 193 216 180" stroke-width="1.2" opacity="0.55"/>
+  <path d="M86 198 Q150 210 214 198" stroke-width="1.2" opacity="0.55"/>
+  <!-- vertical stone joints -->
+  <path d="M110 150 L108 202" stroke-width="1" opacity="0.4"/>
+  <path d="M150 152 L150 206" stroke-width="1" opacity="0.4"/>
+  <path d="M190 150 L192 202" stroke-width="1" opacity="0.4"/>
+</svg>

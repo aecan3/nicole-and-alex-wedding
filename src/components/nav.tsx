@@ -14,7 +14,7 @@ const links = [
   { href: "/where-to-stay", label: "Where to Stay" },
   { href: "/travel", label: "Travel" },
   { href: "/dress-code", label: "Dress Code" },
-  { href: "/registry", label: "Registry" },
+  { href: "/registry", label: "Gifts" },
   { href: "/faq", label: "Q&A" },
 ];
 

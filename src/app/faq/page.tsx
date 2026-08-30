@@ -7,7 +7,7 @@ const faqs = [
   },
   {
     q: "Do you have a registry?",
-    a: "Have a look at our Registry page.",
+    a: "Have a look at our Gifts page.",
   },
   {
     q: "Are children welcome?",
