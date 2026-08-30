@@ -40,9 +40,14 @@ const stays = [
 
 const venuePosition: [number, number] = [-37.478, 144.612];
 
+// The map now marks the three nearby towns where accommodation is
+// concentrated, rather than each individual property — a clearer picture
+// at a glance, with the specifics left to the list below.
 const mapMarkers: MapMarker[] = [
-  { position: venuePosition, label: "Alora Macedon", type: "venue" },
-  ...stays.map((s) => ({ position: s.position, label: s.name, type: "star" as const })),
+  { position: venuePosition, label: "Alora Macedon", type: "venue", showLabel: true, labelDirection: "bottom" },
+  { position: [-37.4173, 144.5661], label: "Macedon", type: "star", showLabel: true, labelDirection: "top" },
+  { position: [-37.4883, 144.5936], label: "Gisborne", type: "star", showLabel: true, labelDirection: "left" },
+  { position: [-37.466, 144.593], label: "New Gisborne", type: "star", showLabel: true, labelDirection: "right" },
 ];
 
 export default function WhereToStayPage() {
@@ -52,29 +57,44 @@ export default function WhereToStayPage() {
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <p className="text-center leading-relaxed">
           The Macedon Ranges fill up quickly, so we&rsquo;d suggest booking early.
-          Here are a few places close to the venue.
+          Accommodation is mostly clustered around Macedon, Gisborne and New
+          Gisborne, all a short drive from the venue.
+        </p>
+        <p className="mt-4 text-center leading-relaxed text-burgundy-600/80">
+          Beyond the hotels below, it&rsquo;s also worth checking{" "}
+          <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+            Airbnb
+          </a>{" "}
+          and{" "}
+          <a href="https://relaxholidayrentals.com.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+            Relax Holiday Rentals
+          </a>
+          , which both list houses and cottages across the area.
         </p>
 
         <Reveal delay={0.1} className="mt-10">
-          <SiteMap center={[-37.421, 144.585]} zoom={12} markers={mapMarkers} />
+          <SiteMap center={[-37.453, 144.589]} zoom={12} markers={mapMarkers} static />
           <p className="mt-3 text-center text-xs text-burgundy-600/60">
-            Approximate locations — the atrium marks Alora Macedon, the stars mark each stay below.
+            Approximate locations — the pin marks Alora Macedon, the stars mark the nearby towns with accommodation.
           </p>
         </Reveal>
 
-        <div className="mt-12 space-y-8">
-          {stays.map((s) => (
-            <div key={s.name} className="border-t border-gold-400/40 pt-6">
-              <h2 className="font-display text-xl text-burgundy-600">{s.name}</h2>
-              <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
-              <p className="text-sm mt-1">
-                <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
-                  {s.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
-                </a>
-              </p>
-              <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
-            </div>
-          ))}
+        <div className="mt-12">
+          <p className="kicker text-sm text-olive-700 text-center mb-8">A few recommendations</p>
+          <div className="space-y-8">
+            {stays.map((s) => (
+              <div key={s.name} className="border-t border-gold-400/40 pt-6">
+                <h2 className="font-display text-xl text-burgundy-600">{s.name}</h2>
+                <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
+                <p className="text-sm mt-1">
+                  <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+                    {s.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                  </a>
+                </p>
+                <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
