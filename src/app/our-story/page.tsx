@@ -4,29 +4,23 @@ import { Gallery } from "@/components/gallery";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
-// left to right. The sold-sign video (a tall 9:16 clip) sits at index 5 —
-// column 3, row 1 on desktop ("up and right", not dangling at the bottom of
-// the middle column) and column 2, row 2 on mobile. With that video pinned
-// there, the four videos (0, 6, 5, 10) still can't land beside or under one
-// another on either the 2-column (mobile) or 3-column (desktop) layout, but
-// there wasn't room left to *also* keep all three black-and-white pieces
-// (1, 4, 10 — the toast-bw video is one of them) apart from each other: 1
-// and 4 end up stacked in the same column on desktop only (they stay clear
-// of each other on mobile). That's the trade-off for this placement — flag
-// it if it reads as two greyscale tiles too close together.
-//
-// couple-rooftop.jpg (also the homepage hero background) and
-// couple-garden-party.jpg (near-duplicate of couple-garden.jpg) were
-// dropped from this gallery in favour of the speech photo and the "sold"
-// sign video below.
+// left to right — and because each column's total height is just the sum
+// of its items' aspect ratios, the ORDER also determines how evenly the
+// columns balance out. After the Christmas photo was removed, 10 items
+// split unevenly across 3 columns (4/3/3), and the previous order happened
+// to put mostly short, wide items in the middle column — it finished a
+// full column's height short of the others, leaving a big empty gap below
+// it. This order was chosen (out of ~5,800 arrangements that keep every
+// video and every black-and-white piece clear of its neighbours on both
+// the 2-column and 3-column layouts) to minimise that height difference.
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
-  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
-  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
   { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
+  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
+  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
   { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden", width: 2000, height: 2692 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
   { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
