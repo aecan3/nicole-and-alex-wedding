@@ -5,21 +5,9 @@ import { Reveal } from "@/components/reveal";
 export default function VenuePage() {
   return (
     <main className="flex-1">
-      <PageHeader kicker="4:00pm, Thursday 11 March 2027" title="Alora Macedon" />
+      <PageHeader title="Alora Macedon" />
 
-      <Reveal className="mx-auto max-w-4xl px-6">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-sm">
-          <Image
-            src="/gallery/venue-photo.jpg"
-            alt="The Glass Atrium at Alora Macedon, set against the Macedon Ranges"
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-      </Reveal>
-
-      <div className="mx-auto max-w-3xl px-6 py-16 text-center">
+      <div className="mx-auto max-w-3xl px-6 pb-4 text-center">
         <Reveal>
           <p className="text-lg leading-relaxed">
             Our ceremony and reception will be held in the Glass Atrium at Alora Macedon,
@@ -43,14 +31,17 @@ export default function VenuePage() {
         </Reveal>
       </div>
 
-      {/* Atmospheric close — the venue's own line-art rendering, full bleed on black */}
-      <Reveal>
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-black">
+      {/* The venue's own line-art rendering — a transparent PNG so it sits
+          directly on the page's cream background rather than in a photo
+          frame or black box. */}
+      <Reveal delay={0.2} className="mx-auto max-w-3xl px-6 pt-8 pb-20">
+        <div className="relative aspect-[1264/843] w-full">
           <Image
-            src="/gallery/venue-line-art.jpg"
-            alt="Line-art rendering of the Alora Macedon glass atrium at night"
+            src="/gallery/venue-atrium-line-art.png"
+            alt="Line-art rendering of the Alora Macedon glass atrium"
             fill
-            className="object-cover"
+            priority
+            className="object-contain"
           />
         </div>
       </Reveal>
