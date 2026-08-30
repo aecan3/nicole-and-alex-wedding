@@ -1,7 +1,6 @@
+import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
-import { SiteMap } from "@/components/site-map-loader";
-import type { MapMarker } from "@/components/site-map";
 
 const stays = [
   {
@@ -38,18 +37,6 @@ const stays = [
   },
 ];
 
-const venuePosition: [number, number] = [-37.478, 144.612];
-
-// The map now marks the three nearby towns where accommodation is
-// concentrated, rather than each individual property — a clearer picture
-// at a glance, with the specifics left to the list below.
-const mapMarkers: MapMarker[] = [
-  { position: venuePosition, label: "Alora Macedon", type: "venue", showLabel: true, labelDirection: "bottom" },
-  { position: [-37.4173, 144.5661], label: "Macedon", type: "star", showLabel: true, labelDirection: "top" },
-  { position: [-37.4883, 144.5936], label: "Gisborne", type: "star", showLabel: true, labelDirection: "left" },
-  { position: [-37.466, 144.593], label: "New Gisborne", type: "star", showLabel: true, labelDirection: "right" },
-];
-
 export default function WhereToStayPage() {
   return (
     <main className="flex-1">
@@ -73,9 +60,16 @@ export default function WhereToStayPage() {
         </p>
 
         <Reveal delay={0.1} className="mt-10">
-          <SiteMap center={[-37.453, 144.589]} zoom={12} markers={mapMarkers} static />
+          <div className="relative aspect-[861/871] w-full overflow-hidden rounded-sm border border-gold-400/25">
+            <Image
+              src="/gallery/where-to-stay-map.png"
+              alt="Map showing Alora Macedon and the nearby towns of Macedon, New Gisborne and Gisborne"
+              fill
+              className="object-cover"
+            />
+          </div>
           <p className="mt-3 text-center text-xs text-burgundy-600/60">
-            Approximate locations — the pin marks Alora Macedon, the stars mark the nearby towns with accommodation.
+            Approximate locations — the pin marks Alora Macedon, the nearby towns have accommodation.
           </p>
         </Reveal>
 

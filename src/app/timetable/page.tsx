@@ -65,7 +65,7 @@ export default function TimetablePage() {
         </motion.ol>
         <p className="mt-12 text-sm text-burgundy-600/80 text-center">
           A shuttle will run from pick-up points around Gisborne, New Gisborne and
-          Macedon &mdash; see the <a href="/travel" className="underline hover:text-burgundy-600">Travel</a> page for details.
+          Macedon &mdash; see the <a href="/faq" className="underline hover:text-burgundy-600">Q&amp;A</a> page for details.
         </p>
       </div>
     </main>

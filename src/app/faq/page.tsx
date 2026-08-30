@@ -1,9 +1,36 @@
 import { PageHeader } from "@/components/page-header";
+import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
+import { SiteMap } from "@/components/site-map-loader";
+import type { MapMarker } from "@/components/site-map";
 
-const faqs = [
+const travelMarkers: MapMarker[] = [
+  { position: [-37.478, 144.612], label: "Alora Macedon", type: "venue" },
+  { position: [-37.4173, 144.5661], label: "Macedon", type: "label" },
+  { position: [-37.4883, 144.5936], label: "Gisborne", type: "label" },
+  { position: [-37.8136, 144.9631], label: "Melbourne", type: "label" },
+];
+
+const faqs: FaqItem[] = [
   {
     q: "When's the RSVP deadline?",
     a: "Please RSVP by Sunday 24 January 2027 so we can get an accurate headcount.",
+  },
+  {
+    q: "How do I get there?",
+    a: (
+      <div className="space-y-4">
+        <p>
+          Alora Macedon sits at the foothills of Mount Macedon, about 45 minutes&rsquo;
+          drive from Melbourne. If you&rsquo;re flying in, Melbourne Airport (Tullamarine)
+          is the closest, around 40 minutes from the venue.
+        </p>
+        <SiteMap center={[-37.62, 144.79]} zoom={9} markers={travelMarkers} heightClassName="h-[320px]" />
+      </div>
+    ),
+  },
+  {
+    q: "Is there a shuttle bus?",
+    a: "We'll be running a shuttle bus from common pick-up points around Gisborne, New Gisborne and Macedon, straight to the venue and back again at the end of the night. Exact pick-up points and times will be confirmed closer to the day — we'll update this page and let you know.",
   },
   {
     q: "Do you have a registry?",
@@ -43,13 +70,8 @@ export default function FaqPage() {
   return (
     <main className="flex-1">
       <PageHeader kicker="Any questions?" title="Q&A" />
-      <div className="mx-auto max-w-2xl px-6 pb-20 space-y-8">
-        {faqs.map((f) => (
-          <div key={f.q} className="border-t border-gold-400/40 pt-6">
-            <h2 className="font-display text-lg text-burgundy-600">{f.q}</h2>
-            <p className="mt-2 leading-relaxed">{f.a}</p>
-          </div>
-        ))}
+      <div className="mx-auto max-w-2xl px-6 pb-20">
+        <FaqAccordion items={faqs} />
       </div>
     </main>
   );
