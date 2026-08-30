@@ -4,24 +4,29 @@ import { Gallery } from "@/components/gallery";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
-// left to right. The three videos (0, 5, 9), the two black-and-white pieces
-// (2, 9) and the two garden-party shots that look alike (6, 10) are each
-// placed so their index difference is never 1, 2 or 3 — which is exactly
-// what it takes for two items to land beside or directly under each other
-// in both the 2-column (mobile) and 3-column (desktop) layouts. Keep new
-// entries at least 4 slots from anything they shouldn't sit next to.
+// left to right. The four videos (0, 6, 5, 10) and the three black-and-white
+// pieces (1, 5, 9 — the toast-bw video is both) are each placed so their
+// index difference is never 1, 2 or 3, which is exactly what it takes for
+// two items to land beside or directly under each other in both the
+// 2-column (mobile) and 3-column (desktop) layouts. Keep new entries at
+// least 4 slots from anything they shouldn't sit next to.
+//
+// couple-rooftop.jpg (also the homepage hero background) and
+// couple-garden-party.jpg (near-duplicate of couple-garden.jpg) were
+// dropped from this gallery in favour of the speech photo and the "sold"
+// sign video below.
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-rooftop.jpg", alt: "Nicole and Alex laughing together", width: 2400, height: 1596 },
   { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
   { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
-  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden", width: 2000, height: 2692 },
+  { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
+  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
   { type: "image" as const, src: "/gallery/couple-christmas.jpg", alt: "Nicole and Alex at Christmas", width: 1180, height: 1572 },
-  { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
-  { type: "image" as const, src: "/gallery/couple-garden-party.jpg", alt: "Nicole and Alex at a garden party", width: 2000, height: 2667 },
+  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
+  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
 ];
 
 const dogPhotos = [
