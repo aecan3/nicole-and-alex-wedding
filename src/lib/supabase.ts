@@ -22,6 +22,15 @@ export function getSupabase(): SupabaseClient {
   // Browser/client-safe Supabase client. Only ever uses the public anon
   // key, which is restricted by row-level security to the SECURITY
   // DEFINER functions in supabase/schema.sql.
-  client = createClient(supabaseUrl, supabaseAnonKey);
+  try {
+    client = createClient(supabaseUrl, supabaseAnonKey);
+  } catch {
+    // createClient() throws its own low-level message (e.g. "Invalid
+    // supabaseUrl") when a value is set but malformed — not helpful for a
+    // guest to see, and not obviously pointing at where to fix it either.
+    throw new Error(
+      "Supabase is misconfigured — check that NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in the Vercel project's Environment Variables are set correctly, then redeploy."
+    );
+  }
   return client;
 }

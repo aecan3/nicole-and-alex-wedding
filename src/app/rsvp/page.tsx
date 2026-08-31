@@ -20,6 +20,18 @@ const BUS_OPTIONS = [
   { value: "not_booked_yet", label: "We'll need the bus, but haven't booked accommodation yet" },
 ];
 
+// supabase-js doesn't throw on a failed RPC call (missing function, RLS
+// denial, bad args, etc.) — it resolves with an `error` field instead, so
+// every call site below has to check it explicitly or a real backend error
+// silently looks identical to "no results found".
+function errorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (err && typeof err === "object" && "message" in err && typeof (err as { message: unknown }).message === "string") {
+    return (err as { message: string }).message;
+  }
+  return "Something went wrong — please try again shortly.";
+}
+
 // A quiet, always-available way out if the search can't find someone or
 // anything on this page misbehaves — shown at the bottom of every stage
 // rather than only after an error, so it's never a dead end.
@@ -60,6 +72,7 @@ export default function RsvpPage() {
   const [busPickup, setBusPickup] = useState("");
   const [message, setMessage] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [configError, setConfigError] = useState<string | null>(null);
 
   async function handleSearch(e: React.FormEvent) {
@@ -69,11 +82,12 @@ export default function RsvpPage() {
     setSearched(false);
     setConfigError(null);
     try {
-      const { data } = await getSupabase().rpc("search_invitees", { query });
+      const { data, error } = await getSupabase().rpc("search_invitees", { query });
+      if (error) throw error;
       setMatches(data ?? []);
       setSearched(true);
     } catch (err) {
-      setConfigError(err instanceof Error ? err.message : "Something went wrong — please try again shortly.");
+      setConfigError(errorMessage(err));
     } finally {
       setSearching(false);
     }
@@ -82,10 +96,11 @@ export default function RsvpPage() {
   async function selectSelf(id: string) {
     setConfigError(null);
     try {
-      const { data } = await getSupabase().rpc("get_party", { invitee_id: id });
+      const { data, error } = await getSupabase().rpc("get_party", { invitee_id: id });
+      if (error) throw error;
       setConfirmingParty(data ?? []);
     } catch (err) {
-      setConfigError(err instanceof Error ? err.message : "Something went wrong — please try again shortly.");
+      setConfigError(errorMessage(err));
     }
   }
 
@@ -112,7 +127,7 @@ export default function RsvpPage() {
     setSubmitStatus("submitting");
     try {
       const sb = getSupabase();
-      await Promise.all(
+      const results = await Promise.all(
         party.map((m) =>
           sb.rpc("submit_rsvp", {
             invitee_id: m.id,
@@ -124,8 +139,11 @@ export default function RsvpPage() {
           })
         )
       );
+      const firstError = results.find((r) => r.error)?.error;
+      if (firstError) throw firstError;
       setSubmitStatus("done");
-    } catch {
+    } catch (err) {
+      setSubmitError(errorMessage(err));
       setSubmitStatus("error");
     }
   }
@@ -331,7 +349,7 @@ export default function RsvpPage() {
             </button>
             {submitStatus === "error" && (
               <p className="text-sm text-red-700 text-center">
-                Something went wrong sending that — mind trying again?
+                {submitError ?? "Something went wrong sending that — mind trying again?"}
               </p>
             )}
             <HelpLink />
