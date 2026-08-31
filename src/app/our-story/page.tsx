@@ -26,11 +26,18 @@ const photos = [
   { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
 ];
 
+// Order matters here too (see note on `photos` above). On desktop's 3
+// columns, 5 items split 2/2/1 — putting the lone extra-square "bed" photo
+// last means it lands alongside a portrait shot instead of doubling up with
+// another one, which keeps the columns close in height instead of leaving
+// a gap under the shorter ones. It also happens to balance the mobile
+// 2-column layout the same way.
 const dogPhotos = [
   { type: "image" as const, src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day", width: 1600, height: 2133 },
-  { type: "image" as const, src: "/gallery/dog-bed.jpg", alt: "Their dog curled up on the bed", width: 2400, height: 2000 },
   { type: "image" as const, src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden", width: 1600, height: 2133 },
   { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
+  { type: "image" as const, src: "/gallery/dog-santa.jpg", alt: "Nicole, Alex and their dog visiting Santa", width: 1800, height: 2400 },
+  { type: "image" as const, src: "/gallery/dog-bed.jpg", alt: "Their dog curled up on the bed", width: 2400, height: 2000 },
 ];
 
 export default function OurStoryPage() {
