@@ -100,3 +100,14 @@ revoke all on public.invitees from anon, authenticated;
 grant execute on function public.search_invitees(text) to anon;
 grant execute on function public.get_party(uuid) to anon;
 grant execute on function public.submit_rsvp(uuid, text, text, text, text) to anon;
+
+-- ---------------------------------------------------------------------
+-- Seed your guest list below, one row per person. Group households/couples
+-- with the same party_id (any shared uuid — gen_random_uuid() per party).
+-- Example:
+--
+-- insert into public.invitees (party_id, full_name) values
+--   ('11111111-1111-1111-1111-111111111111', 'Jane Smith'),
+--   ('11111111-1111-1111-1111-111111111111', 'John Smith'),
+--   ('22222222-2222-2222-2222-222222222222', 'Priya Nair');
+-- ---------------------------------------------------------------------
