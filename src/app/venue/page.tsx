@@ -22,7 +22,7 @@ export default function VenuePage() {
           width={960}
           height={492}
           aria-hidden="true"
-          className="pointer-events-none absolute right-[40px] top-[6%] z-0 w-[640px] max-w-[85vw] opacity-[0.22] sm:w-[860px] lg:w-[1040px]"
+          className="pointer-events-none absolute right-[24px] top-64 z-0 w-[220px] max-w-[55vw] opacity-[0.22] sm:top-6 sm:w-[380px] lg:w-[480px]"
         />
 
         <div className="relative z-10 mx-auto max-w-3xl px-6 pt-10 pb-20 text-center">
