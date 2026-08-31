@@ -5,7 +5,15 @@ import { PageHeader } from "@/components/page-header";
 import { getSupabase } from "@/lib/supabase";
 
 type Match = { id: string; party_id: string; full_name: string };
-type PartyMember = { id: string; full_name: string; rsvp_status: string };
+type PartyMember = {
+  id: string;
+  full_name: string;
+  rsvp_status: string;
+  dietary: string | null;
+  email: string | null;
+  bus_pickup: string | null;
+  message: string | null;
+};
 type Response = {
   attending: "yes" | "no" | "";
   dietary: string;
@@ -19,6 +27,11 @@ const BUS_OPTIONS = [
   { value: "no", label: "No, we'll make our own way there" },
   { value: "not_booked_yet", label: "We'll need the bus, but haven't booked accommodation yet" },
 ];
+
+function busLabelFor(value: string | null | undefined): string | null {
+  if (!value) return null;
+  return BUS_OPTIONS.find((o) => o.value === value)?.label ?? null;
+}
 
 // supabase-js doesn't throw on a failed RPC call (missing function, RLS
 // denial, bad args, etc.) — it resolves with an `error` field instead, so
@@ -65,6 +78,12 @@ export default function RsvpPage() {
   // really their household — `party` (below) is only populated once they
   // do, which is what actually reveals the RSVP form.
   const [confirmingParty, setConfirmingParty] = useState<PartyMember[] | null>(null);
+
+  // Set instead of `party` when the confirmed household has already
+  // responded (rsvp_status isn't "pending" for at least one member) — shows
+  // what's on file and asks whether to keep it or go through the form again,
+  // rather than silently taking them through a blank form a second time.
+  const [previousReview, setPreviousReview] = useState<PartyMember[] | null>(null);
 
   const [party, setParty] = useState<PartyMember[] | null>(null);
   const [responses, setResponses] = useState<Record<string, Response>>({});
@@ -140,14 +159,37 @@ export default function RsvpPage() {
     }
   }
 
-  function confirmParty() {
-    if (!confirmingParty) return;
-    setParty(confirmingParty);
+  // Populates the form (Stage 3) from a party's members — either blank, for
+  // a first-time response, or pre-filled from what's already saved, when
+  // the guest chooses to update an existing one.
+  function startForm(members: PartyMember[]) {
+    setParty(members);
     const initial: Record<string, Response> = {};
-    confirmingParty.forEach((m) => {
-      initial[m.id] = { attending: "", dietary: "" };
+    members.forEach((m) => {
+      initial[m.id] = {
+        attending: m.rsvp_status === "attending" ? "yes" : m.rsvp_status === "declined" ? "no" : "",
+        dietary: m.dietary ?? "",
+      };
     });
     setResponses(initial);
+    // Email/bus pickup/message are shared across the whole party and saved
+    // identically on every member's row — take them from whichever member
+    // has them set.
+    const shared = members.find((m) => m.email || m.bus_pickup || m.message);
+    setEmail(shared?.email ?? "");
+    setBusPickup(shared?.bus_pickup ?? "");
+    setMessage(shared?.message ?? "");
+  }
+
+  function confirmParty() {
+    if (!confirmingParty) return;
+    const alreadyResponded = confirmingParty.some((m) => m.rsvp_status !== "pending");
+    if (alreadyResponded) {
+      setPreviousReview(confirmingParty);
+      setConfirmingParty(null);
+      return;
+    }
+    startForm(confirmingParty);
     setConfirmingParty(null);
   }
 
@@ -155,6 +197,20 @@ export default function RsvpPage() {
     // Back to the match list — not back to a blank search, since the name
     // they typed was probably right and it's just the wrong match.
     setConfirmingParty(null);
+  }
+
+  function keepPreviousResponse() {
+    // Nothing changed — nothing new to save, so this skips straight to the
+    // same confirmation the guest saw the first time rather than re-running
+    // submit_rsvp with the answers it already has.
+    setPreviousReview(null);
+    setSubmitStatus("done");
+  }
+
+  function updatePreviousResponse() {
+    if (!previousReview) return;
+    startForm(previousReview);
+    setPreviousReview(null);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -221,7 +277,7 @@ export default function RsvpPage() {
       <PageHeader kicker="By 24 January 2027" title="RSVP" />
       <div className="mx-auto max-w-md px-6 pb-24">
         {/* Stage 1: search */}
-        {!confirmingParty && !party && (
+        {!confirmingParty && !previousReview && !party && (
           <>
             <form onSubmit={handleSearch} className="flex flex-col gap-3">
               <label className="flex flex-col gap-1 text-sm">
@@ -311,6 +367,58 @@ export default function RsvpPage() {
           </div>
         )}
 
+        {/* Stage 2.5: already responded — show what's on file instead of
+            silently taking them through the form again */}
+        {previousReview && (
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-burgundy-600/80">
+              Looks like we&rsquo;ve already got your RSVP — here&rsquo;s what&rsquo;s on file:
+            </p>
+            <div className="flex flex-col gap-2">
+              {previousReview.map((m) => (
+                <div key={m.id} className="border border-gold-400/50 rounded-lg px-4 py-3">
+                  <p className="font-display text-lg text-burgundy-600">{m.full_name}</p>
+                  <p className="text-sm text-taupe-600 mt-1">
+                    {m.rsvp_status === "attending" ? "Joyfully attending" : "Regretfully declines"}
+                    {m.rsvp_status === "attending" && m.dietary ? ` · ${m.dietary}` : ""}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup) && (
+              <p className="text-sm text-burgundy-600/80">
+                Bus pickup:{" "}
+                <span className="text-burgundy-600">
+                  {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup)}
+                </span>
+              </p>
+            )}
+            {previousReview.find((m) => m.message)?.message && (
+              <p className="text-sm text-burgundy-600/80">
+                Your message: <span className="text-burgundy-600 italic">&ldquo;{previousReview.find((m) => m.message)?.message}&rdquo;</span>
+              </p>
+            )}
+            <p className="text-sm text-burgundy-600/80">Still all correct, or would you like to update it?</p>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={keepPreviousResponse}
+                className="rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors"
+              >
+                Still correct
+              </button>
+              <button
+                type="button"
+                onClick={updatePreviousResponse}
+                className="rounded-full border border-burgundy-800/40 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-cream-200 transition-colors"
+              >
+                Update my RSVP
+              </button>
+            </div>
+            <HelpLink />
+          </div>
+        )}
+
         {/* Stage 3: the actual RSVP form */}
         {party && (
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -326,6 +434,7 @@ export default function RsvpPage() {
                       type="radio"
                       name={`attending-${m.id}`}
                       required
+                      checked={responses[m.id]?.attending === "yes"}
                       onChange={() =>
                         setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: "yes" } }))
                       }
@@ -336,6 +445,7 @@ export default function RsvpPage() {
                     <input
                       type="radio"
                       name={`attending-${m.id}`}
+                      checked={responses[m.id]?.attending === "no"}
                       onChange={() =>
                         setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: "no" } }))
                       }

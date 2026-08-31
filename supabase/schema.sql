@@ -97,13 +97,26 @@ $$;
 -- Returns every invitee sharing a party_id with the given invitee — this is
 -- how selecting yourself in search also pulls in the rest of your party,
 -- and what the RSVP page shows the guest to confirm before they respond.
+-- Also returns each member's saved answers (dietary, and the shared email /
+-- bus_pickup / message fields) so that if a party has already responded,
+-- the RSVP page can show what's on file instead of sending them through a
+-- blank form again.
+drop function if exists public.get_party(uuid);
 create or replace function public.get_party(invitee_id uuid)
-returns table (id uuid, full_name text, rsvp_status text)
+returns table (
+  id uuid,
+  full_name text,
+  rsvp_status text,
+  dietary text,
+  email text,
+  bus_pickup text,
+  message text
+)
 language sql
 security definer
 set search_path = public
 as $$
-  select i.id, i.full_name, i.rsvp_status
+  select i.id, i.full_name, i.rsvp_status, i.dietary, i.email, i.bus_pickup, i.message
   from public.invitees i
   where i.party_id = (select party_id from public.invitees where id = invitee_id)
   order by i.full_name;
