@@ -55,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* paper-texture is scoped here (not on body) so the burgundy nav,
             hero and any other opaque dark section stay clean — it only
             shows through where the page is actually cream. */}
-        <div className="paper-texture relative flex-1">{children}</div>
+        <div className="paper-texture relative flex-1 flex flex-col">{children}</div>
         <footer className="mt-auto bg-burgundy-900 text-cream-200/80 text-xs text-center py-8 px-6">
           Nicole &amp; Alex &middot; 11 March 2027 &middot; Alora Macedon, New Gisborne
         </footer>
