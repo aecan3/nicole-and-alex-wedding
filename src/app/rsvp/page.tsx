@@ -142,6 +142,24 @@ export default function RsvpPage() {
       const firstError = results.find((r) => r.error)?.error;
       if (firstError) throw firstError;
       setSubmitStatus("done");
+
+      // Best-effort confirmation email. The RSVP is already saved above, so
+      // this never affects what the guest sees — a slow inbox, an
+      // unconfigured Resend key, or a failed send is silently swallowed.
+      fetch("/api/send-confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          party: party.map((m) => ({
+            name: m.full_name,
+            attending: responses[m.id]?.attending === "yes",
+            dietary: responses[m.id]?.dietary || null,
+          })),
+          busPickup,
+          message: message || null,
+        }),
+      }).catch(() => {});
     } catch (err) {
       setSubmitError(errorMessage(err));
       setSubmitStatus("error");
