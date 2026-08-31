@@ -11,15 +11,53 @@ type Response = {
   dietary: string;
 };
 
+const BUS_OPTIONS = [
+  { value: "", label: "Select an option" },
+  { value: "macedon_ranges_hotel_spa", label: "Yes — pick up from Macedon Ranges Hotel & Spa" },
+  { value: "black_forest_motel", label: "Yes — pick up from Black Forest Motel" },
+  { value: "gisborne_motel", label: "Yes — pick up from Gisborne Motel" },
+  { value: "no", label: "No, we'll make our own way there" },
+  { value: "not_booked_yet", label: "We'll need the bus, but haven't booked accommodation yet" },
+];
+
+// A quiet, always-available way out if the search can't find someone or
+// anything on this page misbehaves — shown at the bottom of every stage
+// rather than only after an error, so it's never a dead end.
+function HelpLink() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-10 text-center">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="text-xs uppercase tracking-[0.15em] text-burgundy-600/60 underline hover:text-burgundy-600"
+      >
+        Need help?
+      </button>
+      {open && (
+        <p className="mt-2 text-sm text-burgundy-600/80">
+          Reach out to Alex on 0423 340 677 and we&rsquo;ll sort it out.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function RsvpPage() {
   const [query, setQuery] = useState("");
   const [matches, setMatches] = useState<Match[]>([]);
   const [searching, setSearching] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  // Set as soon as a match is picked, before the guest has confirmed it's
+  // really their household — `party` (below) is only populated once they
+  // do, which is what actually reveals the RSVP form.
+  const [confirmingParty, setConfirmingParty] = useState<PartyMember[] | null>(null);
+
   const [party, setParty] = useState<PartyMember[] | null>(null);
   const [responses, setResponses] = useState<Record<string, Response>>({});
-  const [song, setSong] = useState("");
+  const [email, setEmail] = useState("");
+  const [busPickup, setBusPickup] = useState("");
   const [message, setMessage] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [configError, setConfigError] = useState<string | null>(null);
@@ -45,16 +83,27 @@ export default function RsvpPage() {
     setConfigError(null);
     try {
       const { data } = await getSupabase().rpc("get_party", { invitee_id: id });
-      const members: PartyMember[] = data ?? [];
-      setParty(members);
-      const initial: Record<string, Response> = {};
-      members.forEach((m) => {
-        initial[m.id] = { attending: "", dietary: "" };
-      });
-      setResponses(initial);
+      setConfirmingParty(data ?? []);
     } catch (err) {
       setConfigError(err instanceof Error ? err.message : "Something went wrong — please try again shortly.");
     }
+  }
+
+  function confirmParty() {
+    if (!confirmingParty) return;
+    setParty(confirmingParty);
+    const initial: Record<string, Response> = {};
+    confirmingParty.forEach((m) => {
+      initial[m.id] = { attending: "", dietary: "" };
+    });
+    setResponses(initial);
+    setConfirmingParty(null);
+  }
+
+  function rejectParty() {
+    // Back to the match list — not back to a blank search, since the name
+    // they typed was probably right and it's just the wrong match.
+    setConfirmingParty(null);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -69,7 +118,8 @@ export default function RsvpPage() {
             invitee_id: m.id,
             p_status: responses[m.id]?.attending === "yes" ? "attending" : "declined",
             p_dietary: responses[m.id]?.dietary || null,
-            p_song: song || null,
+            p_email: email,
+            p_bus_pickup: busPickup,
             p_message: message || null,
           })
         )
@@ -98,7 +148,8 @@ export default function RsvpPage() {
     <main className="flex-1">
       <PageHeader kicker="By 24 January 2027" title="RSVP" />
       <div className="mx-auto max-w-md px-6 pb-24">
-        {!party && (
+        {/* Stage 1: search */}
+        {!confirmingParty && !party && (
           <>
             <form onSubmit={handleSearch} className="flex flex-col gap-3">
               <label className="flex flex-col gap-1 text-sm">
@@ -123,6 +174,10 @@ export default function RsvpPage() {
               <p className="mt-6 text-sm text-red-700">{configError}</p>
             )}
 
+            {/* The search itself falls back to a fuzzy name match server-side
+                when nothing matches exactly, so this empty state should be
+                rare — it's for names that are too different to guess, not
+                ordinary typos. */}
             {!configError && searched && matches.length === 0 && (
               <p className="mt-6 text-sm text-burgundy-600/80">
                 Couldn&rsquo;t find that name — try a different spelling, or get in
@@ -144,9 +199,47 @@ export default function RsvpPage() {
                 ))}
               </div>
             )}
+
+            <HelpLink />
           </>
         )}
 
+        {/* Stage 2: confirm the household before showing the form */}
+        {confirmingParty && (
+          <div className="flex flex-col gap-4">
+            <p className="text-sm text-burgundy-600/80">Here&rsquo;s who we have on file:</p>
+            <div className="flex flex-col gap-2">
+              {confirmingParty.map((m) => (
+                <p
+                  key={m.id}
+                  className="border border-gold-400/50 rounded-lg px-4 py-3 font-display text-lg text-burgundy-600"
+                >
+                  {m.full_name}
+                </p>
+              ))}
+            </div>
+            <p className="text-sm text-burgundy-600/80">Is that your household?</p>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={confirmParty}
+                className="rounded-full bg-burgundy-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-burgundy-700 transition-colors"
+              >
+                Yes, that&rsquo;s us
+              </button>
+              <button
+                type="button"
+                onClick={rejectParty}
+                className="rounded-full border border-burgundy-800/40 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-cream-200 transition-colors"
+              >
+                Not quite
+              </button>
+            </div>
+            <HelpLink />
+          </div>
+        )}
+
+        {/* Stage 3: the actual RSVP form */}
         {party && (
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <p className="text-sm text-burgundy-600/80">
@@ -191,13 +284,32 @@ export default function RsvpPage() {
               </fieldset>
             ))}
 
-            <label className="flex flex-col gap-1 text-sm">
-              Song request (optional)
+            <label className="flex flex-col gap-1 text-sm border-t border-gold-400/40 pt-4">
+              Email address
               <input
-                value={song}
-                onChange={(e) => setSong(e.target.value)}
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
                 className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
               />
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Do you require the bus?
+              <select
+                required
+                value={busPickup}
+                onChange={(e) => setBusPickup(e.target.value)}
+                className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+              >
+                {BUS_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value} disabled={o.value === ""}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
@@ -222,6 +334,7 @@ export default function RsvpPage() {
                 Something went wrong sending that — mind trying again?
               </p>
             )}
+            <HelpLink />
           </form>
         )}
       </div>
