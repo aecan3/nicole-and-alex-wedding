@@ -64,6 +64,11 @@ export async function POST(req: NextRequest) {
     const { error } = await resend.emails.send({
       from: fromAddress,
       to: email,
+      // The email tells guests not to reply (the sending address isn't a
+      // real inbox) and points them to Alex's email/mobile instead — this
+      // is just a safety net so a reply sent anyway still lands somewhere
+      // real rather than disappearing.
+      replyTo: process.env.RESEND_REPLY_TO || "alex.cann@outlook.com",
       subject: "RSVP confirmed — Nicole & Alex, 11 March 2027",
       html: confirmationEmailHtml({ party, busPickup, message }),
     });

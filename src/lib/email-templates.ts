@@ -142,7 +142,9 @@ export function confirmationEmailHtml(params: {
             <tr>
               <td style="padding: 0 40px 40px; text-align:center; border-top:1px solid #e6d7b8;">
                 <p style="margin:24px 0 0; font-family:${serif}; font-size:12px; color:#8a8f5c;">
-                  Something not right? Reply to this email, or reach Alex on 0423 340 677.
+                  This inbox isn&rsquo;t monitored, so please don&rsquo;t reply to this email. Something not right, or need to change anything? Email
+                  <a href="mailto:alex.cann@outlook.com" style="color:#7a3540;">alex.cann@outlook.com</a>
+                  or message Alex on 0423 340 677.
                 </p>
               </td>
             </tr>
