@@ -2,9 +2,9 @@ import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 
-export default function DressCodePage() {
+export function DressCodeSection() {
   return (
-    <main className="flex-1">
+    <section id="dress-code" className="scroll-mt-24">
       <PageHeader kicker="Formal" title="Black Tie Optional" />
       <div className="mx-auto max-w-xl px-6 pb-20 text-center space-y-8">
         <p className="leading-relaxed">
@@ -37,6 +37,6 @@ export default function DressCodePage() {
           Our wedding is indoors, so no need to worry about grass or gravel underfoot.
         </p>
       </div>
-    </main>
+    </section>
   );
 }

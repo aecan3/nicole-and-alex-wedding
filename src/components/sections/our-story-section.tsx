@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Gallery } from "@/components/gallery";
+import { InView } from "@/components/in-view";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
@@ -34,9 +35,9 @@ const dogPhotos = [
   { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
 ];
 
-export default function OurStoryPage() {
+export function OurStorySection() {
   return (
-    <main className="flex-1">
+    <section id="our-story" className="scroll-mt-24">
       <PageHeader kicker="Coming soon" title="Our Story" />
       <div className="mx-auto max-w-4xl px-6 pb-24">
         <Reveal className="text-center max-w-xl mx-auto">
@@ -46,16 +47,27 @@ export default function OurStoryPage() {
           </p>
         </Reveal>
         <Reveal delay={0.15} className="mt-14">
-          <Gallery items={photos} />
+          {/* The gallery's videos autoplay as soon as they mount — fine when
+              this was the whole page and already in view, not fine when
+              it's one of nine sections that would otherwise all mount at
+              once. InView defers mounting until scrolled near, so it still
+              autoplays "as soon as you land on it," just like before.
+              (The dog gallery below is plain images with no autoplay
+              concern, so it's rendered eagerly rather than going through
+              InView — one less lazy-mount for a nav-click scroll to race
+              past and shift layout under.) */}
+          <InView>
+            <Gallery items={photos} />
+          </InView>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-24 text-center">
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
             Every love story
           </p>
-          <h2 className="font-display text-2xl sm:text-3xl text-burgundy-600">
+          <h3 className="font-display text-2xl sm:text-3xl text-burgundy-600">
             Has a third wheel
-          </h2>
+          </h3>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
             Ours happens to have 4 legs, requires following with a vacuum
             and a wiggle bum that will melt your heart.
@@ -65,6 +77,6 @@ export default function OurStoryPage() {
           <Gallery items={dogPhotos} />
         </Reveal>
       </div>
-    </main>
+    </section>
   );
 }

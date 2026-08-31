@@ -1,26 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { AnchorLink } from "@/components/anchor-link";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
-const links = [
-  { href: "/", label: "Welcome" },
-  { href: "/our-story", label: "Our Story" },
-  { href: "/venue", label: "Venue" },
-  { href: "/timetable", label: "Timetable" },
-  { href: "/where-to-stay", label: "Where to Stay" },
-  { href: "/dress-code", label: "Dress Code" },
-  { href: "/registry", label: "Gifts" },
-  { href: "/faq", label: "Q&A" },
+// Hrefs are in-page anchors now that the whole site lives on one
+// continuously-scrolling route — clicking one of these smooth-scrolls to
+// the matching <section id="..."> (via AnchorLink/scrollToSection) instead
+// of navigating to a new page.
+const links: { href: `#${string}`; label: string }[] = [
+  { href: "#home", label: "Welcome" },
+  { href: "#our-story", label: "Our Story" },
+  { href: "#venue", label: "Venue" },
+  { href: "#timetable", label: "Timetable" },
+  { href: "#where-to-stay", label: "Where to Stay" },
+  { href: "#dress-code", label: "Dress Code" },
+  { href: "#registry", label: "Gifts" },
+  { href: "#faq", label: "Q&A" },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function SiteNav() {
-  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -53,7 +56,9 @@ export function SiteNav() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [pathname]);
+    // Runs once — there's only one route now, so there's no pathname change
+    // to re-evaluate against.
+  }, []);
 
   useEffect(() => {
     document.documentElement.style.overflow = menuOpen ? "hidden" : "";
@@ -61,6 +66,22 @@ export function SiteNav() {
       document.documentElement.style.overflow = "";
     };
   }, [menuOpen]);
+
+  // A direct/cold load of a URL with a hash — a bookmark, a shared link, or
+  // any of the old-route redirects in next.config.ts landing on /#venue
+  // etc. — gets scrolled to that fragment by the browser's own native
+  // anchor-jump before this page's JS has even run. That native jump
+  // computes its target once, before any lazily-mounted content further up
+  // the page (see InView in in-view.tsx) has had a chance to mount and
+  // change the page's height, so it can land short or long exactly like an
+  // in-page nav click used to (see scroll-to-section.ts). Re-running the
+  // same self-correcting scroll once after hydration corrects it.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    scrollToSection(hash);
+    // Intentionally only ever reacts to the hash present on initial load.
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -76,10 +97,10 @@ export function SiteNav() {
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-10 py-5 flex items-center justify-between">
-        <Link href="/" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
+        <AnchorLink href="#home" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
           <Monogram className="h-8 w-8 shrink-0 brightness-0 invert" />
           <span className="font-serif italic text-lg tracking-wide">Nicole &amp; Alex</span>
-        </Link>
+        </AnchorLink>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-x-7 font-serif text-[13px] tracking-[0.08em] text-cream-100/90">
@@ -88,12 +109,12 @@ export function SiteNav() {
           ))}
         </nav>
 
-        <Link
-          href="/rsvp"
+        <AnchorLink
+          href="#rsvp"
           className="hidden lg:inline-block rounded-full bg-olive-800 px-6 py-2 text-[11px] tracking-[0.2em] uppercase text-cream-100 hover:bg-olive-900 transition-colors duration-300"
         >
           RSVP
-        </Link>
+        </AnchorLink>
 
         {/* Mobile trigger */}
         <button
@@ -150,13 +171,13 @@ export function SiteNav() {
                 exit={{ opacity: 0, y: 8 }}
                 transition={{ delay: 0.06 + i * 0.045, duration: 0.5, ease: EASE }}
               >
-                <Link
+                <AnchorLink
                   href={link.href}
                   onClick={closeMenu}
                   className="font-serif italic text-3xl text-cream-100 hover:text-gold-300 transition-colors"
                 >
                   {link.label}
-                </Link>
+                </AnchorLink>
               </motion.div>
             ))}
             <motion.div
@@ -166,13 +187,13 @@ export function SiteNav() {
               transition={{ delay: 0.06 + links.length * 0.045, duration: 0.5, ease: EASE }}
               className="mt-4"
             >
-              <Link
-                href="/rsvp"
+              <AnchorLink
+                href="#rsvp"
                 onClick={closeMenu}
                 className="inline-block rounded-full bg-olive-800 px-10 py-3 text-xs tracking-[0.25em] uppercase text-cream-100 hover:bg-olive-900 transition-colors duration-300"
               >
                 RSVP
-              </Link>
+              </AnchorLink>
             </motion.div>
           </motion.div>
         )}
@@ -181,14 +202,14 @@ export function SiteNav() {
   );
 }
 
-function NavLink({ href, label }: { href: string; label: string }) {
+function NavLink({ href, label }: { href: `#${string}`; label: string }) {
   return (
-    <Link href={href} className="group relative py-1">
+    <AnchorLink href={href} className="group relative py-1">
       <span className="transition-colors duration-300 group-hover:text-gold-300">
         {label}
       </span>
       <span className="pointer-events-none absolute left-1/2 -bottom-0.5 h-px w-0 -translate-x-1/2 bg-gold-300 transition-all duration-300 group-hover:w-full" />
-    </Link>
+    </AnchorLink>
   );
 }
 

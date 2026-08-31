@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { PageHeader } from "@/components/page-header";
+import { AnchorLink } from "@/components/anchor-link";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -40,15 +41,16 @@ const events = [
   },
 ];
 
-export default function TimetablePage() {
+export function TimetableSection() {
   return (
-    <main className="flex-1">
+    <section id="timetable" className="scroll-mt-24">
       <PageHeader kicker="Thursday 11 March 2027" title="Timetable" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <motion.ol
           className="space-y-10"
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           variants={listVariants}
         >
           {events.map((e) => (
@@ -58,16 +60,16 @@ export default function TimetablePage() {
               className="border-l-2 border-gold-400 pl-6"
             >
               <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">{e.time}</p>
-              <h2 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h2>
+              <h3 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h3>
               <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
             </motion.li>
           ))}
         </motion.ol>
         <p className="mt-12 text-sm text-burgundy-600/80 text-center">
           A shuttle will run from pick-up points around Gisborne, New Gisborne and
-          Macedon &mdash; see the <a href="/faq" className="underline hover:text-burgundy-600">Q&amp;A</a> page for details.
+          Macedon &mdash; see the <AnchorLink href="#faq" className="underline hover:text-burgundy-600">Q&amp;A</AnchorLink> section for details.
         </p>
       </div>
-    </main>
+    </section>
   );
 }

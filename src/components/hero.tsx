@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import { AnchorLink } from "@/components/anchor-link";
 
 export function Hero({
   photoSrc,
@@ -14,7 +14,10 @@ export function Hero({
   videoSrc?: string;
 }) {
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center overflow-hidden px-6">
+    <section
+      id="home"
+      className="relative min-h-[100svh] flex flex-col items-center justify-center text-center overflow-hidden px-6"
+    >
       {/* Background */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-b from-burgundy-950 via-burgundy-800 to-burgundy-900" />
 
@@ -101,12 +104,12 @@ export function Hero({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.95, duration: 0.9 }}
       >
-        <Link
-          href="/rsvp"
+        <AnchorLink
+          href="#rsvp"
           className="mt-11 inline-block rounded-full bg-olive-800 text-cream-100 px-11 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-olive-900 hover:shadow-[0_0_30px_rgba(63,66,31,0.35)]"
         >
           RSVP
-        </Link>
+        </AnchorLink>
       </motion.div>
 
       <motion.div

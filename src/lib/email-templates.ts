@@ -134,7 +134,7 @@ export function confirmationEmailHtml(params: {
             </tr>
             <tr>
               <td style="padding: 10px 40px 40px; text-align:center;">
-                <a href="${SITE_URL}/rsvp" style="font-family:${serif}; font-size:13px; color:#7a3540; text-decoration:underline;">
+                <a href="${SITE_URL}/#rsvp" style="font-family:${serif}; font-size:13px; color:#7a3540; text-decoration:underline;">
                   Need to update your RSVP?
                 </a>
               </td>

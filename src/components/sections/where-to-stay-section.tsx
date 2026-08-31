@@ -37,9 +37,9 @@ const stays = [
   },
 ];
 
-export default function WhereToStayPage() {
+export function WhereToStaySection() {
   return (
-    <main className="flex-1">
+    <section id="where-to-stay" className="scroll-mt-24">
       <PageHeader kicker="A few of our favourites" title="Where to Stay" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <p className="text-center leading-relaxed">
@@ -78,7 +78,7 @@ export default function WhereToStayPage() {
           <div className="space-y-8">
             {stays.map((s) => (
               <div key={s.name} className="border-t border-gold-400/40 pt-6">
-                <h2 className="font-display text-xl text-burgundy-600">{s.name}</h2>
+                <h3 className="font-display text-xl text-burgundy-600">{s.name}</h3>
                 <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
                 <p className="text-sm mt-1">
                   <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
@@ -91,6 +91,6 @@ export default function WhereToStayPage() {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }

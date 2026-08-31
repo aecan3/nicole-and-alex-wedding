@@ -50,6 +50,14 @@
   --font-sans: var(--font-inter);
 }
 
+html {
+  /* The whole site is one continuous-scroll page now — nav clicks land on
+     #<section> anchors, and this is what turns those jumps into a smooth
+     scroll instead of an instant snap. Overridden back to `auto` below for
+     prefers-reduced-motion. */
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -110,5 +118,9 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

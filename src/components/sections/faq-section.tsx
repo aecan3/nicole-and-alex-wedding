@@ -2,6 +2,7 @@ import { PageHeader } from "@/components/page-header";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 import { SiteMap } from "@/components/site-map-loader";
 import type { MapMarker } from "@/components/site-map";
+import { AnchorLink } from "@/components/anchor-link";
 
 const travelMarkers: MapMarker[] = [
   { position: [-37.478, 144.612], label: "Alora Macedon", type: "venue" },
@@ -34,7 +35,15 @@ const faqs: FaqItem[] = [
   },
   {
     q: "Do you have a registry?",
-    a: "Have a look at our Gifts page.",
+    a: (
+      <>
+        Have a look at our{" "}
+        <AnchorLink href="#registry" className="underline hover:text-burgundy-600">
+          Gifts
+        </AnchorLink>{" "}
+        section.
+      </>
+    ),
   },
   {
     q: "Are children welcome?",
@@ -66,13 +75,13 @@ const faqs: FaqItem[] = [
   },
 ];
 
-export default function FaqPage() {
+export function FaqSection() {
   return (
-    <main className="flex-1">
+    <section id="faq" className="scroll-mt-24">
       <PageHeader kicker="Any questions?" title="Q&A" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <FaqAccordion items={faqs} />
       </div>
-    </main>
+    </section>
   );
 }

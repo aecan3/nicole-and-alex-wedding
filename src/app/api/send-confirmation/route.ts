@@ -3,10 +3,10 @@ import { Resend } from "resend";
 import { confirmationEmailHtml, type ConfirmationPerson } from "@/lib/email-templates";
 
 // Sends the RSVP confirmation email. Deliberately separate from the RPC
-// calls in src/app/rsvp/page.tsx, which write straight to Supabase from the
-// browser — sending mail needs a secret API key, so it has to happen
-// server-side, in a route the browser calls after the RSVP itself is saved.
-// The actual email markup lives in src/lib/email-templates.ts.
+// calls in src/components/sections/rsvp-section.tsx, which write straight to
+// Supabase from the browser — sending mail needs a secret API key, so it has
+// to happen server-side, in a route the browser calls after the RSVP itself
+// is saved. The actual email markup lives in src/lib/email-templates.ts.
 
 type ConfirmationPayload = {
   email: string;
@@ -37,10 +37,10 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
 
   // The RSVP is already written to Supabase by the time the browser calls
-  // this route (see handleSubmit in src/app/rsvp/page.tsx), so a missing
-  // key here should never look like the RSVP itself failed — it just means
-  // no confirmation email goes out this time. Respond 200 either way; the
-  // page ignores this response.
+  // this route (see handleSubmit in src/components/sections/rsvp-section.tsx),
+  // so a missing key here should never look like the RSVP itself failed — it
+  // just means no confirmation email goes out this time. Respond 200 either
+  // way; the page ignores this response.
   if (!apiKey) {
     return NextResponse.json({ sent: false, reason: "not_configured" });
   }

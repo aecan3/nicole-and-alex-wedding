@@ -2,9 +2,9 @@ import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 
-export default function RegistryPage() {
+export function RegistrySection() {
   return (
-    <main className="flex-1">
+    <section id="registry" className="scroll-mt-24">
       <PageHeader kicker="With Love" title="Gifts" />
       <div className="mx-auto max-w-xl px-6 pb-20 text-center space-y-6">
         <Reveal>
@@ -28,6 +28,6 @@ export default function RegistryPage() {
           together. However you&rsquo;d like to give, it will be truly appreciated.
         </p>
       </div>
-    </main>
+    </section>
   );
 }

@@ -68,7 +68,7 @@ function HelpLink() {
   );
 }
 
-export default function RsvpPage() {
+export function RsvpSection() {
   const [query, setQuery] = useState("");
   const [matches, setMatches] = useState<Match[]>([]);
   const [searching, setSearching] = useState(false);
@@ -260,7 +260,14 @@ export default function RsvpPage() {
 
   if (submitStatus === "done") {
     return (
-      <main className="flex-1">
+      // min-h-svh: this is the last section on the page, so without a floor
+      // on its own height there isn't always enough page left below it for
+      // the browser to scroll #rsvp's top flush with scroll-mt-24 when a
+      // shorter stage (like this one) is showing — the scroll lands short
+      // and the section sits partway down the viewport instead of at the
+      // header. A full viewport of height here guarantees enough scroll
+      // room regardless of which stage is rendered.
+      <section id="rsvp" className="min-h-svh scroll-mt-24">
         <PageHeader kicker="Thank you" title="RSVP Received" />
         <div className="mx-auto max-w-xl px-6 pb-24 text-center">
           <p className="leading-relaxed">
@@ -268,12 +275,15 @@ export default function RsvpPage() {
             with you on 11 March 2027.
           </p>
         </div>
-      </main>
+      </section>
     );
   }
 
   return (
-    <main className="flex-1">
+    // See the min-h-svh comment on the "done" branch above — same reasoning
+    // applies here, and matters even more for this branch since it's the
+    // one guests actually land on when clicking RSVP in the nav.
+    <section id="rsvp" className="min-h-svh scroll-mt-24">
       <PageHeader kicker="By 24 January 2027" title="RSVP" />
       <div className="mx-auto max-w-md px-6 pb-24">
         {/* Stage 1: search */}
@@ -520,6 +530,6 @@ export default function RsvpPage() {
           </form>
         )}
       </div>
-    </main>
+    </section>
   );
 }
