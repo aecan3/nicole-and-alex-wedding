@@ -16,7 +16,7 @@ export default function VenuePage() {
           two-thirds of the page at every screen size by construction. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark.png')] bg-no-repeat bg-right-bottom bg-[length:70%_auto] opacity-[0.2] sm:bg-[length:62%_auto]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark.png')] bg-no-repeat bg-[position:left_50%] bg-[length:135%_auto] opacity-[0.2] sm:bg-right-bottom sm:bg-[length:62%_auto]"
       />
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 pt-10 pb-20 text-center">
