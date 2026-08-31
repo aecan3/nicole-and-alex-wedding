@@ -41,7 +41,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               <h2 className="font-display text-lg text-burgundy-600">{item.q}</h2>
               <span
                 aria-hidden
-                className={`relative h-4 w-4 shrink-0 text-olive-700 transition-transform duration-300 ${
+                className={`relative h-4 w-4 shrink-0 text-taupe-600 transition-transform duration-300 ${
                   isOpen ? "rotate-45" : ""
                 }`}
               >

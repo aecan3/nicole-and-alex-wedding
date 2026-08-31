@@ -26,18 +26,12 @@ const photos = [
   { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
 ];
 
-// Order matters here too (see note on `photos` above). On desktop's 3
-// columns, 5 items split 2/2/1 — putting the lone extra-square "bed" photo
-// last means it lands alongside a portrait shot instead of doubling up with
-// another one, which keeps the columns close in height instead of leaving
-// a gap under the shorter ones. It also happens to balance the mobile
-// 2-column layout the same way.
+// Trimmed back to three so it fills exactly one row on desktop's 3-column
+// layout instead of leaving a short, unbalanced second row underneath.
 const dogPhotos = [
   { type: "image" as const, src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day", width: 1600, height: 2133 },
   { type: "image" as const, src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden", width: 1600, height: 2133 },
   { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
-  { type: "image" as const, src: "/gallery/dog-santa.jpg", alt: "Nicole, Alex and their dog visiting Santa", width: 1800, height: 2400 },
-  { type: "image" as const, src: "/gallery/dog-bed.jpg", alt: "Their dog curled up on the bed", width: 2400, height: 2000 },
 ];
 
 export default function OurStoryPage() {
@@ -56,15 +50,15 @@ export default function OurStoryPage() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-24 text-center">
-          <p className="kicker text-base sm:text-lg text-olive-700 mb-3">
+          <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
             Every love story
           </p>
           <h2 className="font-display text-2xl sm:text-3xl text-burgundy-600">
             Has a third wheel
           </h2>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
-            Ours happens to have four legs and a very good sense for when
-            someone needs cheering up.
+            Ours happens to have 4 legs, requires following with a vacuum
+            and a wiggle bum that will melt your heart.
           </p>
         </Reveal>
         <Reveal delay={0.2} className="mt-10 max-w-lg mx-auto">

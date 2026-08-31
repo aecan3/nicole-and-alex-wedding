@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 import { getSupabase } from "@/lib/supabase";
 
@@ -75,22 +75,58 @@ export default function RsvpPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [configError, setConfigError] = useState<string | null>(null);
 
-  async function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (!query.trim()) return;
+  // Guards against a slower, earlier request landing after a faster, later
+  // one — otherwise fast typing can flash a stale result set right after
+  // the guest has already typed past it.
+  const latestQueryRef = useRef("");
+
+  const runSearch = useCallback(async (q: string) => {
+    latestQueryRef.current = q;
     setSearching(true);
-    setSearched(false);
     setConfigError(null);
     try {
-      const { data, error } = await getSupabase().rpc("search_invitees", { query });
+      const { data, error } = await getSupabase().rpc("search_invitees", { query: q });
       if (error) throw error;
+      if (latestQueryRef.current !== q) return;
       setMatches(data ?? []);
       setSearched(true);
     } catch (err) {
+      if (latestQueryRef.current !== q) return;
       setConfigError(errorMessage(err));
     } finally {
-      setSearching(false);
+      if (latestQueryRef.current === q) setSearching(false);
     }
+  }, []);
+
+  // Live results as the guest types — matches the search box's own minimum
+  // (search_invitees ignores anything under 2 characters), debounced so
+  // every keystroke doesn't fire a request. The Search button/Enter below
+  // still runs the same search immediately, for anyone who'd rather type
+  // the whole name and submit. Dropping back under 2 characters is handled
+  // in handleQueryChange below, not here, so this effect never calls
+  // setState synchronously in its own body.
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (trimmed.length < 2) return;
+    const handle = setTimeout(() => runSearch(trimmed), 350);
+    return () => clearTimeout(handle);
+  }, [query, runSearch]);
+
+  function handleQueryChange(value: string) {
+    setQuery(value);
+    if (value.trim().length < 2) {
+      latestQueryRef.current = "";
+      setMatches([]);
+      setSearched(false);
+      setConfigError(null);
+    }
+  }
+
+  async function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    await runSearch(trimmed);
   }
 
   async function selectSelf(id: string) {
@@ -192,7 +228,7 @@ export default function RsvpPage() {
                 Find your invitation
                 <input
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => handleQueryChange(e.target.value)}
                   placeholder="Type your full name"
                   className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
                 />
@@ -200,7 +236,7 @@ export default function RsvpPage() {
               <button
                 type="submit"
                 disabled={searching}
-                className="self-start rounded-full bg-burgundy-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-burgundy-700 transition-colors disabled:opacity-50"
+                className="self-start rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors disabled:opacity-50"
               >
                 {searching ? "Searching..." : "Search"}
               </button>
@@ -223,7 +259,7 @@ export default function RsvpPage() {
 
             {matches.length > 0 && (
               <div className="mt-6 flex flex-col gap-2">
-                <p className="text-sm text-burgundy-600/80">That you?</p>
+                <p className="text-sm text-burgundy-600/80">Is this you?</p>
                 {matches.map((m) => (
                   <button
                     key={m.id}
@@ -259,7 +295,7 @@ export default function RsvpPage() {
               <button
                 type="button"
                 onClick={confirmParty}
-                className="rounded-full bg-burgundy-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-burgundy-700 transition-colors"
+                className="rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors"
               >
                 Yes, that&rsquo;s us
               </button>
@@ -361,7 +397,7 @@ export default function RsvpPage() {
             <button
               type="submit"
               disabled={submitStatus === "submitting"}
-              className="rounded-full bg-burgundy-800 text-cream-100 px-10 py-3 text-sm tracking-[0.2em] uppercase hover:bg-burgundy-700 transition-colors disabled:opacity-50"
+              className="rounded-full bg-olive-800 text-cream-100 px-10 py-3 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors disabled:opacity-50"
             >
               {submitStatus === "submitting" ? "Sending..." : "Send RSVP"}
             </button>

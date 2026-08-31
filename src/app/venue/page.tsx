@@ -35,11 +35,11 @@ export default function VenuePage() {
         <Reveal delay={0.15}>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 text-left max-w-xl mx-auto">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-olive-700">Address</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">Address</p>
               <p className="mt-1">330 Barringo Road<br />New Gisborne, VIC</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-olive-700">Ceremony &amp; Reception</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">Ceremony &amp; Reception</p>
               <p className="mt-1">Arrival from 3:30pm<br />Ceremony at 4:00pm, indoors</p>
             </div>
           </div>

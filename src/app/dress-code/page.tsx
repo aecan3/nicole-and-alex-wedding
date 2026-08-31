@@ -25,11 +25,11 @@ export default function DressCodePage() {
 
         <div className="grid gap-8 sm:grid-cols-2 text-left">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-olive-700">For the Gents</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">For the Gents</p>
             <p className="mt-2">A sharp suit and tie (or, if you have one, a tux).</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-olive-700">For the Ladies</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">For the Ladies</p>
             <p className="mt-2">A long, formal dress.</p>
           </div>
         </div>

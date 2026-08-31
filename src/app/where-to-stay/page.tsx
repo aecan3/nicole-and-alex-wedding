@@ -74,7 +74,7 @@ export default function WhereToStayPage() {
         </Reveal>
 
         <div className="mt-12">
-          <p className="kicker text-sm text-olive-700 text-center mb-8">A few recommendations</p>
+          <p className="kicker text-sm text-taupe-600 text-center mb-8">A few recommendations</p>
           <div className="space-y-8">
             {stays.map((s) => (
               <div key={s.name} className="border-t border-gold-400/40 pt-6">

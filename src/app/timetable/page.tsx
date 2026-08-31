@@ -21,22 +21,22 @@ const events = [
   {
     time: "3:30pm",
     title: "Guest Arrival",
-    detail: "Please arrive by 3:30pm and take your seats — the ceremony starts promptly at 4:00pm.",
+    detail: "Please arrive by 3:30pm to settle in and find your seat. The ceremony will commence promptly at 4:00pm, so we kindly ask guests to arrive on time.",
   },
   {
     time: "4:00pm",
-    title: "Ceremony",
-    detail: "Our ceremony will be held indoors in the Glass Atrium at Alora Macedon.",
+    title: "The Ceremony",
+    detail: "We say &ldquo;I do&rdquo; in The Vista, set against views of Mount Macedon.",
   },
   {
-    time: "4:30pm – 6:00pm",
-    title: "Canapés & Photos",
-    detail: "Drinks and canapés while we sneak off for photos.",
+    time: "5:00pm",
+    title: "Canapés, Drinks & Photos",
+    detail: "Enjoy drinks and bites outdoors as the sun sets over the grounds.",
   },
   {
-    time: "6:00pm – 12:00am",
-    title: "Reception",
-    detail: "Dinner, drinks, speeches and dancing — indoors at Alora Macedon.",
+    time: "6:30pm – Midnight",
+    title: "The Reception",
+    detail: "Dinner, speeches, and plenty of dancing inside the Glass Atrium.",
   },
 ];
 
@@ -57,7 +57,7 @@ export default function TimetablePage() {
               variants={itemVariants}
               className="border-l-2 border-gold-400 pl-6"
             >
-              <p className="text-xs uppercase tracking-[0.2em] text-olive-700">{e.time}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">{e.time}</p>
               <h2 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h2>
               <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
             </motion.li>

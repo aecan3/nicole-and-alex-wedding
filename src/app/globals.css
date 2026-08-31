@@ -13,6 +13,9 @@
   --color-olive-800: #565937;
   --color-olive-700: #6b7048;
   --color-olive-500: #8a8f5c;
+  /* Secondary/label text colour site-wide (kickers, timestamps, small
+     headings) — olive-* is reserved for the RSVP flow's buttons instead. */
+  --color-taupe-600: #8c7361;
   --color-cream-100: #faf6ee;
   --color-cream-200: #f6efe4;
   --color-cream-300: #ece0cc;
@@ -33,6 +36,7 @@
   --color-olive-800: var(--color-olive-800);
   --color-olive-700: var(--color-olive-700);
   --color-olive-500: var(--color-olive-500);
+  --color-taupe-600: var(--color-taupe-600);
   --color-cream-100: var(--color-cream-100);
   --color-cream-200: var(--color-cream-200);
   --color-cream-300: var(--color-cream-300);
