@@ -78,7 +78,7 @@ body {
 }
 
 /* Lace-doily frame around the homepage's welcome quote, built from the
-   couple's own reference image (public/decor/lace-frame-src-v3.png — the
+   couple's own reference image (public/decor/lace-frame-src-v4.png — the
    original black-on-white clipart, re-keyed here to cream-on-transparent:
    the true outer background and the solid card interior are each isolated
    with a flood fill from opposite seed points, so they can be told apart
@@ -86,27 +86,28 @@ body {
    luminance-based alpha so its fine mesh texture still lets the section's
    burgundy show through the tiny gaps).
 
-   The interior mask is dilated 26px past its measured boundary into the
-   band, well past what's visible at the frame's capped desktop width
-   (~704px, close to the source's own 612px) — that headroom matters
-   because this element only ever shrinks from there. At any render width
-   below the source's 612px (every phone, and any desktop window under
-   ~935px wide given the min(75.2vw, 704px) sizing below), the browser
-   has to minify the image, and that downscaling blends texture from a
-   wider neighbourhood of source pixels — enough to pull the transition
-   zone's dark line back into view as a thin hairline along the card's
-   straight edges even after it reads as clean at 1:1 scale. 26px gives
-   enough margin that the blend radius can't reach the transition zone at
-   any width down to ~320px, verified directly against rendered
-   screenshots rather than just the source art at full size.
+   The interior mask is dilated 16px past its measured boundary into the
+   band. A hairline seam along the card's straight edges shows up once
+   this element renders smaller than the source image's own 612px width
+   (the browser has to minify, and that downscaling blends texture across
+   too thin a margin) — 16px keeps that clean down to ~550px-wide
+   renders, which covers the desktop/laptop range this frame is actually
+   tuned for. We tried 26px at one point to also cover phone-width
+   renders, but that visibly grew the solid interior into the decorative
+   band — enough to read as the cream "encroaching on the lace" once
+   compared side by side. 16px only grows the interior ~0.7% over the
+   original 14px attempt (26px was ~3.7%), keeping it close to the
+   proportions already approved. Revisit this once the frame gets an
+   actual mobile-width layout pass, rather than pushing dilation further
+   to paper over a size range it isn't designed for yet.
 
-   The file is versioned in its name (-v3, bumped each time the pixels
-   change) rather than kept as a stable lace-frame-src.png — a plain
-   /public asset has no cache-busting of its own, so a browser (or any
-   CDN/edge cache in front of it) can go on serving old bytes for that
-   URL indefinitely after a deploy, even once the on-disk file has
-   changed. Renaming the file forces a fresh fetch everywhere, no matter
-   what cached what. Bump the suffix again next time the art changes.
+   The file is versioned in its name (bumped each time the pixels change)
+   rather than kept as a stable lace-frame-src.png — a plain /public
+   asset has no cache-busting of its own, so a browser (or any CDN/edge
+   cache in front of it) can go on serving old bytes for that URL
+   indefinitely after a deploy, even once the on-disk file has changed.
+   Renaming forces a fresh fetch everywhere, no matter what cached what.
+   Bump the suffix again next time the art changes.
 
    This used to be a 9-slice border-image, which meant the frame's own
    proportions got stretched to whatever aspect ratio the text content
@@ -126,7 +127,7 @@ body {
   width: min(75.2vw, 704px);
   aspect-ratio: 612 / 542;
   margin-inline: auto;
-  background-image: url("/decor/lace-frame-src-v3.png");
+  background-image: url("/decor/lace-frame-src-v4.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -135,30 +136,21 @@ body {
    percentage of the frame — measured from the source art's interior
    rectangle, then pulled in slightly less than that measurement since the
    cream recolor now dilates a few px past that line into the band to kill
-   a hairline seam that used to show there (see lace-frame-src.png's
+   a hairline seam that used to show there (see lace-frame-src-v4.png's
    generation notes) — the solid area is a bit bigger than the original
    measurement, so the text can use more of it. Because it's defined in
    percentages of the (now aspect-locked) frame, it scales right along
    with it at any size.
 
    The real cursive font (Beau Rivage) is much more compact than the
-   sandbox's fallback-font preview — this whole block is noticeably
-   shorter than the zone once the real font is measured, so there's
-   always real leftover space to place somewhere. We tried two approaches
-   before this one: `justify-content: center` + `margin-top: auto` on
-   just the signature (that auto margin claims ALL leftover space and
-   dumps it entirely above the signature — a huge awkward gap once the
-   real font's shorter body meant there was a lot of it), then plain
-   `justify-content: center` (splits the leftover evenly above and below
-   the whole block — better, but reads as too much empty air above the
-   kicker relative to the bottom).
-
-   The `::before`/`::after` pair below are empty flex items that only
-   exist to soak up leftover space in a chosen ratio (0.75 : 1) — a
-   little less above the block than below — biasing the whole group
-   upward without pinning it to either edge outright. Because it's a
-   ratio of flex-grow, not a fixed offset, it stays proportionally
-   correct at any zone size or content length. */
+   sandbox's fallback-font preview it was originally tuned against, so
+   this block used to leave a lot of dead space in the zone no matter how
+   that leftover space was distributed (we tried several: auto-margin on
+   just the signature, plain centering, an asymmetric flex-ratio bias —
+   all just moved the same gap around). The actual fix was to make the
+   content bigger (see .lace-frame__kicker/__body/__sig below) so it
+   fills enough of the zone that a plain `justify-content: center` looks
+   balanced on its own, without needing a bias hack. */
 .lace-frame__text {
   position: absolute;
   left: 6.5%;
@@ -168,19 +160,38 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
   padding: 0 2%;
 }
 
-.lace-frame__text::before {
-  content: "";
-  flex: 0.75 0 0;
+/* Sized relative to the frame's own width (the same min(vw, px) shape as
+   .lace-frame itself, scaled down proportionally: 22px and 30px are what
+   those work out to at the frame's capped 704px) rather than jumping once
+   at a single Tailwind breakpoint. The frame's width is fluid below
+   ~935px viewport width, so a font-size that only changes at one
+   breakpoint either overflows the (now-smaller) box on the narrow side of
+   that jump or sits too small on the wide side — sizing continuously
+   with the same formula as the box keeps text proportional to it at
+   every width in between, verified against rendered screenshots from
+   550px up to the 704px cap with no overflow. Margins use `em` so they
+   scale automatically with each element's own font-size instead of
+   needing their own separate min(vw, px) expressions. */
+.lace-frame__kicker {
+  margin: 0;
+  font-size: min(2.351vw, 22px);
 }
 
-.lace-frame__text::after {
-  content: "";
-  flex: 1 0 0;
+.lace-frame__body {
+  margin-top: 0.7em;
+  font-size: min(3.205vw, 30px);
+  line-height: 1.55;
+}
+
+.lace-frame__sig {
+  margin-top: 1.5em;
+  font-size: min(3.205vw, 30px);
+  line-height: 1.3;
 }
 
 /* Cardstock texture for the light (cream) content areas only — scoped to
