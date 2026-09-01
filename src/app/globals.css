@@ -119,20 +119,24 @@ body {
    percentages of the (now aspect-locked) frame, it scales right along
    with it at any size.
 
-   justify-content is flex-end (not center): the kicker/body/signature
-   group is anchored to the bottom of the zone as one unit, with the gap
-   between the body paragraph and the signature coming purely from the
-   signature's own margin-top (see page.tsx). We previously used
-   justify-content: center plus margin-top: auto on the signature alone —
-   that auto margin greedily claims *all* leftover vertical space in the
-   zone and dumps it entirely above the signature, which looked fine
-   against the sandbox's taller fallback-font preview but produced a huge,
-   awkward gap once the real (more compact) cursive font shipped to
-   production. Anchoring the whole block to the bottom instead means any
-   leftover space (from a shorter body or a taller viewport) shows up
-   *above* the kicker, not as a void in the middle — and the signature
-   still reads as sitting low in the card, "signing off," without the
-   gap growing unpredictably with font metrics. */
+   The real cursive font (Beau Rivage) is much more compact than the
+   sandbox's fallback-font preview — this whole block is noticeably
+   shorter than the zone once the real font is measured, so there's
+   always real leftover space to place somewhere. We tried two approaches
+   before this one: `justify-content: center` + `margin-top: auto` on
+   just the signature (that auto margin claims ALL leftover space and
+   dumps it entirely above the signature — a huge awkward gap once the
+   real font's shorter body meant there was a lot of it), then plain
+   `justify-content: center` (splits the leftover evenly above and below
+   the whole block — better, but reads as too much empty air above the
+   kicker relative to the bottom).
+
+   The `::before`/`::after` pair below are empty flex items that only
+   exist to soak up leftover space in a chosen ratio (0.75 : 1) — a
+   little less above the block than below — biasing the whole group
+   upward without pinning it to either edge outright. Because it's a
+   ratio of flex-grow, not a fixed offset, it stays proportionally
+   correct at any zone size or content length. */
 .lace-frame__text {
   position: absolute;
   left: 6.5%;
@@ -142,9 +146,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   text-align: center;
   padding: 0 2%;
+}
+
+.lace-frame__text::before {
+  content: "";
+  flex: 0.75 0 0;
+}
+
+.lace-frame__text::after {
+  content: "";
+  flex: 1 0 0;
 }
 
 /* Cardstock texture for the light (cream) content areas only — scoped to
