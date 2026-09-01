@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { AnchorLink } from "@/components/anchor-link";
 import { Hero } from "@/components/hero";
-import { LaceFrame } from "@/components/lace-frame";
 import { Reveal } from "@/components/reveal";
 import { OurStorySection } from "@/components/sections/our-story-section";
 import { VenueSection } from "@/components/sections/venue-section";
@@ -18,22 +18,13 @@ export default function Home() {
 
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
-          <LaceFrame>
-            <p className="lace-frame__kicker font-script text-taupe-600">
-              Together with our families,
-            </p>
-            <p className="lace-frame__body font-script text-burgundy-600">
-              We joyfully invite you to our wedding celebration. Thank you for
-              being part of one of the most meaningful moments of our lives.
-              We cannot wait to celebrate love, laughter and unforgettable
-              memories with you.
-            </p>
-            <p className="lace-frame__sig font-script text-burgundy-600">
-              Forever grateful,
-              <br />
-              Nicole &amp; Alex
-            </p>
-          </LaceFrame>
+          <Image
+            src="/decor/invitation-card.jpg"
+            alt="Together with our families, we joyfully invite you to our wedding celebration. Thank you for being part of one of the most meaningful moments of our lives. We cannot wait to celebrate love, laughter and unforgettable memories with you. Forever grateful, Nicole &amp; Alex"
+            width={1166}
+            height={896}
+            className="mx-auto h-auto w-[min(75.2vw,704px)]"
+          />
         </Reveal>
 
         <Reveal delay={0.15}>
