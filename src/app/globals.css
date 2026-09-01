@@ -98,7 +98,7 @@ body {
    straight edges even after it reads as clean at 1:1 scale. 26px gives
    enough margin that the blend radius can't reach the transition zone at
    any width down to ~320px, verified directly against rendered
-   screenshots rather than just the source art at full size. */
+   screenshots rather than just the source art at full size.
 
    This used to be a 9-slice border-image, which meant the frame's own
    proportions got stretched to whatever aspect ratio the text content
