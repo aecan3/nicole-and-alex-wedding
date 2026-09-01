@@ -86,6 +86,20 @@ body {
    luminance-based alpha so its fine mesh texture still lets the section's
    burgundy show through the tiny gaps).
 
+   The interior mask is dilated 26px past its measured boundary into the
+   band, well past what's visible at the frame's capped desktop width
+   (~704px, close to the source's own 612px) — that headroom matters
+   because this element only ever shrinks from there. At any render width
+   below the source's 612px (every phone, and any desktop window under
+   ~935px wide given the min(75.2vw, 704px) sizing below), the browser
+   has to minify the image, and that downscaling blends texture from a
+   wider neighbourhood of source pixels — enough to pull the transition
+   zone's dark line back into view as a thin hairline along the card's
+   straight edges even after it reads as clean at 1:1 scale. 26px gives
+   enough margin that the blend radius can't reach the transition zone at
+   any width down to ~320px, verified directly against rendered
+   screenshots rather than just the source art at full size. */
+
    This used to be a 9-slice border-image, which meant the frame's own
    proportions got stretched to whatever aspect ratio the text content
    happened to produce — fine when the box was close to the source's own
