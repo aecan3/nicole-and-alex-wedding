@@ -78,7 +78,7 @@ body {
 }
 
 /* Lace-doily frame around the homepage's welcome quote, built from the
-   couple's own reference image (public/decor/lace-frame-src.png — the
+   couple's own reference image (public/decor/lace-frame-src-v3.png — the
    original black-on-white clipart, re-keyed here to cream-on-transparent:
    the true outer background and the solid card interior are each isolated
    with a flood fill from opposite seed points, so they can be told apart
@@ -100,6 +100,14 @@ body {
    any width down to ~320px, verified directly against rendered
    screenshots rather than just the source art at full size.
 
+   The file is versioned in its name (-v3, bumped each time the pixels
+   change) rather than kept as a stable lace-frame-src.png — a plain
+   /public asset has no cache-busting of its own, so a browser (or any
+   CDN/edge cache in front of it) can go on serving old bytes for that
+   URL indefinitely after a deploy, even once the on-disk file has
+   changed. Renaming the file forces a fresh fetch everywhere, no matter
+   what cached what. Bump the suffix again next time the art changes.
+
    This used to be a 9-slice border-image, which meant the frame's own
    proportions got stretched to whatever aspect ratio the text content
    happened to produce — fine when the box was close to the source's own
@@ -118,7 +126,7 @@ body {
   width: min(75.2vw, 704px);
   aspect-ratio: 612 / 542;
   margin-inline: auto;
-  background-image: url("/decor/lace-frame-src.png");
+  background-image: url("/decor/lace-frame-src-v3.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
