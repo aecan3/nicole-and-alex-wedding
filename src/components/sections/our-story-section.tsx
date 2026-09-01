@@ -61,10 +61,10 @@ export function OurStorySection() {
 
         <Reveal delay={0.1} className="mt-24 text-center">
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
-            Every love story
+            Every Love Story has a Third Wheel
           </p>
           <h3 className="font-display text-2xl sm:text-3xl text-burgundy-600">
-            Has a third wheel
+            Meet Riley
           </h3>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
             Our anxious boy has 4 legs, requires following with a vacuum
