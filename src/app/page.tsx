@@ -19,14 +19,19 @@ export default function Home() {
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
           <LaceFrame>
-            <p className="kicker text-base sm:text-lg text-taupe-600">
+            <p className="font-script text-lg sm:text-xl text-taupe-600">
               Together with our families,
             </p>
-            <p className="mt-4 sm:mt-5 font-script text-xl sm:text-2xl leading-[1.65] text-burgundy-600 max-w-[46ch]">
+            <p className="mt-3 sm:mt-4 font-script text-[1.4rem] sm:text-[1.65rem] leading-[1.5] text-burgundy-600">
               We joyfully invite you to our wedding celebration. Thank you for
               being part of one of the most meaningful moments of our lives.
               We cannot wait to celebrate love, laughter and unforgettable
-              memories with you. Forever grateful, Nicole and Alex.
+              memories with you.
+            </p>
+            <p className="mt-auto pt-4 font-script text-[1.4rem] sm:text-[1.65rem] leading-[1.3] text-burgundy-600">
+              Forever grateful,
+              <br />
+              Nicole &amp; Alex
             </p>
           </LaceFrame>
         </Reveal>

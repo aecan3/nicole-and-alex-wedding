@@ -110,16 +110,20 @@ body {
 }
 
 /* The text-safe zone: the solid-card region inside the lace, as a
-   percentage of the frame — measured from the source art (interior
-   rectangle at roughly x:50-562, y:95-417 of the 612x542 image). Because
-   it's defined in percentages of the (now aspect-locked) frame, it scales
-   right along with it at any size. */
+   percentage of the frame — measured from the source art's interior
+   rectangle, then pulled in slightly less than that measurement since the
+   cream recolor now dilates a few px past that line into the band to kill
+   a hairline seam that used to show there (see lace-frame-src.png's
+   generation notes) — the solid area is a bit bigger than the original
+   measurement, so the text can use more of it. Because it's defined in
+   percentages of the (now aspect-locked) frame, it scales right along
+   with it at any size. */
 .lace-frame__text {
   position: absolute;
-  left: 8.2%;
-  right: 8.2%;
-  top: 17.5%;
-  bottom: 23.1%;
+  left: 6.5%;
+  right: 6.5%;
+  top: 16%;
+  bottom: 21%;
   display: flex;
   flex-direction: column;
   align-items: center;
