@@ -89,13 +89,8 @@ export function Hero({
           </p>
           <span className="h-px w-8 bg-gold-300/50" />
         </div>
-        <p className="font-serif italic text-lg text-cream-200/75">
-          Alora Macedon,
-          <br />
-          New Gisborne
-        </p>
-        <p className="mt-2 text-xs tracking-[0.1em] text-taupe-600">
-          330 Barringo Road, New Gisborne, VIC
+        <p className="font-serif italic text-2xl sm:text-3xl text-cream-100">
+          Alora Macedon
         </p>
       </motion.div>
 
@@ -106,7 +101,7 @@ export function Hero({
       >
         <AnchorLink
           href="#rsvp"
-          className="mt-11 inline-block rounded-full bg-olive-800 text-cream-100 px-11 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-olive-900 hover:shadow-[0_0_30px_rgba(63,66,31,0.35)]"
+          className="mt-11 inline-block rounded-full bg-taupe-600 text-cream-100 px-11 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-[#77604f] hover:shadow-[0_0_30px_rgba(140,115,97,0.35)]"
         >
           RSVP
         </AnchorLink>

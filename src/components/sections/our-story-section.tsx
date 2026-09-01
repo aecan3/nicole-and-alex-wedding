@@ -38,12 +38,18 @@ const dogPhotos = [
 export function OurStorySection() {
   return (
     <section id="our-story" className="scroll-mt-24">
-      <PageHeader kicker="Coming soon" title="Our Story" />
+      <PageHeader kicker="How it all began" title="Our Story" />
       <div className="mx-auto max-w-4xl px-6 pb-24">
         <Reveal className="text-center max-w-xl mx-auto">
           <p className="leading-relaxed text-burgundy-600/80">
-            We&rsquo;re writing this one ourselves — check back soon. Tap the first
-            tile below for how it actually happened.
+            Our first date at a little antique bar on a Tuesday night was the
+            beginning of our forever. A few years later, during a special
+            trip to Fiji, Alex popped the question (with a couple of
+            margaritas to settle his nerves). Between settling into our new
+            home, taking care of our anxious boy Riley, and many memories
+            created, we couldn&rsquo;t be happier with the life we&rsquo;re
+            building together. We&rsquo;re so excited for our future
+            adventures ahead, and many more mid-week cocktails.
           </p>
         </Reveal>
         <Reveal delay={0.15} className="mt-14">
@@ -63,13 +69,13 @@ export function OurStorySection() {
 
         <Reveal delay={0.1} className="mt-24 text-center">
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
-            Every love story
+            The third wheel
           </p>
           <h3 className="font-display text-2xl sm:text-3xl text-burgundy-600">
-            Has a third wheel
+            Meet Riley
           </h3>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
-            Ours happens to have 4 legs, requires following with a vacuum
+            Our anxious boy has 4 legs, requires following with a vacuum
             and a wiggle bum that will melt your heart.
           </p>
         </Reveal>
