@@ -23,7 +23,21 @@ export default function Home() {
             alt="Together with our families, we joyfully invite you to our wedding celebration. Thank you for being part of one of the most meaningful moments of our lives. We cannot wait to celebrate love, laughter and unforgettable memories with you. Forever grateful, Nicole &amp; Alex"
             width={1166}
             height={896}
-            className="mx-auto h-auto w-[min(75.2vw,704px)]"
+            /* Rendered width is min(100vw-48px, 704px) — 48px matches this
+               section's own px-6 padding on both sides, so on mobile the
+               card fills the full available width up to that padding
+               (rather than the old fixed 75.2vw, which left it looking
+               small) while staying capped at 704px on desktop like
+               before. `sizes` mirrors that same formula so the browser
+               requests an appropriately small file below the 752px
+               crossover (100vw-48px = 704px at a 752px viewport) instead
+               of assuming full-width and fetching the largest variant on
+               every device, phones included — that mismatch was why the
+               card was slow to load on mobile: it was pulling the same
+               ~3840px-wide file meant for a 4K desktop monitor down to a
+               ~300px-wide display. */
+            sizes="(min-width: 752px) 704px, calc(100vw - 48px)"
+            className="mx-auto h-auto w-[min(calc(100vw-48px),704px)]"
           />
         </Reveal>
 
