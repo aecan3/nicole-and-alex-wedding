@@ -113,7 +113,12 @@ body {
   border-style: solid;
   border-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
   border-image-source: url("/decor/lace-frame-src.png");
-  border-image-slice: 100 130 125 130;
+  /* A couple of px past the source's actual interior/band boundary (100 130
+     125 130) — right on that line, bilinear resampling at the slice edge
+     pulls in a sliver of the transparent/burgundy band and shows up as a
+     faint hairline across the card. Slicing slightly inside the solid
+     interior avoids sampling across that transition. */
+  border-image-slice: 102 132 127 132;
   border-image-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
   /* `round` on the sides seemed like the right call for a repeating dot
      pattern, but the source strip's top/bottom edges don't tile seamlessly
