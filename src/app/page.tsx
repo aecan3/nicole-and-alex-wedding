@@ -28,7 +28,7 @@ export default function Home() {
               We cannot wait to celebrate love, laughter and unforgettable
               memories with you.
             </p>
-            <p className="mt-auto pt-4 font-script text-[1.4rem] sm:text-[1.65rem] leading-[1.3] text-burgundy-600">
+            <p className="mt-8 sm:mt-10 font-script text-[1.4rem] sm:text-[1.65rem] leading-[1.3] text-burgundy-600">
               Forever grateful,
               <br />
               Nicole &amp; Alex

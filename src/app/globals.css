@@ -117,7 +117,22 @@ body {
    generation notes) — the solid area is a bit bigger than the original
    measurement, so the text can use more of it. Because it's defined in
    percentages of the (now aspect-locked) frame, it scales right along
-   with it at any size. */
+   with it at any size.
+
+   justify-content is flex-end (not center): the kicker/body/signature
+   group is anchored to the bottom of the zone as one unit, with the gap
+   between the body paragraph and the signature coming purely from the
+   signature's own margin-top (see page.tsx). We previously used
+   justify-content: center plus margin-top: auto on the signature alone —
+   that auto margin greedily claims *all* leftover vertical space in the
+   zone and dumps it entirely above the signature, which looked fine
+   against the sandbox's taller fallback-font preview but produced a huge,
+   awkward gap once the real (more compact) cursive font shipped to
+   production. Anchoring the whole block to the bottom instead means any
+   leftover space (from a shorter body or a taller viewport) shows up
+   *above* the kicker, not as a void in the middle — and the signature
+   still reads as sitting low in the card, "signing off," without the
+   gap growing unpredictably with font metrics. */
 .lace-frame__text {
   position: absolute;
   left: 6.5%;
@@ -127,7 +142,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: center;
   padding: 0 2%;
 }
