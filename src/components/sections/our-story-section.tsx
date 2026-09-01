@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Gallery } from "@/components/gallery";
@@ -7,33 +8,24 @@ import { InView } from "@/components/in-view";
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
 // left to right — and because each column's total height is just the sum
 // of its items' aspect ratios, the ORDER also determines how evenly the
-// columns balance out. After the Christmas photo was removed, 10 items
-// split unevenly across 3 columns (4/3/3), and the previous order happened
-// to put mostly short, wide items in the middle column — it finished a
-// full column's height short of the others, leaving a big empty gap below
-// it. This order was chosen (out of ~5,800 arrangements that keep every
-// video and every black-and-white piece clear of its neighbours on both
-// the 2-column and 3-column layouts) to minimise that height difference.
+// columns balance out. After the sunset-hug and red-dress-garden photos
+// were dropped, this order was picked (searched out of every arrangement
+// that keeps every video and every black-and-white piece clear of its
+// neighbours, on both the 2-column mobile and 3-column desktop layouts) to
+// minimise the worst-case column height difference on desktop — the videos'
+// tall 9:16 aspect ratio makes a perfectly even split impossible with only
+// 4 of them to spread across 3 columns, but this keeps the gap small.
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
-  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
-  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
-  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-sunset.jpg", alt: "Nicole and Alex embracing at sunset", width: 2304, height: 1537 },
-  { type: "image" as const, src: "/gallery/couple-garden.jpg", alt: "Nicole and Alex in the garden", width: 2000, height: 2692 },
+  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
+  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
+  { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
+  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
 ];
 
-// Trimmed back to three so it fills exactly one row on desktop's 3-column
-// layout instead of leaving a short, unbalanced second row underneath.
-const dogPhotos = [
-  { type: "image" as const, src: "/gallery/dog-christmas.jpg", alt: "Their dog on Christmas Day", width: 1600, height: 2133 },
-  { type: "image" as const, src: "/gallery/dog-portrait.jpg", alt: "Their dog in the garden", width: 1600, height: 2133 },
-  { type: "image" as const, src: "/gallery/dog-beach.jpg", alt: "Their dog on the beach", width: 1600, height: 2133 },
-];
 
 export function OurStorySection() {
   return (
@@ -79,8 +71,15 @@ export function OurStorySection() {
             and a wiggle bum that will melt your heart.
           </p>
         </Reveal>
-        <Reveal delay={0.2} className="mt-10 max-w-lg mx-auto">
-          <Gallery items={dogPhotos} />
+        <Reveal delay={0.2} className="mt-10">
+          <Image
+            src="/gallery/riley-framed.png"
+            alt="Riley in an ornate gold frame"
+            width={768}
+            height={1024}
+            sizes="(max-width: 640px) 60vw, 280px"
+            className="mx-auto h-auto w-[min(60vw,280px)]"
+          />
         </Reveal>
       </div>
     </section>

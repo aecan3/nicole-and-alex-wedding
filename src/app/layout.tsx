@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Beau_Rivage, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/nav";
@@ -32,6 +32,18 @@ export const metadata: Metadata = {
   title: "Nicole & Alex | 11 March 2027",
   description: "Join us as we celebrate our wedding at Alora Macedon, New Gisborne.",
   robots: { index: false, follow: false },
+};
+
+// minimumScale pins pinch-zoom-OUT to the page's natural fit — without it
+// mobile browsers let you pinch out past that point, which shrinks the
+// layout viewport oddly (the bug report: "screws with the perspective and
+// then it's hard to get back"). maximumScale is left at the browser
+// default (well above 1) so zooming IN to read fine print still works.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  userScalable: true,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
