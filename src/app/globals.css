@@ -98,7 +98,10 @@ body {
    bigger or smaller, never squished. */
 .lace-frame {
   position: relative;
-  width: min(94vw, 880px);
+  /* 20% down from the previous min(94vw, 880px) — both terms scaled
+     together so the responsive behaviour (94vw on narrow screens, capped
+     at the px value on wide ones) stays the same shape, just smaller. */
+  width: min(75.2vw, 704px);
   aspect-ratio: 612 / 542;
   margin-inline: auto;
   background-image: url("/decor/lace-frame-src.png");
