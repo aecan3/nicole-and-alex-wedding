@@ -77,6 +77,36 @@ body {
   color: var(--color-burgundy-950);
 }
 
+/* Hand-authored lace-doily frame (public/decor/lace-border.svg) used to
+   border the homepage's welcome quote. It's a CSS border-image: the SVG's
+   four 60px-tall/wide edge strips repeat via `round` so the scallops tile
+   evenly at any box size, and its four 60x60 corners carry the flower
+   medallions — see the SVG source for the full construction notes. The
+   image's edge/corner artwork is drawn in cream on a transparent ground, so
+   the element's own background (set by the caller — burgundy, to match the
+   surrounding section) shows straight through everywhere the lace doesn't
+   cover, which is what keeps the frame reading as lace laid over a
+   continuous burgundy field rather than a separate light card. */
+.lace-frame {
+  --lace-w: clamp(26px, 6vw, 46px);
+  position: relative;
+  border-style: solid;
+  border-width: var(--lace-w);
+  border-image-source: url("/decor/lace-border.svg");
+  border-image-slice: 60;
+  border-image-width: var(--lace-w);
+  border-image-repeat: round;
+}
+
+/* The doily's inner dotted thread, inset from the lace edge itself. */
+.lace-frame::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(250, 246, 238, 0.5);
+  pointer-events: none;
+}
+
 /* Cardstock texture for the light (cream) content areas only — scoped to
    `.paper-texture` rather than the whole body, so the burgundy nav, hero and
    footer stay clean. The fine, even speckle grain (::before) is what reads
