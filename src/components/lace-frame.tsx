@@ -1,10 +1,13 @@
 import { type ReactNode } from "react";
 
 /**
- * Decorative lace-doily border (see .lace-frame / .lace-frame::before in
- * globals.css and public/decor/lace-border.svg for the actual artwork and
- * construction notes). Purely presentational — sizes to its content, so
- * callers control max-width/centering from the outside.
+ * Decorative lace-doily border (see .lace-frame / .lace-frame__text in
+ * globals.css and public/decor/lace-frame-src.png for the actual artwork
+ * and construction notes). The frame is a fixed-aspect-ratio image — it
+ * always scales uniformly, never stretches — with `children` overlaid in
+ * the solid-card region via an absolutely-positioned text zone. Callers
+ * control the frame's overall size via `className` (e.g. a max-width);
+ * the text zone's own percentage insets track it automatically.
  */
 export function LaceFrame({
   children,
@@ -14,8 +17,8 @@ export function LaceFrame({
   className?: string;
 }) {
   return (
-    <div className={`lace-frame px-7 py-8 sm:px-11 sm:py-10 ${className}`}>
-      {children}
+    <div className={`lace-frame ${className}`}>
+      <div className="lace-frame__text">{children}</div>
     </div>
   );
 }

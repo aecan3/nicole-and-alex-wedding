@@ -79,53 +79,50 @@ body {
 
 /* Lace-doily frame around the homepage's welcome quote, built from the
    couple's own reference image (public/decor/lace-frame-src.png — the
-   original black-on-white clipart, re-keyed here to cream-on-transparent by
-   thresholding its luminance into an alpha mask, since the source had no
-   real alpha channel of its own).
-   It's a 9-slice CSS border-image: the source is 612x542, sliced at
-   100/130/125/130 (top/right/bottom/left) so each corner keeps its full
-   scroll-and-leaf flourish intact, the ornate top/bottom bands stretch
-   horizontally to the box's width (`stretch` — they're a one-off swag/rose
-   motif, not a repeating tile), and the plain scalloped sides repeat
-   vertically via `round` so their dot pattern stays circular instead of
-   stretching into ovals. `--lace-k` is the single uniform scale factor
-   applied to all four slice edges together (never varied per-side) so the
-   corner flourishes scale evenly instead of squishing.
-   The frame sits on the section's burgundy — background-clip: padding-box
-   confines this element's own cream "card" fill to inside the border area,
-   so the ring where the lace mesh sits keeps showing burgundy through the
-   image's transparent gaps, while the text sits on solid cream. */
+   original black-on-white clipart, re-keyed here to cream-on-transparent:
+   the true outer background and the solid card interior are each isolated
+   with a flood fill from opposite seed points, so they can be told apart
+   even though both are pale, and the decorative band between them keeps a
+   luminance-based alpha so its fine mesh texture still lets the section's
+   burgundy show through the tiny gaps).
+
+   This used to be a 9-slice border-image, which meant the frame's own
+   proportions got stretched to whatever aspect ratio the text content
+   happened to produce — fine when the box was close to the source's own
+   612:542 ratio, visibly distorted once it wasn't. Locking `aspect-ratio`
+   on this element to the source image's exact ratio and painting the whole
+   image as one `background-size: 100% 100%` layer removes the distortion
+   entirely: the box is always shaped like the image, so "100% 100%" never
+   has to stretch it non-uniformly. Sizing now happens by scaling `width`
+   alone (height follows from aspect-ratio) — the frame gets uniformly
+   bigger or smaller, never squished. */
 .lace-frame {
-  /* Same three clamps, each independently — NOT a single unitless scale
-     factor multiplied out with calc(): mixing a vw-based clamp() into a
-     calc(100px * var(--k)) computes an invalid value (a length can't
-     multiply a length) and silently collapses the border to almost
-     nothing, which is what happened on the first pass. Keeping the
-     100:130:125:130 source ratio approximate across these three clamps is
-     enough — it doesn't need to be exact to avoid squishing the flourish
-     noticeably. */
-  --lace-top: clamp(30px, 7vw, 50px);
-  --lace-side: clamp(38px, 9vw, 65px);
-  --lace-bottom: clamp(37px, 8.7vw, 62px);
   position: relative;
-  background-color: var(--color-cream-100);
-  background-clip: padding-box;
-  border-style: solid;
-  border-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
-  border-image-source: url("/decor/lace-frame-src.png");
-  /* A couple of px past the source's actual interior/band boundary (100 130
-     125 130) — right on that line, bilinear resampling at the slice edge
-     pulls in a sliver of the transparent/burgundy band and shows up as a
-     faint hairline across the card. Slicing slightly inside the solid
-     interior avoids sampling across that transition. */
-  border-image-slice: 102 132 127 132;
-  border-image-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
-  /* `round` on the sides seemed like the right call for a repeating dot
-     pattern, but the source strip's top/bottom edges don't tile seamlessly
-     (it wasn't drawn as a tile) — round left a visible seam line at every
-     repeat. Plain `stretch` has no seam, and at these box proportions the
-     vertical stretch is mild enough not to read as distorted. */
-  border-image-repeat: stretch;
+  width: min(94vw, 880px);
+  aspect-ratio: 612 / 542;
+  margin-inline: auto;
+  background-image: url("/decor/lace-frame-src.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* The text-safe zone: the solid-card region inside the lace, as a
+   percentage of the frame — measured from the source art (interior
+   rectangle at roughly x:50-562, y:95-417 of the 612x542 image). Because
+   it's defined in percentages of the (now aspect-locked) frame, it scales
+   right along with it at any size. */
+.lace-frame__text {
+  position: absolute;
+  left: 8.2%;
+  right: 8.2%;
+  top: 17.5%;
+  bottom: 23.1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 2%;
 }
 
 /* Cardstock texture for the light (cream) content areas only — scoped to

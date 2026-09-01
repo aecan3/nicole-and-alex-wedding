@@ -18,13 +18,15 @@ export default function Home() {
 
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
-          <LaceFrame className="mx-auto max-w-xl">
+          <LaceFrame>
             <p className="kicker text-base sm:text-lg text-taupe-600">
-              Together with our families
+              Together with our families,
             </p>
-            <p className="mt-7 text-2xl sm:text-3xl leading-relaxed font-display italic text-burgundy-600">
-              We&rsquo;re absolutely thrilled to celebrate our big day with you at
-              Alora Macedon, New Gisborne.
+            <p className="mt-4 sm:mt-5 font-script text-xl sm:text-2xl leading-[1.65] text-burgundy-600 max-w-[46ch]">
+              We joyfully invite you to our wedding celebration. Thank you for
+              being part of one of the most meaningful moments of our lives.
+              We cannot wait to celebrate love, laughter and unforgettable
+              memories with you. Forever grateful, Nicole and Alex.
             </p>
           </LaceFrame>
         </Reveal>
