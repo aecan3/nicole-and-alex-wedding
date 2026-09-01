@@ -77,34 +77,50 @@ body {
   color: var(--color-burgundy-950);
 }
 
-/* Hand-authored lace-doily frame (public/decor/lace-border.svg) used to
-   border the homepage's welcome quote. It's a CSS border-image: the SVG's
-   four 60px-tall/wide edge strips repeat via `round` so the scallops tile
-   evenly at any box size, and its four 60x60 corners carry the flower
-   medallions — see the SVG source for the full construction notes. The
-   image's edge/corner artwork is drawn in cream on a transparent ground, so
-   the element's own background (set by the caller — burgundy, to match the
-   surrounding section) shows straight through everywhere the lace doesn't
-   cover, which is what keeps the frame reading as lace laid over a
-   continuous burgundy field rather than a separate light card. */
+/* Lace-doily frame around the homepage's welcome quote, built from the
+   couple's own reference image (public/decor/lace-frame-src.png — the
+   original black-on-white clipart, re-keyed here to cream-on-transparent by
+   thresholding its luminance into an alpha mask, since the source had no
+   real alpha channel of its own).
+   It's a 9-slice CSS border-image: the source is 612x542, sliced at
+   100/130/125/130 (top/right/bottom/left) so each corner keeps its full
+   scroll-and-leaf flourish intact, the ornate top/bottom bands stretch
+   horizontally to the box's width (`stretch` — they're a one-off swag/rose
+   motif, not a repeating tile), and the plain scalloped sides repeat
+   vertically via `round` so their dot pattern stays circular instead of
+   stretching into ovals. `--lace-k` is the single uniform scale factor
+   applied to all four slice edges together (never varied per-side) so the
+   corner flourishes scale evenly instead of squishing.
+   The frame sits on the section's burgundy — background-clip: padding-box
+   confines this element's own cream "card" fill to inside the border area,
+   so the ring where the lace mesh sits keeps showing burgundy through the
+   image's transparent gaps, while the text sits on solid cream. */
 .lace-frame {
-  --lace-w: clamp(26px, 6vw, 46px);
+  /* Same three clamps, each independently — NOT a single unitless scale
+     factor multiplied out with calc(): mixing a vw-based clamp() into a
+     calc(100px * var(--k)) computes an invalid value (a length can't
+     multiply a length) and silently collapses the border to almost
+     nothing, which is what happened on the first pass. Keeping the
+     100:130:125:130 source ratio approximate across these three clamps is
+     enough — it doesn't need to be exact to avoid squishing the flourish
+     noticeably. */
+  --lace-top: clamp(30px, 7vw, 50px);
+  --lace-side: clamp(38px, 9vw, 65px);
+  --lace-bottom: clamp(37px, 8.7vw, 62px);
   position: relative;
+  background-color: var(--color-cream-100);
+  background-clip: padding-box;
   border-style: solid;
-  border-width: var(--lace-w);
-  border-image-source: url("/decor/lace-border.svg");
-  border-image-slice: 60;
-  border-image-width: var(--lace-w);
-  border-image-repeat: round;
-}
-
-/* The doily's inner dotted thread, inset from the lace edge itself. */
-.lace-frame::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px dashed rgba(250, 246, 238, 0.5);
-  pointer-events: none;
+  border-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
+  border-image-source: url("/decor/lace-frame-src.png");
+  border-image-slice: 100 130 125 130;
+  border-image-width: var(--lace-top) var(--lace-side) var(--lace-bottom) var(--lace-side);
+  /* `round` on the sides seemed like the right call for a repeating dot
+     pattern, but the source strip's top/bottom edges don't tile seamlessly
+     (it wasn't drawn as a tile) — round left a visible seam line at every
+     repeat. Plain `stretch` has no seam, and at these box proportions the
+     vertical stretch is mild enough not to read as distorted. */
+  border-image-repeat: stretch;
 }
 
 /* Cardstock texture for the light (cream) content areas only — scoped to

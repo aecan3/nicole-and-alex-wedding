@@ -19,10 +19,10 @@ export default function Home() {
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
           <LaceFrame className="mx-auto max-w-xl">
-            <p className="kicker text-base sm:text-lg text-cream-100">
+            <p className="kicker text-base sm:text-lg text-taupe-600">
               Together with our families
             </p>
-            <p className="mt-7 text-2xl sm:text-3xl leading-relaxed font-display italic text-cream-100">
+            <p className="mt-7 text-2xl sm:text-3xl leading-relaxed font-display italic text-burgundy-600">
               We&rsquo;re absolutely thrilled to celebrate our big day with you at
               Alora Macedon, New Gisborne.
             </p>
