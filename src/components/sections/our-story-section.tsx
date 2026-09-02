@@ -6,20 +6,25 @@ import { InView } from "@/components/in-view";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
-// left to right. After the black-and-white balloon-arch video was dropped,
-// this order was picked (searched out of every arrangement, on both the
-// 2-column mobile and 3-column desktop layouts) to satisfy every rule at
-// once: no two videos stacked together, no two black-and-white pieces
-// stacked together, the three identically-sized 9:16 videos land one per
-// column instead of clustering, and — because each column's height is just
-// the sum of its items' aspect ratios — the three desktop columns come out
-// close to even as a side effect (3.15 / 3.25 / 3.11, in aspect-ratio units).
+// left to right. Rules this order satisfies at once, on both the 2-column
+// mobile and 3-column desktop layouts: no two videos stacked together, no
+// two black-and-white pieces stacked together, the three identically-sized
+// 9:16 videos land one per column instead of clustering, and — because each
+// column's height is just the sum of its items' aspect ratios — the three
+// desktop columns come out close to even as a side effect (3.15/3.11/3.25,
+// in aspect-ratio units). The sold-sign video and the gallery b&w photo
+// were asked to swap column-top spots directly, but that exact 1-for-1 swap
+// forces two videos together further down the same column on both layouts
+// — there's no arrangement of these 7 that keeps every rule and does only
+// that swap — so the beach photo also rotated in to absorb it: the b&w
+// photo now sits where the video was, the video moved one spot down, and
+// the beach photo took the video's old neighbouring slot.
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
-  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
-  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
+  { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
+  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
   { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
 ];
