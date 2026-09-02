@@ -6,15 +6,14 @@ import { InView } from "@/components/in-view";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
-// left to right — and because each column's total height is just the sum
-// of its items' aspect ratios, the ORDER also determines how evenly the
-// columns balance out. After the sunset-hug and red-dress-garden photos
-// were dropped, this order was picked (searched out of every arrangement
-// that keeps every video and every black-and-white piece clear of its
-// neighbours, on both the 2-column mobile and 3-column desktop layouts) to
-// minimise the worst-case column height difference on desktop — the videos'
-// tall 9:16 aspect ratio makes a perfectly even split impossible with only
-// 4 of them to spread across 3 columns, but this keeps the gap small.
+// left to right. After the black-and-white balloon-arch video was dropped,
+// this order was picked (searched out of every arrangement, on both the
+// 2-column mobile and 3-column desktop layouts) to satisfy every rule at
+// once: no two videos stacked together, no two black-and-white pieces
+// stacked together, the three identically-sized 9:16 videos land one per
+// column instead of clustering, and — because each column's height is just
+// the sum of its items' aspect ratios — the three desktop columns come out
+// close to even as a side effect (3.15 / 3.25 / 3.11, in aspect-ratio units).
 const photos = [
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
@@ -22,7 +21,6 @@ const photos = [
   { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
-  { type: "video" as const, src: "/gallery/couple-toast-bw.mp4", alt: "Just engaged, black and white", width: 1080, height: 810 },
   { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
 ];
 
