@@ -53,7 +53,7 @@ export function Hero({
           alt="N & A monogram"
           width={112}
           height={112}
-          className="mx-auto mb-8 h-24 w-24 sm:h-28 sm:w-28 brightness-0 invert"
+          className="mx-auto mb-8 h-24 w-24 sm:h-28 sm:w-28 2xl:h-32 2xl:w-32 brightness-0 invert"
           priority
         />
       </motion.div>
@@ -62,7 +62,7 @@ export function Hero({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.35, duration: 0.9 }}
-        className="kicker text-base sm:text-lg text-cream-100"
+        className="kicker text-base sm:text-lg 2xl:text-xl text-cream-100"
       >
         We&rsquo;re getting married
       </motion.p>
@@ -71,7 +71,7 @@ export function Hero({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="font-script text-6xl sm:text-8xl text-cream-100 leading-[1.25] mt-5 px-2"
+        className="font-script text-6xl sm:text-8xl 2xl:text-9xl text-cream-100 leading-[1.25] mt-5 px-2"
       >
         Nicole &amp; Alex
       </motion.h1>
@@ -84,12 +84,12 @@ export function Hero({
       >
         <div className="flex items-center gap-3 text-cream-100">
           <span className="h-px w-8 bg-gold-300/50" />
-          <p className="tracking-[0.25em] uppercase text-xs sm:text-sm">
+          <p className="tracking-[0.25em] uppercase text-xs sm:text-sm 2xl:text-base">
             Thursday, 11 March 2027
           </p>
           <span className="h-px w-8 bg-gold-300/50" />
         </div>
-        <p className="font-serif italic text-2xl sm:text-3xl text-cream-100">
+        <p className="font-serif italic text-2xl sm:text-3xl 2xl:text-4xl text-cream-100">
           Alora Macedon
         </p>
       </motion.div>
@@ -101,7 +101,7 @@ export function Hero({
       >
         <AnchorLink
           href="#rsvp"
-          className="mt-11 inline-block rounded-full bg-taupe-600 text-cream-100 px-11 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-[#77604f] hover:shadow-[0_0_30px_rgba(140,115,97,0.35)]"
+          className="mt-11 inline-block rounded-full bg-taupe-600 text-cream-100 px-11 py-3.5 2xl:px-14 2xl:py-4 text-sm 2xl:text-base tracking-[0.25em] uppercase transition-all duration-300 hover:bg-[#77604f] hover:shadow-[0_0_30px_rgba(140,115,97,0.35)]"
         >
           RSVP
         </AnchorLink>

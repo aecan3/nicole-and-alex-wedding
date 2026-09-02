@@ -96,14 +96,14 @@ export function SiteNav() {
         scrolled ? "shadow-[0_8px_24px_rgba(58,15,24,0.18)]" : "shadow-none"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 py-5 flex items-center justify-between">
+      <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-6 sm:px-10 py-5 2xl:py-6 flex items-center justify-between">
         <AnchorLink href="#home" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
-          <Monogram className="h-8 w-8 shrink-0 brightness-0 invert" />
-          <span className="font-serif italic text-lg tracking-wide">Nicole &amp; Alex</span>
+          <Monogram className="h-8 w-8 2xl:h-9 2xl:w-9 shrink-0 brightness-0 invert" />
+          <span className="font-serif italic text-lg 2xl:text-xl tracking-wide">Nicole &amp; Alex</span>
         </AnchorLink>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-x-7 font-serif text-[13px] tracking-[0.08em] text-cream-100/90">
+        <nav className="hidden lg:flex items-center gap-x-7 2xl:gap-x-8 font-serif text-[13px] 2xl:text-[15px] tracking-[0.08em] text-cream-100/90">
           {links.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
@@ -111,7 +111,7 @@ export function SiteNav() {
 
         <AnchorLink
           href="#rsvp"
-          className="hidden lg:inline-block rounded-full bg-taupe-600 px-6 py-2 text-[11px] tracking-[0.2em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
+          className="hidden lg:inline-block rounded-full bg-taupe-600 px-6 2xl:px-8 py-2 2xl:py-2.5 text-[11px] 2xl:text-xs tracking-[0.2em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
         >
           RSVP
         </AnchorLink>
