@@ -88,11 +88,15 @@ export function TimetableSection() {
             Macedon &mdash; see the <AnchorLink href="#faq" className="underline hover:text-burgundy-600">Q&amp;A</AnchorLink> section for details.
           </p>
         </div>
-        {/* Reserved for the watermark above: height = bg-size width % x the
-            image's own aspect ratio (492/960 ≈ 0.5125), in vw so it tracks
-            the same viewport-relative scaling bg-size uses — 115%*0.5125
-            ≈ 59vw on mobile, 50%*0.5125 ≈ 25.6vw from sm: up. */}
-        <div aria-hidden="true" className="h-[59vw] sm:h-[25.6vw]" />
+        {/* Deliberately shorter than the watermark's own rendered height
+            (59vw / 25.6vw at this bg-size — see above) rather than matching
+            it exactly: since the image bottom-anchors to the section, a
+            smaller reserve here lets its top portion rise up past this gap
+            and overlap the bottom-right of the text above (the roofline
+            peeking in behind "the Q&A section for details"), instead of
+            sitting in its own fully separate blank band. Also just less
+            empty space overall before "Where to Stay" starts. */}
+        <div aria-hidden="true" className="h-[28vw] sm:h-[12vw]" />
       </div>
     </section>
   );
