@@ -42,7 +42,7 @@ export function VenueSection() {
           fill
           priority={false}
           sizes="100vw"
-          className="object-cover opacity-[0.15] pointer-events-none select-none"
+          className="object-cover opacity-[0.18] pointer-events-none select-none"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)",

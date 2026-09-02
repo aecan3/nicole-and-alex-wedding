@@ -8,25 +8,24 @@ import { InView } from "@/components/in-view";
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
 // left to right. Rules this order satisfies at once, on both the 2-column
 // mobile and 3-column desktop layouts: no two videos stacked together, no
-// two black-and-white pieces stacked together, the three identically-sized
-// 9:16 videos land one per column instead of clustering, and — because each
-// column's height is just the sum of its items' aspect ratios — the three
-// desktop columns come out close to even as a side effect (3.15/3.11/3.25,
-// in aspect-ratio units). The sold-sign video and the gallery b&w photo
-// were asked to swap column-top spots directly, but that exact 1-for-1 swap
-// forces two videos together further down the same column on both layouts
-// — there's no arrangement of these 7 that keeps every rule and does only
-// that swap — so the beach photo also rotated in to absorb it: the b&w
-// photo now sits where the video was, the video moved one spot down, and
-// the beach photo took the video's old neighbouring slot.
+// two black-and-white pieces stacked together, and — because each column's
+// height is just the sum of its items' aspect ratios — column heights come
+// out close to even on both layouts (desktop spread 0.134, same as before;
+// mobile spread 0.985, down from 1.874, which was leaving a large empty
+// gap under the shorter mobile column). Found by brute-force search over
+// all orderings that satisfy the two adjacency rules on both layouts at
+// once, picking the one with the smallest desktop imbalance and, among
+// ties, the smallest mobile imbalance — the pure best-mobile ordering
+// exists but roughly 10x's the desktop imbalance, which isn't worth it
+// for a gap that was never reported as a problem on desktop.
 const photos = [
+  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
   { type: "video" as const, src: "/gallery/couple-toast.mp4", alt: "The moment we got engaged", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
   { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
+  { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
   { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
-  { type: "image" as const, src: "/gallery/couple-speech-bw.jpg", alt: "Alex's speech at their engagement party, black and white", width: 2600, height: 1730 },
 ];
 
 
