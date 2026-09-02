@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { AnchorLink } from "@/components/anchor-link";
 import { Hero } from "@/components/hero";
 import { Reveal } from "@/components/reveal";
 import { OurStorySection } from "@/components/sections/our-story-section";
@@ -16,6 +15,10 @@ export default function Home() {
     <main className="flex-1">
       <Hero photoSrc="/gallery/couple-rooftop.jpg" />
 
+      {/* No CTA below the card any more (removed per request) — the
+          section's py is symmetric top/bottom so the card, as the only
+          child now, sits vertically centered in the burgundy band on its
+          own rather than needing extra balancing margin. */}
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
           <Image
@@ -39,15 +42,6 @@ export default function Home() {
             sizes="(min-width: 752px) 704px, calc(100vw - 48px)"
             className="mx-auto h-auto w-[min(calc(100vw-48px),704px)]"
           />
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <AnchorLink
-            href="#rsvp"
-            className="mt-14 inline-block rounded-full bg-olive-800 text-cream-100 px-10 py-3.5 text-sm tracking-[0.25em] uppercase transition-all duration-300 hover:bg-olive-900 hover:shadow-[0_8px_30px_rgba(63,66,31,0.3)]"
-          >
-            RSVP
-          </AnchorLink>
         </Reveal>
       </section>
 

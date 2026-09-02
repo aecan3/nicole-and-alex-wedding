@@ -302,7 +302,7 @@ export function RsvpSection() {
               <button
                 type="submit"
                 disabled={searching}
-                className="self-start rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors disabled:opacity-50"
+                className="self-start rounded-full bg-taupe-600 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors disabled:opacity-50"
               >
                 {searching ? "Searching..." : "Search"}
               </button>
@@ -361,7 +361,7 @@ export function RsvpSection() {
               <button
                 type="button"
                 onClick={confirmParty}
-                className="rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors"
+                className="rounded-full bg-taupe-600 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors"
               >
                 Yes, that&rsquo;s us
               </button>
@@ -413,7 +413,7 @@ export function RsvpSection() {
               <button
                 type="button"
                 onClick={keepPreviousResponse}
-                className="rounded-full bg-olive-800 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors"
+                className="rounded-full bg-taupe-600 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors"
               >
                 Still correct
               </button>
@@ -517,7 +517,7 @@ export function RsvpSection() {
             <button
               type="submit"
               disabled={submitStatus === "submitting"}
-              className="rounded-full bg-olive-800 text-cream-100 px-10 py-3 text-sm tracking-[0.2em] uppercase hover:bg-olive-900 transition-colors disabled:opacity-50"
+              className="rounded-full bg-taupe-600 text-cream-100 px-10 py-3 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors disabled:opacity-50"
             >
               {submitStatus === "submitting" ? "Sending..." : "Send RSVP"}
             </button>

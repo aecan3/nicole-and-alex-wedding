@@ -111,7 +111,7 @@ export function SiteNav() {
 
         <AnchorLink
           href="#rsvp"
-          className="hidden lg:inline-block rounded-full bg-olive-800 px-6 py-2 text-[11px] tracking-[0.2em] uppercase text-cream-100 hover:bg-olive-900 transition-colors duration-300"
+          className="hidden lg:inline-block rounded-full bg-taupe-600 px-6 py-2 text-[11px] tracking-[0.2em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
         >
           RSVP
         </AnchorLink>
@@ -190,7 +190,7 @@ export function SiteNav() {
               <AnchorLink
                 href="#rsvp"
                 onClick={closeMenu}
-                className="inline-block rounded-full bg-olive-800 px-10 py-3 text-xs tracking-[0.25em] uppercase text-cream-100 hover:bg-olive-900 transition-colors duration-300"
+                className="inline-block rounded-full bg-taupe-600 px-10 py-3 text-xs tracking-[0.25em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
               >
                 RSVP
               </AnchorLink>

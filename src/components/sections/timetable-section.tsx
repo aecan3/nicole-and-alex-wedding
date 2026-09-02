@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { PageHeader } from "@/components/page-header";
-import { AnchorLink } from "@/components/anchor-link";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -55,10 +54,23 @@ export function TimetableSection() {
           height the image needs at its own bg-size percentage (vw-based,
           matching how bg-size scales with viewport width) so it always
           sits fully below the shuttle line and never gets clipped or
-          overlaps the text above it. */}
+          overlaps the text above it. The line art itself is recolored
+          (was flat black ink, only reading as warm brown from the low
+          opacity blending with the page) to taupe-600 boosted 10% in
+          saturation, matching the richer tone used elsewhere. The edge
+          feather lives in the PNG's own alpha channel now (baked in),
+          not a CSS mask on this div — a mask here fades relative to the
+          div's own box, which rarely lines up with where bg-position/
+          bg-size actually put the image, so it either missed the real
+          edge or washed out the middle. Feathering the asset itself
+          means the fade always tracks the image's true edges, on both
+          layouts, regardless of position/size tweaks. Mobile position
+          reverted back to the original 10%/bottom, 115% size — mobile-
+          specific repositioning attempts (pushing it further right)
+          didn't land right and weren't worth the added complexity. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark.png')] bg-no-repeat bg-[position:10%_bottom] bg-[length:115%_auto] opacity-[0.2] sm:bg-right-bottom sm:bg-[length:50%_auto]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark.png')] bg-no-repeat bg-[position:10%_bottom] bg-[length:115%_auto] opacity-[0.24] sm:bg-right-bottom sm:bg-[length:50%_auto]"
       />
 
       <div className="relative z-10">
@@ -83,17 +95,12 @@ export function TimetableSection() {
               </motion.li>
             ))}
           </motion.ol>
-          <p className="mt-12 text-sm text-burgundy-600/80 text-center">
-            A shuttle will run from pick-up points around Gisborne, New Gisborne and
-            Macedon &mdash; see the <AnchorLink href="#faq" className="underline hover:text-burgundy-600">Q&amp;A</AnchorLink> section for details.
-          </p>
         </div>
         {/* Deliberately shorter than the watermark's own rendered height
             (59vw / 25.6vw at this bg-size — see above) rather than matching
             it exactly: since the image bottom-anchors to the section, a
             smaller reserve here lets its top portion rise up past this gap
-            and overlap the bottom-right of the text above (the roofline
-            peeking in behind "the Q&A section for details"), instead of
+            and overlap the bottom-right of the event list above, instead of
             sitting in its own fully separate blank band. Also just less
             empty space overall before "Where to Stay" starts. */}
         <div aria-hidden="true" className="h-[28vw] sm:h-[12vw]" />

@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
-import { Reveal } from "@/components/reveal";
 
 const stays = [
   {
@@ -40,7 +38,7 @@ const stays = [
 export function WhereToStaySection() {
   return (
     <section id="where-to-stay" className="scroll-mt-24">
-      <PageHeader kicker="A few of our favourites" title="Where to Stay" />
+      <PageHeader kicker="A few recommendations" title="Where to Stay" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <p className="text-center leading-relaxed">
           The Macedon Ranges fill up quickly, so we&rsquo;d suggest booking early.
@@ -59,36 +57,19 @@ export function WhereToStaySection() {
           , which both list houses and cottages across the area.
         </p>
 
-        <Reveal delay={0.1} className="mt-10">
-          <div className="relative aspect-[861/871] w-full overflow-hidden rounded-sm border border-gold-400/25">
-            <Image
-              src="/gallery/where-to-stay-map.png"
-              alt="Map showing Alora Macedon and the nearby towns of Macedon, New Gisborne and Gisborne"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <p className="mt-3 text-center text-xs text-burgundy-600/60">
-            Approximate locations — the pin marks Alora Macedon, the nearby towns have accommodation.
-          </p>
-        </Reveal>
-
-        <div className="mt-12">
-          <p className="kicker text-sm text-taupe-600 text-center mb-8">A few recommendations</p>
-          <div className="space-y-8">
-            {stays.map((s) => (
-              <div key={s.name} className="border-t border-gold-400/40 pt-6">
-                <h3 className="font-display text-xl text-burgundy-600">{s.name}</h3>
-                <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
-                <p className="text-sm mt-1">
-                  <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
-                    {s.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
-                  </a>
-                </p>
-                <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
-              </div>
-            ))}
-          </div>
+        <div className="mt-12 space-y-8">
+          {stays.map((s) => (
+            <div key={s.name} className="border-t border-gold-400/40 pt-6">
+              <h3 className="font-display text-xl text-burgundy-600">{s.name}</h3>
+              <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
+              <p className="text-sm mt-1">
+                <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+                  {s.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                </a>
+              </p>
+              <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
