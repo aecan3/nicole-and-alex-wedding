@@ -9,6 +9,7 @@ import { DressCodeSection } from "@/components/sections/dress-code-section";
 import { RegistrySection } from "@/components/sections/registry-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { RsvpSection } from "@/components/sections/rsvp-section";
+import { CountdownSection } from "@/components/sections/countdown-section";
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
       <RegistrySection />
       <FaqSection />
       <RsvpSection />
+      <CountdownSection />
     </main>
   );
 }

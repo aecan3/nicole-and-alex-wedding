@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Beau_Rivage, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-import { SiteNav } from "@/components/nav";
+import { SiteNav, Monogram } from "@/components/nav";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -75,8 +75,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <SiteNav />
         <div className="relative flex-1 flex flex-col">{children}</div>
-        <footer className="mt-auto bg-burgundy-900 text-cream-200/80 text-xs text-center py-8 px-6">
-          Nicole &amp; Alex &middot; 11 March 2027 &middot; Alora Macedon, New Gisborne
+        {/* The "Nicole & Alex · 11 March 2027 · Alora Macedon, New Gisborne"
+            line this used to carry has moved off — the footer is just the
+            monogram now, centered, same on mobile and desktop. */}
+        <footer className="mt-auto bg-burgundy-900 py-4 px-6 flex items-center justify-center">
+          <Monogram className="h-8 w-8 brightness-0 invert" />
         </footer>
       </body>
     </html>

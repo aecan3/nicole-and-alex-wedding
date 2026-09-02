@@ -45,6 +45,57 @@ function errorMessage(err: unknown): string {
   return "Something went wrong — please try again shortly.";
 }
 
+// The same warm duotone-wash-behind-text treatment used on the Venue and
+// Timetable sections, reused here as the backdrop for the last section on
+// the page. Desktop and mobile use separate photos — same reasoning as the
+// two Venue photos: this section is portrait and tall on mobile (and its
+// height swings a lot between RSVP stages, from the short search box up to
+// the full multi-person form), so the wide desktop shot forced into that
+// shape either turned into a thin, empty sliver (full-bleed cover) or
+// only ever showed a small crop (zoomed in). A second, portrait-oriented
+// photo of the same villa (supplied specifically for mobile) sidesteps
+// both problems: it's zoomed in and anchored toward the bottom, trading
+// the sky (and some of the lawn in the bottom-left, per the go-ahead to
+// crop it) for keeping the house and balustrades — the actual point of
+// the photo — in frame, the way the desktop crop keeps the arches and
+// pool in frame. Desktop keeps the original full-bleed wash: its
+// proportions are close enough to that photo's that cover crops
+// comparatively little, and it's already reading well.
+function RsvpBackground() {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.32] pointer-events-none select-none sm:hidden"
+        style={{
+          backgroundImage: "url('/gallery/rsvp-villa-mobile-wash.jpg')",
+          backgroundSize: "auto 118%",
+          backgroundPosition: "78% 75%",
+          backgroundRepeat: "no-repeat",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+          maskImage:
+            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="hidden sm:block absolute inset-0 opacity-[0.28] pointer-events-none select-none"
+        style={{
+          backgroundImage: "url('/gallery/rsvp-villa-wash.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "60% 65%",
+          backgroundRepeat: "no-repeat",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+          maskImage:
+            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+        }}
+      />
+    </>
+  );
+}
+
 // A quiet, always-available way out if the search can't find someone or
 // anything on this page misbehaves — shown at the bottom of every stage
 // rather than only after an error, so it's never a dead end.
@@ -267,13 +318,16 @@ export function RsvpSection() {
       // and the section sits partway down the viewport instead of at the
       // header. A full viewport of height here guarantees enough scroll
       // room regardless of which stage is rendered.
-      <section id="rsvp" className="min-h-svh scroll-mt-24">
-        <PageHeader kicker="Thank you" title="RSVP Received" />
-        <div className="mx-auto max-w-xl px-6 pb-24 text-center">
-          <p className="leading-relaxed">
-            Thanks so much for letting us know — we can&rsquo;t wait to celebrate
-            with you on 11 March 2027.
-          </p>
+      <section id="rsvp" className="relative min-h-svh scroll-mt-24 overflow-hidden">
+        <RsvpBackground />
+        <div className="relative z-10">
+          <PageHeader kicker="Thank you" title="RSVP Received" />
+          <div className="mx-auto max-w-xl px-6 pb-24 text-center">
+            <p className="leading-relaxed">
+              Thanks so much for letting us know — we can&rsquo;t wait to celebrate
+              with you on 11 March 2027.
+            </p>
+          </div>
         </div>
       </section>
     );
@@ -283,9 +337,26 @@ export function RsvpSection() {
     // See the min-h-svh comment on the "done" branch above — same reasoning
     // applies here, and matters even more for this branch since it's the
     // one guests actually land on when clicking RSVP in the nav.
-    <section id="rsvp" className="min-h-svh scroll-mt-24">
-      <PageHeader kicker="By 24 January 2027" title="RSVP" />
-      <div className="mx-auto max-w-md px-6 pb-24">
+    <section id="rsvp" className="relative min-h-svh scroll-mt-24 overflow-hidden">
+      <RsvpBackground />
+      {/* mx-auto max-w-6xl gives the section the same outer width as the
+          rest of the site; the sm:max-w-md column inside it isn't itself
+          centered, so from tablet up the RSVP content hugs the left side
+          of the section instead of sitting dead-center over the image —
+          per request, so the pool/arches on the image's right stay clear
+          rather than being covered by the form. Mobile is unaffected
+          (sm:max-w-md doesn't apply below 640px), staying centered as
+          before since there's no room to spare for an off-center layout
+          on a phone-width screen. */}
+      {/* sm:pt-24 nudges the whole block down on tablet/desktop, on top of
+          PageHeader's own pt-20 — enough to no longer sit flush against the
+          nav, but nowhere near vertical-centering it in a min-h-svh
+          section (that would put the "Find your invitation" input roughly
+          in the middle of the screen). Mobile is unaffected. */}
+      <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-24">
+        <div className="sm:max-w-md">
+          <PageHeader kicker="By 24 January 2027" title="RSVP" />
+          <div className="mx-auto max-w-md px-6 pb-24 sm:mx-0 sm:px-0">
         {/* Stage 1: search */}
         {!confirmingParty && !previousReview && !party && (
           <>
@@ -529,6 +600,8 @@ export function RsvpSection() {
             <HelpLink />
           </form>
         )}
+          </div>
+        </div>
       </div>
     </section>
   );
