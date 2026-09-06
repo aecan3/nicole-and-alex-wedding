@@ -55,13 +55,28 @@ import { Reveal } from "@/components/reveal";
 // the original hand-drawn text boxes ran slightly wider than the card at
 // some rows, and the more sensitive -v4 mask was catching the ornate
 // silver frame's carving as "ink" there too.
+//
+// -v5 replaces -v4: the -v4 background removal compared the (BGR) source
+// image against a reference colour written in RGB order, so the R and B
+// channels were swapped when measuring "distance from background" - a
+// meaningful chunk of the real background fell under the mis-scaled
+// threshold and stayed partly opaque, showing up as a faint but visibly
+// darker rectangular ghost of the source screenshot's own background
+// behind the frame. -v5 fixes the channel order and measures the
+// reference colour from this image's own corner pixels instead of a
+// hardcoded constant, so it's self-calibrating.
+//
+// Text sizes bumped a step up at both breakpoints (kicker/body/title) and
+// the overlay column widened from 42% to 46% of the card to give the
+// larger title room before wrapping - the previous sizes read as too
+// small to comfortably read on a phone.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
         <div className="relative mx-auto aspect-[928/1152] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v4.png"
+            src="/gallery/gifts-plate-card-v5.png"
             alt=""
             aria-hidden="true"
             fill
@@ -74,15 +89,15 @@ export function RegistrySection() {
               framed-photo width, so none of it drifts onto the silver frame
               at either breakpoint. */}
 
-          <p className="absolute left-1/2 top-[34%] w-[42%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-[10px] sm:text-xs text-taupe-600">
+          <p className="absolute left-1/2 top-[34%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-xs sm:text-sm text-taupe-600">
             With love
           </p>
 
-          <h2 className="absolute left-1/2 top-[44%] w-[42%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-2xl leading-[1.15] text-burgundy-600">
+          <h2 className="absolute left-1/2 top-[44%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-2xl sm:text-3xl leading-[1.15] text-burgundy-600">
             A quick note on gifts
           </h2>
 
-          <p className="absolute left-1/2 top-[59.5%] w-[42%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-[10px] sm:text-sm leading-[1.4] text-burgundy-600/90">
+          <p className="absolute left-1/2 top-[59.5%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-600/90">
             Your presence is the greatest gift of all. For those who&rsquo;d
             still like to give, we have a wishing well for contributions
             towards our future together.
