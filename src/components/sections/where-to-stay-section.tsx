@@ -19,12 +19,12 @@ type Stay = {
 const stays: Stay[] = [
   {
     name: "Macedon Ranges Hotel & Spa",
-    // Three-line address (street / suburb+postcode / country) instead of
-    // the single comma-joined line the other cards still use, each wrapped
-    // in one link out to Apple Maps (not the Google Maps links this was
-    // sourced from) — ll= is the venue's actual coordinates so the pin
-    // lands on the hotel itself rather than a text-only address guess.
-    addressLines: ["652 Black Forest Drive", "Macedon VIC 3440", "Australia"],
+    // Two-line address (street / suburb+postcode) instead of the single
+    // comma-joined line the other cards still use, each wrapped in one link
+    // out to Apple Maps (not the Google Maps links this was sourced from) —
+    // ll= is the venue's actual coordinates so the pin lands on the hotel
+    // itself rather than a text-only address guess.
+    addressLines: ["652 Black Forest Drive", "Macedon VIC 3440"],
     mapsUrl: "https://maps.apple.com/?ll=-37.411854,144.542473&q=Macedon%20Ranges%20Hotel%20%26%20Spa",
     phone: "03 5426 4044",
     phoneHref: "tel:0354264044",
@@ -34,10 +34,15 @@ const stays: Stay[] = [
   },
   {
     name: "Black Forest Motel",
-    address: "426 Black Forest Drive, Macedon VIC",
+    // No coordinates were supplied for this one (unlike Macedon Ranges, which
+    // came from a Google Maps link) — mapsUrl omits ll= and just geocodes the
+    // address text itself, which Apple Maps handles fine for a real address.
+    addressLines: ["426 Black Forest Drive", "Macedon VIC 3440"],
+    mapsUrl: "https://maps.apple.com/?q=426%20Black%20Forest%20Drive%2C%20Macedon%20VIC%203440",
     phone: "03 5426 1600",
-    website: "https://www.facebook.com/blackforestmotel",
-    note: "Breakfast included with direct bookings. We're arranging a guest rate — details to follow.",
+    phoneHref: "tel:0354261600",
+    website: "https://www.blackforestmotel.com.au/",
+    note: "Use discount code ‘GetNicoles10%’ for direct bookings only over the phone.",
     position: [-37.415, 144.559] as [number, number],
   },
   {
