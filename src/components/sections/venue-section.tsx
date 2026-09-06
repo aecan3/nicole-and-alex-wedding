@@ -101,14 +101,16 @@ export function VenueSection() {
           <Reveal delay={0.15}>
             <div className="mt-10 text-center">
               <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">Address</p>
-              {/* Coordinates match the venue marker already used on the site
-                  map (faq-section.tsx), so the pin lands on Alora Macedon
-                  itself rather than a text-only address guess — same Apple
-                  Maps link + light gold underline treatment as the Where to
-                  Stay hotel cards. */}
+              {/* The previous ll=/q= link used the venue marker's coordinates
+                  from the site map (faq-section.tsx), which turned out to
+                  be an approximate pin, not the building itself — reported
+                  as landing on the wrong spot. This is Apple's own canonical
+                  place link for Alora Macedon (its Apple Maps place ID),
+                  which points at the actual venue. Same light gold
+                  underline treatment as the Where to Stay hotel cards. */}
               <p className="mt-1">
                 <a
-                  href="https://maps.apple.com/?ll=-37.478,144.612&q=Alora%20Macedon"
+                  href="https://maps.apple.com/place?place-id=I3F6B708E65383F4A&address=330%20Barringo%20Rd,%20New%20Gisborne%20VIC%203438,%20Australia"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline underline-offset-2 decoration-gold-400/60 hover:decoration-gold-400"
