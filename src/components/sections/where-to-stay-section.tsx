@@ -109,7 +109,15 @@ export function WhereToStaySection() {
             below.
             <br />
             For house or cottage rentals, explore{" "}
-            <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+            {/* The old /macedon-ranges-shire-australia/stays link was one of
+                Airbnb's own curated destination-page slugs (fixed on their
+                end, not something we can rename) — swapping "shire" for
+                "vic" 404s. The generic /s/<location>/homes search URL takes
+                free-text location instead, so it's what actually lets us
+                control the prefilled text ("Macedon Ranges VIC, Australia"
+                per request) rather than Airbnb's own page title for the
+                area. */}
+            <a href="https://www.airbnb.com.au/s/Macedon-Ranges--VIC--Australia/homes" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Airbnb
             </a>{" "}
             or{" "}
