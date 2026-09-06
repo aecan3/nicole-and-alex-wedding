@@ -76,8 +76,8 @@ export function OurStorySection() {
             Third Wheel
           </h3>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
-            Our anxious boy has 4 legs, requires following with a vacuum
-            and a wiggle bum that will melt your heart.
+            Ours just happens to have four legs, a lot of opinions and
+            unconditional love.
           </p>
         </Reveal>
         <Reveal delay={0.2} className="mt-10">
