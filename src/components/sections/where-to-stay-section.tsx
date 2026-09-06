@@ -152,7 +152,7 @@ export function WhereToStaySection() {
                         href={s.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline-offset-2 decoration-gold-400/60 hover:underline"
+                        className="underline underline-offset-2 decoration-gold-400/60 hover:decoration-gold-400"
                       >
                         {lines.map((line, i) => (
                           <span key={line}>
