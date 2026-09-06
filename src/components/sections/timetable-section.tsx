@@ -83,27 +83,28 @@ export function TimetableSection() {
           the phone screen, so any bg-size width over 100% pushes part of
           this 2.76:1-wide image past the section's overflow-hidden edge.
           The old 163%/left-anchored version clipped the wrong side — the
-          right arch and chandelier were being cut off, which read as
-          "cut off" rather than a sizing preference. Rather than settle for
-          100% (the largest width with nothing clipped, but too small to
-          overlap the text as originally requested), mobile is anchored
-          bg-right-bottom like desktop and sized at 140%: the source art has
-          a wide band of empty sky/lawn on its left third (the glasshouse
-          structure itself only starts around 32% of the way across, per a
-          column-alpha scan of the asset), so right-anchoring means growing
-          past 100% crops that empty margin first — 140% only eats into it
-          up to ~29% of the way across, comfortably short of the structure —
-          instead of the chandelier/arches on the right, which is what a
-          left anchor would sacrifice first. Desktop has a much wider
-          positioning area to work with, so 71% comfortably fits within it
-          at bg-right-bottom with room to spare; it's kept larger than the
-          old art's 115%/50% (×1.4165 factor) so the rendered height matches
-          what it was before despite the new art's shallower 2.76:1 aspect
-          ratio (was 1.95:1), preserving the slight overlap with the event
-          list the original was tuned for. */}
+          right arch and chandelier were being cut off. Mobile is anchored
+          bg-right-bottom like desktop, growing past 100% only into the
+          source art's empty left-hand sky/lawn margin (the glasshouse
+          structure itself doesn't start until about a third of the way
+          across, per a column-alpha scan of the asset) rather than into
+          the chandelier/arches on the right. 140% (tried first) read as
+          too tightly cropped on an actual phone — lost the asymmetric,
+          off-centre feel of the original art and most of the bottom-left
+          foliage — so it's dialled back ~10% to 126%, which keeps
+          noticeably more of that left margin and foliage in frame while
+          still growing enough to overlap the text (spacer below reduced to
+          match, since a smaller image is also a shorter one and would
+          otherwise drop back out of overlap range). Desktop has a much
+          wider positioning area to work with, so 71% comfortably fits
+          within it at bg-right-bottom with room to spare; it's kept larger
+          than the old art's 115%/50% (×1.4165 factor) so the rendered
+          height matches what it was before despite the new art's shallower
+          2.76:1 aspect ratio (was 1.95:1), preserving the slight overlap
+          with the event list the original was tuned for. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark-v3.png')] bg-no-repeat bg-right-bottom bg-[length:140%_auto] opacity-[0.24] sm:bg-right-bottom sm:bg-[length:71%_auto]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark-v3.png')] bg-no-repeat bg-right-bottom bg-[length:126%_auto] opacity-[0.24] sm:bg-right-bottom sm:bg-[length:71%_auto]"
       />
 
       <div className="relative z-10">
@@ -129,16 +130,19 @@ export function TimetableSection() {
             ))}
           </motion.ol>
         </div>
-        {/* Deliberately shorter than the watermark's own rendered height
-            (59vw / 25.6vw at this bg-size — the bumped-up 163%/71% above
-            was chosen specifically to land back on this same rendered
-            height despite the new art's aspect ratio) rather than matching
-            it exactly: since the image bottom-anchors to the section, a
-            smaller reserve here lets its top portion rise up past this gap
-            and overlap the bottom-right of the event list above, instead
-            of sitting in its own fully separate blank band. Also just less
-            empty space overall before "Where to Stay" starts. */}
-        <div aria-hidden="true" className="h-[28vw] sm:h-[12vw]" />
+        {/* Deliberately shorter than the watermark's own rendered height at
+            this bg-size, rather than matching it exactly: since the image
+            bottom-anchors to the section, a smaller reserve here lets its
+            top portion rise up past this gap and overlap the bottom of the
+            event list above, instead of sitting in its own fully separate
+            blank band. Mobile's 16vw (down from 28vw) matches the 126%
+            bg-size above — both were dialled down together after the first
+            140%/28vw cut read as too small a gap on an actual phone (no
+            visible overlap despite one showing up in desktop-browser mobile
+            emulation) — so this is tuned smaller than the minimum a same-
+            device screenshot required, to leave margin for that gap
+            between emulated and real mobile Safari/Chrome rendering. */}
+        <div aria-hidden="true" className="h-[16vw] sm:h-[12vw]" />
       </div>
     </section>
   );
