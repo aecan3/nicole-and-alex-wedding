@@ -74,13 +74,21 @@ export function OurStorySection() {
           </p>
         </Reveal>
         <Reveal delay={0.2} className="mt-10">
+          {/* riley-framed-v2.png adds a synthesised drop shadow (the
+              original cutout had none) behind the frame, matching the
+              Gifts section's plate photo — so the source canvas has an
+              80px transparent margin all round for the shadow to blur
+              into. The display size below is scaled up from the old
+              220px/48vw by that same margin ratio (928/768) so the frame
+              itself reads at the same on-page size as before, with the
+              shadow now filling the extra space around it. */}
           <Image
-            src="/gallery/riley-framed.png"
+            src="/gallery/riley-framed-v2.png"
             alt="Riley in an ornate gold frame"
-            width={768}
-            height={1024}
-            sizes="(max-width: 640px) 48vw, 220px"
-            className="mx-auto h-auto w-[min(48vw,220px)]"
+            width={928}
+            height={1184}
+            sizes="(max-width: 640px) 58vw, 266px"
+            className="mx-auto h-auto w-[min(58vw,266px)]"
           />
         </Reveal>
       </div>
