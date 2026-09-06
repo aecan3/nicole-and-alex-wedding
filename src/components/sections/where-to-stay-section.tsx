@@ -35,46 +35,109 @@ const stays = [
   },
 ];
 
+// Small inline icons for the address/phone rows below — kept as plain
+// currentColor line icons (no icon package pulled in for just two glyphs).
+function PinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-400">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-400">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  );
+}
+
+function ArrowUpRightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3">
+      <path d="M7 17 17 7M8 7h9v9" />
+    </svg>
+  );
+}
+
 export function WhereToStaySection() {
   return (
     <section id="where-to-stay" className="scroll-mt-24">
       <PageHeader kicker="A few recommendations" title="Where to Stay" />
-      <div className="mx-auto max-w-2xl px-6 pb-20">
-        <p className="text-center leading-relaxed">
-          The Macedon Ranges fill up quickly, so we&rsquo;d suggest booking early.
-          Accommodation is mostly clustered around Macedon, Gisborne and New
-          Gisborne, all a short drive from the venue.
-        </p>
-        <p className="mt-4 text-center leading-relaxed text-burgundy-600/80">
-          Beyond the hotels below, it&rsquo;s also worth checking{" "}
-          <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
-            Airbnb
-          </a>{" "}
-          and{" "}
-          <a href="https://relaxholidayrentals.com.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
-            Relax Holiday Rentals
-          </a>
-          , which both list houses and cottages across the area.
-        </p>
-        {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
-            small headings elsewhere) — used here to set this logistical note
-            apart from the two recommendation paragraphs above it. */}
-        <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
-          A shuttle bus will be organised for guests staying at the following
-          locations.
-        </p>
+      <div className="px-6 pb-20">
+        <div className="mx-auto max-w-2xl">
+          <p className="text-center leading-relaxed">
+            The Macedon Ranges fill up quickly, so we&rsquo;d suggest booking early.
+            Accommodation is mostly clustered around Macedon, Gisborne and New
+            Gisborne, all a short drive from the venue.
+          </p>
+          <p className="mt-4 text-center leading-relaxed text-burgundy-600/80">
+            Beyond the hotels below, it&rsquo;s also worth checking{" "}
+            <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+              Airbnb
+            </a>{" "}
+            and{" "}
+            <a href="https://relaxholidayrentals.com.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+              Relax Holiday Rentals
+            </a>
+            , which both list houses and cottages across the area.
+          </p>
+          {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
+              small headings elsewhere) — used here to set this logistical note
+              apart from the two recommendation paragraphs above it. */}
+          <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
+            A shuttle bus will be organised for guests staying at the following
+            locations.
+          </p>
+        </div>
 
-        <div className="mt-12 space-y-8">
+        {/* Each hotel used to be a plain stacked text block separated by a
+            top-border hairline. This reads more like a little place card
+            from the same stationery suite as the rest of the site: the
+            gold rule under the name is the exact divider motif used under
+            every page heading (just shortened and left-aligned instead of
+            centred), the note below borrows the kicker's italic serif so
+            it reads as a handwritten aside next to the plainer sans-serif
+            address/phone, and the diagonal cream gradient fill catches
+            light unevenly the way the Gifts section's paper card photo
+            does, instead of one flat tone. The "Visit website" pill reuses
+            the exact taupe button used for RSVP/nav CTAs, so it still
+            reads as a real, familiar button rather than a new style. */}
+        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
           {stays.map((s) => (
-            <div key={s.name} className="border-t border-gold-400/40 pt-6">
+            <div
+              key={s.name}
+              className="group relative flex flex-col rounded-sm border border-gold-400/40 bg-[linear-gradient(155deg,var(--color-cream-100),var(--color-cream-300))] p-7 pb-6 shadow-[0_1px_3px_rgba(58,15,24,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/75 hover:shadow-[0_10px_24px_-8px_rgba(58,15,24,0.18)]"
+            >
               <h3 className="font-display text-xl text-burgundy-600">{s.name}</h3>
-              <p className="text-sm mt-1">{s.address} &middot; {s.phone}</p>
-              <p className="text-sm mt-1">
-                <a href={s.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
-                  {s.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
-                </a>
+              <div className="mb-4 mt-3 h-px w-11 bg-gradient-to-r from-gold-400 to-transparent" />
+
+              <div className="mb-4 flex flex-col gap-1.5">
+                <div className="flex items-start gap-2 text-sm text-burgundy-600">
+                  <PinIcon />
+                  <span>{s.address}</span>
+                </div>
+                <div className="flex items-start gap-2 text-sm text-burgundy-600">
+                  <PhoneIcon />
+                  <span>{s.phone}</span>
+                </div>
+              </div>
+
+              <p className="mb-5 font-serif text-base italic leading-[1.5] text-taupe-600">
+                {s.note}
               </p>
-              <p className="text-sm mt-2 text-burgundy-600/80">{s.note}</p>
+
+              <a
+                href={s.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-taupe-600 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-cream-100 transition-all duration-200 hover:gap-2.5 hover:bg-[#77604f]"
+              >
+                Visit website
+                <ArrowUpRightIcon />
+              </a>
             </div>
           ))}
         </div>
