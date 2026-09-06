@@ -105,8 +105,8 @@ export function RegistrySection() {
                 The {" "} above keeps a space between the sentences when the
                 br is hidden — JSX would otherwise collapse it to nothing. */}
             <br className="hidden sm:block" />
-            For those who&rsquo;d still like to give, we have a wishing well
-            for contributions towards our future together.
+            For those who&rsquo;d still like to give, we will have a wishing
+            well available for contributions towards our future together.
           </p>
         </div>
       </Reveal>
