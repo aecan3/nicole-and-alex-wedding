@@ -106,7 +106,9 @@ export function WhereToStaySection() {
               logistics apart from the recommendation above. */}
           <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
             A shuttle bus will be provided for guests staying at the locations
-            below. For house or cottage rentals, explore{" "}
+            below.
+            <br />
+            For house or cottage rentals, explore{" "}
             <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Airbnb
             </a>{" "}
