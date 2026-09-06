@@ -101,7 +101,23 @@ export function VenueSection() {
           <Reveal delay={0.15}>
             <div className="mt-10 text-center">
               <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">Address</p>
-              <p className="mt-1">330 Barringo Road<br />New Gisborne, VIC</p>
+              {/* Coordinates match the venue marker already used on the site
+                  map (faq-section.tsx), so the pin lands on Alora Macedon
+                  itself rather than a text-only address guess — same Apple
+                  Maps link + light gold underline treatment as the Where to
+                  Stay hotel cards. */}
+              <p className="mt-1">
+                <a
+                  href="https://maps.apple.com/?ll=-37.478,144.612&q=Alora%20Macedon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 decoration-gold-400/60 hover:decoration-gold-400"
+                >
+                  330 Barringo Road
+                  <br />
+                  New Gisborne VIC 3438
+                </a>
+              </p>
             </div>
           </Reveal>
         </div>
