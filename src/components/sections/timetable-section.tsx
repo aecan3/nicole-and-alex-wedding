@@ -81,23 +81,29 @@ export function TimetableSection() {
           Sizing differs deliberately by breakpoint rather than sharing one
           bg-size: mobile's background positioning area is only as wide as
           the phone screen, so any bg-size width over 100% pushes part of
-          this 2.76:1-wide image past the section's overflow-hidden edge —
-          at the old 163% width, roughly a third of the image (the right
-          arch and chandelier) was being clipped off, which is what read as
-          "cut off" rather than a sizing preference. 100% is the largest
-          width mobile can show in full, so mobile is pinned there — bottom
-          bg-position, horizontal position is now moot since the image
-          exactly fills the section's width either way. Desktop has a much
-          wider positioning area to work with, so 71% comfortably fits
-          within it at bg-right-bottom with room to spare; it's kept larger
-          than mobile's rendered size (163%/71% ×1.4165 factor vs. the old
-          art's 115%/50%) so the rendered height matches what it was before
-          despite the new art's shallower 2.76:1 aspect ratio (was 1.95:1),
-          preserving the slight overlap with the event list the original
-          was tuned for. */}
+          this 2.76:1-wide image past the section's overflow-hidden edge.
+          The old 163%/left-anchored version clipped the wrong side — the
+          right arch and chandelier were being cut off, which read as
+          "cut off" rather than a sizing preference. Rather than settle for
+          100% (the largest width with nothing clipped, but too small to
+          overlap the text as originally requested), mobile is anchored
+          bg-right-bottom like desktop and sized at 140%: the source art has
+          a wide band of empty sky/lawn on its left third (the glasshouse
+          structure itself only starts around 32% of the way across, per a
+          column-alpha scan of the asset), so right-anchoring means growing
+          past 100% crops that empty margin first — 140% only eats into it
+          up to ~29% of the way across, comfortably short of the structure —
+          instead of the chandelier/arches on the right, which is what a
+          left anchor would sacrifice first. Desktop has a much wider
+          positioning area to work with, so 71% comfortably fits within it
+          at bg-right-bottom with room to spare; it's kept larger than the
+          old art's 115%/50% (×1.4165 factor) so the rendered height matches
+          what it was before despite the new art's shallower 2.76:1 aspect
+          ratio (was 1.95:1), preserving the slight overlap with the event
+          list the original was tuned for. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark-v3.png')] bg-no-repeat bg-[position:10%_bottom] bg-[length:100%_auto] opacity-[0.24] sm:bg-right-bottom sm:bg-[length:71%_auto]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[url('/gallery/venue-atrium-watermark-v3.png')] bg-no-repeat bg-right-bottom bg-[length:140%_auto] opacity-[0.24] sm:bg-right-bottom sm:bg-[length:71%_auto]"
       />
 
       <div className="relative z-10">
