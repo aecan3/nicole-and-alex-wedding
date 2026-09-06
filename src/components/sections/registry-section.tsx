@@ -19,7 +19,7 @@ export function RegistrySection() {
       <Reveal>
         <div className="relative mx-auto aspect-[736/1104] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card.png"
+            src="/gallery/gifts-plate-card-v2.png"
             alt=""
             aria-hidden="true"
             fill
