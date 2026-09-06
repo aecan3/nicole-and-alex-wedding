@@ -56,6 +56,13 @@ export function WhereToStaySection() {
           </a>
           , which both list houses and cottages across the area.
         </p>
+        {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
+            small headings elsewhere) — used here to set this logistical note
+            apart from the two recommendation paragraphs above it. */}
+        <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
+          A shuttle bus will be organised for guests staying at the following
+          locations.
+        </p>
 
         <div className="mt-12 space-y-8">
           {stays.map((s) => (
