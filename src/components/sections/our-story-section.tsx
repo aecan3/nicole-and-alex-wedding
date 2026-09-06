@@ -24,7 +24,14 @@ const photos = [
   { type: "image" as const, src: "/gallery/couple-beach.jpg", alt: "Nicole and Alex at the beach", width: 684, height: 1004 },
   { type: "image" as const, src: "/gallery/couple-house.jpg", alt: "Nicole and Alex outside their new home", width: 2400, height: 1690 },
   { type: "image" as const, src: "/gallery/couple-gallery-bw.jpg", alt: "Nicole and Alex, black and white", width: 2000, height: 2667 },
-  { type: "video" as const, src: "/gallery/couple-sold-sign.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
+  // -v2 is graded down from the original clip, which was shot on an
+  // overcast day and came out noticeably brighter/flatter than every other
+  // photo and video in this grid (mean luma ~157/255 with almost nothing
+  // near true black, vs. ~112 with real shadow detail on the sunny
+  // couple-house.jpg shot next to it). ffmpeg eq filter — contrast 1.22,
+  // brightness -0.07, gamma 0.94, saturation 1.15 — re-encoded via libx264,
+  // same resolution/duration/no-audio as the original.
+  { type: "video" as const, src: "/gallery/couple-sold-sign-v2.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
 ];
 
