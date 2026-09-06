@@ -36,7 +36,7 @@ export function DressCodeSection() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-gold-400">For the Ladies</p>
-                <p className="mt-2 text-cream-100">Floor-length formal dress.</p>
+                <p className="mt-2 text-cream-100">A floor-length dress or formal eveningwear.</p>
               </div>
             </div>
           </div>
