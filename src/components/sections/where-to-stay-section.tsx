@@ -109,7 +109,7 @@ export function WhereToStaySection() {
             below.
             <br />
             For house or cottage rentals, explore{" "}
-            <a href="https://www.airbnb.co.nz/mount-macedon-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
+            <a href="https://www.airbnb.com.au/mount-macedon-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Airbnb
             </a>{" "}
             or{" "}
