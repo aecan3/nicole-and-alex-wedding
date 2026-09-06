@@ -32,15 +32,15 @@ export function RegistrySection() {
               framed-photo width, so none of it drifts onto the silver frame
               at either breakpoint. */}
 
-          <p className="absolute left-1/2 top-[34%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-[10px] sm:text-xs text-taupe-600">
+          <p className="absolute left-1/2 top-[37%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-[10px] sm:text-xs text-taupe-600">
             With love
           </p>
 
-          <h2 className="absolute left-1/2 top-[41.5%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-2xl leading-[1.15] text-burgundy-600">
+          <h2 className="absolute left-1/2 top-[44.5%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-2xl leading-[1.15] text-burgundy-600">
             A quick note on gifts
           </h2>
 
-          <p className="absolute left-1/2 top-[53.5%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-[10px] sm:text-sm leading-[1.4] text-burgundy-600/90">
+          <p className="absolute left-1/2 top-[56%] w-[38%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-[10px] sm:text-sm leading-[1.4] text-burgundy-600/90">
             Your presence is the greatest gift of all. For those who&rsquo;d
             still like to give, we have a wishing well for contributions
             towards our future together.
