@@ -101,23 +101,20 @@ export function WhereToStaySection() {
             Accommodation is mostly clustered around Macedon, Gisborne and New
             Gisborne, all a short drive from the venue.
           </p>
-          <p className="mt-4 text-center leading-relaxed text-burgundy-600/80">
-            Beyond the hotels below, it&rsquo;s also worth checking{" "}
+          {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
+              small headings elsewhere) — used here to set the shuttle/rental
+              logistics apart from the recommendation above. */}
+          <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
+            A shuttle bus will be provided for guests staying at the locations
+            below. For house or cottage rentals, explore{" "}
             <a href="https://www.airbnb.com.au/macedon-ranges-shire-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Airbnb
             </a>{" "}
-            and{" "}
+            or{" "}
             <a href="https://relaxholidayrentals.com.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Relax Holiday Rentals
             </a>
-            , which both list houses and cottages across the area.
-          </p>
-          {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
-              small headings elsewhere) — used here to set this logistical note
-              apart from the two recommendation paragraphs above it. */}
-          <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
-            A shuttle bus will be organised for guests staying at the following
-            locations.
+            .
           </p>
         </div>
 
