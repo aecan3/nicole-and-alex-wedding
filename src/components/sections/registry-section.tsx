@@ -98,9 +98,15 @@ export function RegistrySection() {
           </h2>
 
           <p className="absolute left-1/2 top-[59.5%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-600/90">
-            Your presence is the greatest gift of all. For those who&rsquo;d
-            still like to give, we have a wishing well for contributions
-            towards our future together.
+            Your presence is the greatest gift of all.{" "}
+            {/* Line break only on sm+ (desktop/tablet) — on mobile the card
+                is already tight for vertical space, so the text keeps
+                flowing/wrapping naturally there instead of forcing a break.
+                The {" "} above keeps a space between the sentences when the
+                br is hidden — JSX would otherwise collapse it to nothing. */}
+            <br className="hidden sm:block" />
+            For those who&rsquo;d still like to give, we have a wishing well
+            for contributions towards our future together.
           </p>
         </div>
       </Reveal>
