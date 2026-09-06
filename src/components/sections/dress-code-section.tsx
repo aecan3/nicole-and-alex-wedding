@@ -24,21 +24,11 @@ export function DressCodeSection() {
             <div className="mx-auto mt-6 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
           </Reveal>
 
-          <div className="mt-10 space-y-8">
+          <div className="mt-10">
             <p className="leading-relaxed text-cream-200">
-              We&rsquo;d love for you to dress up and celebrate in style with us.
+              We can&rsquo;t wait to dress up with you! Think floor-length dresses,
+              sleek eveningwear, or a tailored suit with a tie or bow tie.
             </p>
-
-            <div className="grid gap-8 sm:grid-cols-2 text-left">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-gold-400">For the Gents</p>
-                <p className="mt-2 text-cream-100">Tailored suit with a tie or bow tie.</p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-gold-400">For the Ladies</p>
-                <p className="mt-2 text-cream-100">A floor-length dress or formal eveningwear.</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
