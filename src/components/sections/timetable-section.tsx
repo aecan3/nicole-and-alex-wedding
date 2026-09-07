@@ -30,8 +30,8 @@ const events = [
   },
   {
     time: "5:00pm",
-    title: "Canapés, Drinks & Photos",
-    detail: "Enjoy drinks and bites outdoors as the sun sets over the grounds.",
+    title: "Aperitivo Hour",
+    detail: "Sip and savour as the sun sets over the grounds.",
   },
   {
     time: "6:30pm – Midnight",
