@@ -57,8 +57,8 @@ export function DressCodeSection() {
             <p className="leading-relaxed text-cream-200">
               We can&rsquo;t wait to dress up with you!
               <br />
-              Think floor-length dresses, sleek eveningwear,
-              <br />
+              Think floor-length dresses, sleek eveningwear,{" "}
+              <br className="hidden sm:block" />
               or a tailored suit with a tie or bow tie.
             </p>
           </div>
