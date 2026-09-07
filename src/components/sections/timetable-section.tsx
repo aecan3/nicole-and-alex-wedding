@@ -21,7 +21,7 @@ const events = [
   {
     time: "3:30pm",
     title: "Guest Arrival",
-    detail: "Please arrive by 3:30pm to settle in and find your seat. The ceremony will commence promptly at 4:00pm, so we kindly ask guests to arrive on time.",
+    detail: "Please arrive by 3:30pm to settle in before our ceremony commences at 4:00pm.",
   },
   {
     time: "4:00pm",
