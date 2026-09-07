@@ -108,6 +108,26 @@ import { Reveal } from "@/components/reveal";
 // text-xl — sm+ keeps text-3xl) since at the narrower 36% column and the
 // phone-width card, text-2xl script wrapped to two lines and ran into
 // the body copy below it.
+//
+// Two fixes after seeing -v6 live: (1) the kicker and body copy were left
+// in the same serif treatment the old -v5 image used, carried over without
+// reconsidering it against this new photo — but the photo you supplied has
+// every line, not just the title, written in the same flowing script, so
+// the overlay now matches: kicker and body both switch from the shared
+// `.kicker`/`font-serif` styling to `font-script`, same as the title
+// already used. A full paragraph in script reads smaller than serif at the
+// same font-size, so the body steps up a size at both breakpoints
+// (text-sm/sm:text-lg instead of text-xs/sm:text-base) with a touch more
+// line-height, and the forced desktop-only line break is dropped — verified
+// against the real embedded font (the dev sandbox can't reach Google Fonts,
+// so live-preview screenshots render a fallback) that it wraps cleanly to
+// 4-5 short lines with room to spare inside the paper at both sizes without
+// it. (2) "off centered" — true: the card's blank paper isn't centred in
+// its own frame photo, it sits noticeably left of the frame's middle
+// (measured left/right paper edges across several rows land it at ~47.5%
+// of the image width, not 50%), so every overlay element centered on 50%
+// was drifting right of the paper's real centre. All three now centre on
+// the paper's measured 47.5% instead of the image's 50%.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
@@ -127,24 +147,18 @@ export function RegistrySection() {
               framed-photo width, so none of it drifts onto the silver frame
               at either breakpoint. */}
 
-          <p className="absolute left-1/2 top-[37.7%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-xs sm:text-sm text-burgundy-700">
+          <p className="absolute left-[47.5%] top-[37.7%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xs sm:text-sm text-burgundy-700">
             With love
           </p>
 
-          <h2 className="absolute left-1/2 top-[46.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-3xl leading-[1.15] text-burgundy-600">
+          <h2 className="absolute left-[47.5%] top-[46.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-3xl leading-[1.15] text-burgundy-600">
             A quick note on gifts
           </h2>
 
-          <p className="absolute left-1/2 top-[62.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-800">
-            Your presence is the greatest gift of all.{" "}
-            {/* Line break only on sm+ (desktop/tablet) — on mobile the card
-                is already tight for vertical space, so the text keeps
-                flowing/wrapping naturally there instead of forcing a break.
-                The {" "} above keeps a space between the sentences when the
-                br is hidden — JSX would otherwise collapse it to nothing. */}
-            <br className="hidden sm:block" />
-            For those who&rsquo;d still like to give, we will have a wishing
-            well available for contributions towards our future together.
+          <p className="absolute left-[47.5%] top-[62.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-sm sm:text-lg leading-[1.3] sm:leading-[1.35] text-burgundy-800">
+            Your presence is the greatest gift of all. For those who&rsquo;d
+            still like to give, we will have a wishing well available for
+            contributions towards our future together.
           </p>
         </div>
       </Reveal>
