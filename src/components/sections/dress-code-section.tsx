@@ -19,12 +19,12 @@ export function DressCodeSection() {
         {/* Olive branches: your own supplied artwork (background-removed),
             not a redrawn version. Framing the whole text block from the
             "Dress Code" kicker down through the body copy, nudged in
-            close per request — hidden below sm since the section isn't
-            wide enough on mobile for them to sit clear of the text. Right
-            branch is the same asset mirrored with scaleX(-1) rather than
-            a second file. Position values (calc(50% - 410px) etc.) are
-            relative to this full-width section, not the max-w-xl text
-            column, matching the approved mock-up exactly. */}
+            close per request. Right branch is the same asset mirrored
+            with scaleX(-1) rather than a second file. Position values
+            (calc(50% - 410px) etc.) are relative to this full-width
+            section, not the max-w-xl text column, matching the approved
+            mock-up exactly. sm and up only — the mobile pair below is a
+            different, faded-background treatment instead. */}
         <Image
           src="/decor/olive-branch.png"
           alt=""
@@ -42,6 +42,30 @@ export function DressCodeSection() {
           height={236}
           className="pointer-events-none absolute hidden w-[230px] h-auto opacity-95 sm:block"
           style={{ right: "calc(50% - 410px)", top: "calc(50% - 24px)", transform: "translateY(-50%) scaleX(-1)" }}
+        />
+
+        {/* Mobile treatment: there's no clear space beside the text at
+            this width, so instead of flanking it these are faded well
+            into the background (opacity-40, vs. 95% on desktop) and
+            allowed to sit behind/under the text rather than beside it —
+            approved from a mock-up of a few opacity/size options. */}
+        <Image
+          src="/decor/olive-branch.png"
+          alt=""
+          aria-hidden="true"
+          width={212}
+          height={236}
+          className="pointer-events-none absolute block w-[170px] h-auto opacity-40 sm:hidden"
+          style={{ left: "-10px", top: "50%", transform: "translateY(-50%)" }}
+        />
+        <Image
+          src="/decor/olive-branch.png"
+          alt=""
+          aria-hidden="true"
+          width={212}
+          height={236}
+          className="pointer-events-none absolute block w-[170px] h-auto opacity-40 sm:hidden"
+          style={{ right: "-10px", top: "50%", transform: "translateY(-50%) scaleX(-1)" }}
         />
 
         <div className="relative z-10 mx-auto max-w-xl px-6 py-20 sm:py-28 text-center">
