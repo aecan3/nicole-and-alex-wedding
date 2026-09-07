@@ -19,14 +19,26 @@ export default function Home() {
       {/* No CTA below the card any more (removed per request) — the
           section's py is symmetric top/bottom so the card, as the only
           child now, sits vertically centered in the burgundy band on its
-          own rather than needing extra balancing margin. */}
+          own rather than needing extra balancing margin.
+
+          -v2 swaps in a different card frame (a scalloped doily-style
+          border instead of the previous card art) per request, text
+          already baked into the supplied source image so no separate
+          overlay text needed here. The source came in on a solid black
+          backdrop; background-removed the same way as other cutouts on
+          this site (corner-sampled reference colour, distance-based alpha)
+          and re-composited onto the section's own bg-burgundy-900 colour
+          (#4a1521) rather than kept transparent, so it's a flat opaque JPG
+          like the original and blends into the section exactly the same
+          way. New width/height match the new card's own aspect ratio
+          (1218x864 vs the old 1166x896) so next/image doesn't stretch it. */}
       <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
         <Reveal>
           <Image
-            src="/decor/invitation-card.jpg"
+            src="/decor/invitation-card-v2.jpg"
             alt="Together with our families, we joyfully invite you to our wedding celebration. Thank you for being part of one of the most meaningful moments of our lives. We cannot wait to celebrate love, laughter and unforgettable memories with you. Forever grateful, Nicole &amp; Alex"
-            width={1166}
-            height={896}
+            width={1218}
+            height={864}
             /* Rendered width is min(100vw-48px, 704px) — 48px matches this
                section's own px-6 padding on both sides, so on mobile the
                card fills the full available width up to that padding
