@@ -26,7 +26,7 @@ const events = [
   {
     time: "4:00pm",
     title: "The Ceremony",
-    detail: "We say &ldquo;I do&rdquo; in The Vista, set against views of Mount Macedon.",
+    detail: "We exchange vows at The Vista, framed by views of Mount Macedon.",
   },
   {
     time: "5:00pm",
@@ -36,7 +36,7 @@ const events = [
   {
     time: "6:30pm – Midnight",
     title: "The Reception",
-    detail: "Dinner, speeches, and plenty of dancing inside the Glass Atrium.",
+    detail: "An evening of dinner, toasts, and dancing under the stars in the Glass Atrium.",
   },
 ];
 
