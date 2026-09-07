@@ -79,11 +79,11 @@ export function DressCodeSection() {
 
           <div className="mt-10">
             <p className="leading-relaxed text-cream-200">
-              We can&rsquo;t wait to dress up with you!
+              We ask that guests join us in formal attire.
               <br />
-              Think floor-length dresses, sleek eveningwear,{" "}
+              Think floor-length dresses, elegant eveningwear,{" "}
               <br className="hidden sm:block" />
-              or a tailored suit with a tie or bow tie.
+              or a tailored suit with a tie.
             </p>
           </div>
         </div>
