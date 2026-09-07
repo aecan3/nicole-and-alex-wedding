@@ -51,7 +51,8 @@ import { Reveal } from "@/components/reveal";
 // tried first too, and whatever one-off feature sat in the sampled patch
 // (a faint highlight near its edge) became a repeating seam once tiled.
 // The ink mask is also clamped to the text's own known-safe width (the
-// overlay elements below are all w-[42%] of this container, centered) —
+// overlay elements below were all w-[42%] of this container at the time,
+// centered) —
 // the original hand-drawn text boxes ran slightly wider than the card at
 // some rows, and the more sensitive -v4 mask was catching the ornate
 // silver frame's carving as "ink" there too.
@@ -71,51 +72,70 @@ import { Reveal } from "@/components/reveal";
 // larger title room before wrapping - the previous sizes read as too
 // small to comfortably read on a phone.
 //
-// Contrast/vintage pass (approved from a mock-up): the card image gets a
-// mild filter (a touch more contrast, slightly desaturated, a hint of
-// sepia, a bit less bright) plus a soft warm vignette overlay so the
-// paper reads a little aged rather than freshly printed. The body copy
-// stays the same serif font/weight — just stepped one shade darker
-// (burgundy-600/90 to a solid burgundy-800) for legibility against the
-// paper; the kicker/title were already dark enough and are unchanged.
+// Contrast/vintage pass (approved from a mock-up): the card image got a
+// mild filter (contrast/sepia/vignette) plus a darker body-copy colour so
+// the paper read a little aged rather than freshly printed.
+//
+// -v6 replaces -v5 with a photo you supplied directly, already carrying
+// its own warmer, more contrasty vintage tone (from your own edit), so
+// the CSS filter/vignette from the mock-up pass above is removed here —
+// applying both would have double-processed it. Like -v3, the source
+// came in as a screenshot with this component's own text baked into the
+// pixels, so it needed the same "erase the baked-in copy, then let the
+// real text sit back on top" treatment: an ink mask from local
+// background subtraction (restricted to a hand-measured safe box well
+// inside the card so the frame's carving is never mistaken for ink),
+// filled via a large-radius (81px) per-channel median blur feathered
+// back in — a smaller radius or a boundary-diffusion fill both still
+// left a faint readable "ghost" of the letters (the diffusion result is
+// mathematically pulled toward the letter-shaped mask boundary, so it
+// echoes the letterforms no matter how many iterations it runs; a wide
+// enough median instead pulls a robust value from a broad neighbourhood
+// dominated by plain paper, which doesn't). Background alpha is the same
+// corner-sampled difference matte as -v5, except forced to full opacity
+// across the paper's own convex hull — computing it straight from the
+// diffed pixels re-introduced a faint version of the same ghost, because
+// the removed ink pixels differ from the background-colour model by a
+// lot more than the surrounding blank paper does, so the two areas were
+// getting slightly different alpha and the mismatch alone silhouetted
+// the old text once composited over the page's cream. Photo is a
+// different aspect ratio again (955×1120), so the container's aspect-[]
+// and the hand-measured overlay percentages below are updated to match —
+// including the overlay width, stepped down from 42% to 36%: the paper
+// itself is proportionally narrower in this photo (~44% of the frame vs
+// ~49% before), so 42% was overhanging onto the frame on the paragraph's
+// wider lines. The title also drops a step on mobile (text-2xl to
+// text-xl — sm+ keeps text-3xl) since at the narrower 36% column and the
+// phone-width card, text-2xl script wrapped to two lines and ran into
+// the body copy below it.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
-        <div className="relative mx-auto aspect-[928/1152] w-full max-w-[420px] sm:max-w-xl">
+        <div className="relative mx-auto aspect-[955/1120] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v5.png"
+            src="/gallery/gifts-plate-card-v6.png"
             alt=""
             aria-hidden="true"
             fill
             sizes="(min-width: 640px) 576px, 420px"
             className="object-contain select-none pointer-events-none"
-            style={{ filter: "contrast(1.1) saturate(0.82) sepia(0.14) brightness(0.93)" }}
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 65% at 50% 48%, transparent 55%, rgba(90,50,30,0.10) 100%)",
-              mixBlendMode: "multiply",
-            }}
           />
 
-          {/* Everything below is sized to the card's own width (~48.7% of
-              this box — x 238–690 of the 928px source photo), not the full
+          {/* Everything below is sized to the card's own width (~44% of
+              this box — x 246–665 of the 955px source photo), not the full
               framed-photo width, so none of it drifts onto the silver frame
               at either breakpoint. */}
 
-          <p className="absolute left-1/2 top-[34%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-xs sm:text-sm text-taupe-600">
+          <p className="absolute left-1/2 top-[37.7%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center kicker text-xs sm:text-sm text-burgundy-700">
             With love
           </p>
 
-          <h2 className="absolute left-1/2 top-[44%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-2xl sm:text-3xl leading-[1.15] text-burgundy-600">
+          <h2 className="absolute left-1/2 top-[46.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-3xl leading-[1.15] text-burgundy-600">
             A quick note on gifts
           </h2>
 
-          <p className="absolute left-1/2 top-[59.5%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-800">
+          <p className="absolute left-1/2 top-[62.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-800">
             Your presence is the greatest gift of all.{" "}
             {/* Line break only on sm+ (desktop/tablet) — on mobile the card
                 is already tight for vertical space, so the text keeps
