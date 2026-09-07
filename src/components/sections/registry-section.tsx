@@ -1,165 +1,48 @@
 import Image from "next/image";
 import { Reveal } from "@/components/reveal";
 
-// The section used to be a plain PageHeader + two paragraphs of body copy.
-// It's now built entirely around a single photo (an ornate silver frame
-// holding a blank deckle-edge card, background removed so it sits directly
-// on the site's own cream page colour) with all of the copy — including
-// what used to be the "With Love / Gifts" PageHeader — laid over the card
-// face as real text, the same way the invitation-card image up in the
-// Hero carries its own message. Percentages below are hand-measured against
-// the source photo (928×1152) so each line lands inside the card's deckle
-// edges rather than drifting onto the silver frame as the box reflows. No
-// monogram here any more — with just three lines of copy, adding a fourth
-// element only pushed everything down and left a gap at the top of the
-// card, so the text block now starts right under the deckle edge instead.
-//
-// -v3 replaces -v2: the frame/tray in -v2 had a soft blurry patch on the
-// lower-left tray surface (a leftover artifact from the dish-flattening
-// pass used to tame a distracting highlight there) that never fully
-// resolved — the source photo behind -v3 doesn't have that highlight to
-// begin with, so the whole tray reads sharp and consistent. The supplied
-// -v3 source came through as a screenshot of this very page (with this
-// component's own text already baked into the pixels at render time,
-// down to the exact font/kerning), so it needed the same "erase the
-// baked-in copy" treatment as the original -v2 source before it could go
-// back to being a blank card for this component's real text to sit on
-// again — otherwise the two copies would have rendered doubled up.
-// Background removal is a difference matte against the sampled page-cream
-// corner colour (928×1152 image, so a different aspect ratio from -v2 —
-// the container's aspect-[] below is updated to match, otherwise
-// object-contain would letterbox it).
-//
-// -v4 replaces -v3: the text-removal pass behind -v3 used a small-radius
-// cv2.inpaint restricted to a flat "gray < 210" ink threshold, which left
-// visible blotchy discoloration in the paper where the letters used to be
-// (the threshold also caught only part of the anti-aliased letter edges,
-// and a plain inpaint of that size has no way to reproduce the paper's own
-// fine grain, so the filled patches read as smudges rather than paper).
-// -v4 rebuilds that removal step end to end: an ink mask from LOCAL
-// background subtraction (a pixel is "ink" if it's meaningfully darker, in
-// grayscale or in color, than a large-median-blur estimate of its own
-// surrounding paper — catches faint anti-aliased edges that a flat cutoff
-// missed, without being fooled by the paper's own slow shading); a smooth
-// low-frequency fill via plain iterative blur-diffusion run at full
-// resolution on a small crop around the text (a downscale/inpaint/upscale
-// version of this tried first, but left both a repeatable ringing artifact
-// and a visible "staircase" from the resize grid); and separately
-// synthesized paper grain (random noise matched to the paper's own
-// measured amplitude, lightly blurred) laid back on top, rather than
-// copying a real patch of texture — copying-and-tiling a real patch was
-// tried first too, and whatever one-off feature sat in the sampled patch
-// (a faint highlight near its edge) became a repeating seam once tiled.
-// The ink mask is also clamped to the text's own known-safe width (the
-// overlay elements below were all w-[42%] of this container at the time,
-// centered) —
-// the original hand-drawn text boxes ran slightly wider than the card at
-// some rows, and the more sensitive -v4 mask was catching the ornate
-// silver frame's carving as "ink" there too.
-//
-// -v5 replaces -v4: the -v4 background removal compared the (BGR) source
-// image against a reference colour written in RGB order, so the R and B
-// channels were swapped when measuring "distance from background" - a
-// meaningful chunk of the real background fell under the mis-scaled
-// threshold and stayed partly opaque, showing up as a faint but visibly
-// darker rectangular ghost of the source screenshot's own background
-// behind the frame. -v5 fixes the channel order and measures the
-// reference colour from this image's own corner pixels instead of a
-// hardcoded constant, so it's self-calibrating.
-//
-// Text sizes bumped a step up at both breakpoints (kicker/body/title) and
-// the overlay column widened from 42% to 46% of the card to give the
-// larger title room before wrapping - the previous sizes read as too
-// small to comfortably read on a phone.
-//
-// Contrast/vintage pass (approved from a mock-up): the card image got a
-// mild filter (contrast/sepia/vignette) plus a darker body-copy colour so
-// the paper read a little aged rather than freshly printed.
-//
-// -v6 replaces -v5 with a photo you supplied directly, already carrying
-// its own warmer, more contrasty vintage tone (from your own edit), so
-// the CSS filter/vignette from the mock-up pass above is removed here —
-// applying both would have double-processed it. Like -v3, the source
-// came in as a screenshot with this component's own text baked into the
-// pixels, so it needed the same "erase the baked-in copy, then let the
-// real text sit back on top" treatment: an ink mask from local
-// background subtraction (restricted to a hand-measured safe box well
-// inside the card so the frame's carving is never mistaken for ink),
-// filled via a large-radius (81px) per-channel median blur feathered
-// back in — a smaller radius or a boundary-diffusion fill both still
-// left a faint readable "ghost" of the letters (the diffusion result is
-// mathematically pulled toward the letter-shaped mask boundary, so it
-// echoes the letterforms no matter how many iterations it runs; a wide
-// enough median instead pulls a robust value from a broad neighbourhood
-// dominated by plain paper, which doesn't). Background alpha is the same
-// corner-sampled difference matte as -v5, except forced to full opacity
-// across the paper's own convex hull — computing it straight from the
-// diffed pixels re-introduced a faint version of the same ghost, because
-// the removed ink pixels differ from the background-colour model by a
-// lot more than the surrounding blank paper does, so the two areas were
-// getting slightly different alpha and the mismatch alone silhouetted
-// the old text once composited over the page's cream. Photo is a
-// different aspect ratio again (955×1120), so the container's aspect-[]
-// and the hand-measured overlay percentages below are updated to match —
-// including the overlay width, stepped down from 42% to 36%: the paper
-// itself is proportionally narrower in this photo (~44% of the frame vs
-// ~49% before), so 42% was overhanging onto the frame on the paragraph's
-// wider lines. The title also drops a step on mobile (text-2xl to
-// text-xl — sm+ keeps text-3xl) since at the narrower 36% column and the
-// phone-width card, text-2xl script wrapped to two lines and ran into
-// the body copy below it.
-//
-// Two fixes after seeing -v6 live: (1) the kicker and body copy were left
-// in the same serif treatment the old -v5 image used, carried over without
-// reconsidering it against this new photo — but the photo you supplied has
-// every line, not just the title, written in the same flowing script, so
-// the overlay now matches: kicker and body both switch from the shared
-// `.kicker`/`font-serif` styling to `font-script`, same as the title
-// already used. A full paragraph in script reads smaller than serif at the
-// same font-size, so the body steps up a size at both breakpoints
-// (text-sm/sm:text-lg instead of text-xs/sm:text-base) with a touch more
-// line-height, and the forced desktop-only line break is dropped — verified
-// against the real embedded font (the dev sandbox can't reach Google Fonts,
-// so live-preview screenshots render a fallback) that it wraps cleanly to
-// 4-5 short lines with room to spare inside the paper at both sizes without
-// it. (2) "off centered" — true: the card's blank paper isn't centred in
-// its own frame photo, it sits noticeably left of the frame's middle
-// (measured left/right paper edges across several rows land it at ~47.5%
-// of the image width, not 50%), so every overlay element centered on 50%
-// was drifting right of the paper's real centre. All three now centre on
-// the paper's measured 47.5% instead of the image's 50%.
+// The section is a single photo: an ornate silver frame holding a
+// deckle-edge card, background removed so it sits directly on the site's
+// own cream page colour, its own soft drop shadow preserved from the
+// original photo rather than a CSS shadow. -v2 through -v6 carried the copy
+// as real HTML text laid over a blank card image instead (percentages
+// hand-measured against each new source photo so it landed inside the
+// card's edges rather than drifting onto the frame) — matching a live font
+// against a photographed handwriting style, and keeping it centred on the
+// card's own measured centre rather than the photo's, turned out to be more
+// fiddly to keep right across every card-photo replacement than it was
+// worth. -v7 folds the copy into the photo itself instead: you sent through
+// a screenshot of the last (correctly centred, correct font) render of this
+// section as the new source image, so there's no more live text to
+// position — just the one flattened picture, cropped/lit/shadowed exactly
+// as supplied. Getting there took two passes over that screenshot: a mild
+// unsharp mask, since the screenshot capture read a bit soft next to the
+// original card photo's own sharpness; and a background removal that keeps
+// the frame's real soft shadow rather than cutting it off hard at some
+// radius — a plain corner-sampled difference matte (as used for earlier
+// versions) put the shadow's own gradient through the same threshold as
+// everything else, which for a shadow that fades gradually into a
+// naturally textured (not perfectly flat) wall produced a jagged, staircase
+// edge right where the shadow faded out. Fix was to only force full opacity
+// where it's actually needed — inside the card's own paper, whose pale
+// colour otherwise sits close enough to the background model to get read as
+// partly transparent (the same "paper hole" failure earlier versions hit,
+// now solved with a convex hull over the paper's own colour instead of
+// trying to threshold the whole frame+shadow silhouette at once) — and
+// leave the shadow and every other pixel on the original soft, unforced
+// alpha gradient, so the shadow keeps its natural photographic falloff.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
         <div className="relative mx-auto aspect-[955/1120] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v6.png"
-            alt=""
-            aria-hidden="true"
+            src="/gallery/gifts-plate-card-v7.png"
+            alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
             sizes="(min-width: 640px) 576px, 420px"
             className="object-contain select-none pointer-events-none"
           />
-
-          {/* Everything below is sized to the card's own width (~44% of
-              this box — x 246–665 of the 955px source photo), not the full
-              framed-photo width, so none of it drifts onto the silver frame
-              at either breakpoint. */}
-
-          <p className="absolute left-[47.5%] top-[37.7%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xs sm:text-sm text-burgundy-700">
-            With love
-          </p>
-
-          <h2 className="absolute left-[47.5%] top-[46.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-xl sm:text-3xl leading-[1.15] text-burgundy-600">
-            A quick note on gifts
-          </h2>
-
-          <p className="absolute left-[47.5%] top-[62.9%] w-[36%] -translate-x-1/2 -translate-y-1/2 text-center font-script italic text-sm sm:text-lg leading-[1.3] sm:leading-[1.35] text-burgundy-800">
-            Your presence is the greatest gift of all. For those who&rsquo;d
-            still like to give, we will have a wishing well available for
-            contributions towards our future together.
-          </p>
         </div>
       </Reveal>
     </section>
