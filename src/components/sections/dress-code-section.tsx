@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Reveal } from "@/components/reveal";
 
 // This section used to run through the shared PageHeader (burgundy text on
@@ -14,8 +15,36 @@ import { Reveal } from "@/components/reveal";
 export function DressCodeSection() {
   return (
     <section id="dress-code" className="scroll-mt-24">
-      <div className="bg-[radial-gradient(ellipse_140%_100%_at_50%_0%,var(--color-burgundy-800)_0%,var(--color-burgundy-900)_55%,var(--color-burgundy-950)_100%)]">
-        <div className="mx-auto max-w-xl px-6 py-20 sm:py-28 text-center">
+      <div className="relative overflow-hidden bg-[radial-gradient(ellipse_140%_100%_at_50%_0%,var(--color-burgundy-800)_0%,var(--color-burgundy-900)_55%,var(--color-burgundy-950)_100%)]">
+        {/* Olive branches: your own supplied artwork (background-removed),
+            not a redrawn version. Framing the whole text block from the
+            "Dress Code" kicker down through the body copy, nudged in
+            close per request — hidden below sm since the section isn't
+            wide enough on mobile for them to sit clear of the text. Right
+            branch is the same asset mirrored with scaleX(-1) rather than
+            a second file. Position values (calc(50% - 410px) etc.) are
+            relative to this full-width section, not the max-w-xl text
+            column, matching the approved mock-up exactly. */}
+        <Image
+          src="/decor/olive-branch.png"
+          alt=""
+          aria-hidden="true"
+          width={212}
+          height={236}
+          className="pointer-events-none absolute hidden w-[230px] h-auto opacity-95 sm:block"
+          style={{ left: "calc(50% - 410px)", top: "calc(50% - 24px)", transform: "translateY(-50%)" }}
+        />
+        <Image
+          src="/decor/olive-branch.png"
+          alt=""
+          aria-hidden="true"
+          width={212}
+          height={236}
+          className="pointer-events-none absolute hidden w-[230px] h-auto opacity-95 sm:block"
+          style={{ right: "calc(50% - 410px)", top: "calc(50% - 24px)", transform: "translateY(-50%) scaleX(-1)" }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-xl px-6 py-20 sm:py-28 text-center">
           <Reveal>
             <p className="kicker text-base sm:text-lg text-gold-400 mb-3">Dress Code</p>
             <h2 className="font-display text-4xl sm:text-6xl text-cream-100 tracking-tight">
@@ -28,8 +57,9 @@ export function DressCodeSection() {
             <p className="leading-relaxed text-cream-200">
               We can&rsquo;t wait to dress up with you!
               <br />
-              Think floor-length dresses, sleek eveningwear, or a tailored suit
-              with a tie or bow tie.
+              Think floor-length dresses, sleek eveningwear,
+              <br />
+              or a tailored suit with a tie or bow tie.
             </p>
           </div>
         </div>
