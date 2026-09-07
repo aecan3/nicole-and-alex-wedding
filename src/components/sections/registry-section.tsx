@@ -70,6 +70,14 @@ import { Reveal } from "@/components/reveal";
 // the overlay column widened from 42% to 46% of the card to give the
 // larger title room before wrapping - the previous sizes read as too
 // small to comfortably read on a phone.
+//
+// Contrast/vintage pass (approved from a mock-up): the card image gets a
+// mild filter (a touch more contrast, slightly desaturated, a hint of
+// sepia, a bit less bright) plus a soft warm vignette overlay so the
+// paper reads a little aged rather than freshly printed. The body copy
+// stays the same serif font/weight — just stepped one shade darker
+// (burgundy-600/90 to a solid burgundy-800) for legibility against the
+// paper; the kicker/title were already dark enough and are unchanged.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
@@ -82,6 +90,16 @@ export function RegistrySection() {
             fill
             sizes="(min-width: 640px) 576px, 420px"
             className="object-contain select-none pointer-events-none"
+            style={{ filter: "contrast(1.1) saturate(0.82) sepia(0.14) brightness(0.93)" }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 65% at 50% 48%, transparent 55%, rgba(90,50,30,0.10) 100%)",
+              mixBlendMode: "multiply",
+            }}
           />
 
           {/* Everything below is sized to the card's own width (~48.7% of
@@ -97,7 +115,7 @@ export function RegistrySection() {
             A quick note on gifts
           </h2>
 
-          <p className="absolute left-1/2 top-[59.5%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-600/90">
+          <p className="absolute left-1/2 top-[59.5%] w-[46%] -translate-x-1/2 -translate-y-1/2 text-center font-serif text-xs sm:text-base leading-[1.4] text-burgundy-800">
             Your presence is the greatest gift of all.{" "}
             {/* Line break only on sm+ (desktop/tablet) — on mobile the card
                 is already tight for vertical space, so the text keeps
