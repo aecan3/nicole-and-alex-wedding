@@ -21,13 +21,20 @@ import { Reveal } from "@/components/reveal";
 // burgundy-700 by that strength (rather than a flat recolour), so the
 // anti-aliased edges of the letters stay smooth instead of going hard/
 // pixelated. Nothing else about the card or its position changed.
+//
+// -v10c: you asked for this card's ink to be as dark as the welcome-letter
+// card's ink (the "Together with our families..." invitation), so instead
+// of guessing a shade I sampled that image's actual text colour (~#3e3426,
+// a dark warm brown-black) and reran the same ink-strength blend against
+// that target instead of burgundy-700. Position, size and everything else
+// unchanged.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
         <div className="relative mx-auto aspect-[2944/4416] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v10b.png"
+            src="/gallery/gifts-plate-card-v10c.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
             sizes="(min-width: 640px) 576px, 420px"

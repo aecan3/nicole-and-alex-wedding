@@ -45,22 +45,6 @@ const stays: Stay[] = [
     note: "Use discount code ‘GetNicoles10%’ for direct bookings only over the phone.",
     position: [-37.415, 144.559] as [number, number],
   },
-  {
-    name: "Lawson Lodge Country Estate",
-    address: "227 Lawson Road, Macedon VIC",
-    phone: "03 5426 1551",
-    website: "https://www.lawsonlodge.com.au/",
-    note: "A larger country property with group-stay rooms — a good option if a few of you want to stay together.",
-    position: [-37.428, 144.56] as [number, number],
-  },
-  {
-    name: "Braeside Mt Macedon Country Retreat",
-    address: "47 Taylors Road, Mount Macedon VIC",
-    phone: "03 5426 1762",
-    website: "https://www.braesidemtmacedon.com.au/",
-    note: "Three private self-contained cottages set in garden grounds, a little further up the mountain.",
-    position: [-37.3695, 144.5875] as [number, number],
-  },
 ];
 
 // Small inline icons for the address/phone rows below — kept as plain
