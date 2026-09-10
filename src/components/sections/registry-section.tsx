@@ -62,15 +62,28 @@ import { Reveal } from "@/components/reveal";
 // Note: your screenshot's side margins still matched the *old* px-4/
 // max-w-420 numbers almost exactly, which means that screenshot was very
 // likely a cached view from before round 2 actually redeployed, not a
-// bug in the round 2 fix - worth a hard refresh to confirm the sides are
-// already flush before judging this round.
+// bug in the round 2 fix.
+//
+// Round 4 (the real fix): you confirmed sides were fine after a hard
+// refresh, but top/bottom still didn't budge even with py cut to almost
+// nothing - because the section's own padding was never the (main) cause.
+// The v12 canvas (2944x4416) had a lot of transparent margin baked in
+// around the tray itself (14%/13%/7%/9% top/bottom/left/right of the
+// canvas) left over from when it was composited at a fixed size - since
+// the box's aspect-ratio matches the *whole canvas*, object-contain was
+// faithfully rendering that baked-in margin as cream dead space no
+// amount of section padding could touch. Fixed by cropping the PNG
+// itself tight around the tray+shadow (down to 2579x3351, ~2% breathing
+// room around the shadow's soft edge) and updating the aspect-ratio class
+// to match, so the box now hugs the actual content instead of the old
+// oversized canvas.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-0 sm:px-4 py-4 sm:py-8">
       <Reveal>
-        <div className="relative mx-auto aspect-[2944/4416] w-full max-w-none sm:max-w-[692px]">
+        <div className="relative mx-auto aspect-[2579/3351] w-full max-w-none sm:max-w-[692px]">
           <Image
-            src="/gallery/gifts-plate-card-v12.png"
+            src="/gallery/gifts-plate-card-v13.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
             sizes="(min-width: 640px) 692px, 100vw"
