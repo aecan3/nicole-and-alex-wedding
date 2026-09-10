@@ -25,13 +25,22 @@ import { Reveal } from "@/components/reveal";
 // -v10c (reverted): tried resampling the welcome-letter's ink colour and
 // reblending to it, but it made the lettering look traced/outlined rather
 // than clean printed text - reverted back to -v10b (burgundy-700) below.
+//
+// -v11: swapped the card for the new, cleaner photo you supplied directly
+// (text already set in it, same as -v10) - background removed with a
+// plain brightness cutout again, but this time with a more generous
+// inward crop pad and a hard (not soft-ramped) alpha edge, because the
+// -v10 soft-ramp approach left a faint white fringe on this photo's crisp
+// edge. Placed at the exact same centred footprint the card has occupied
+// since -v9/-v10 (measured directly off the live composite, not
+// eyeballed), so position and relative size match every version before it.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
         <div className="relative mx-auto aspect-[2944/4416] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v10b.png"
+            src="/gallery/gifts-plate-card-v11.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
             sizes="(min-width: 640px) 576px, 420px"
