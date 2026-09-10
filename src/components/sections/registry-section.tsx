@@ -34,13 +34,17 @@ import { Reveal } from "@/components/reveal";
 // edge. Placed at the exact same centred footprint the card has occupied
 // since -v9/-v10 (measured directly off the live composite, not
 // eyeballed), so position and relative size match every version before it.
+//
+// -v12: swapped in the correct photo of the card (same treatment as -v11 -
+// brightness cutout, hard alpha edge, same centred footprint) - this one's
+// ink is already burgundy, not the dark brown -v11 had.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
         <div className="relative mx-auto aspect-[2944/4416] w-full max-w-[420px] sm:max-w-xl">
           <Image
-            src="/gallery/gifts-plate-card-v11.png"
+            src="/gallery/gifts-plate-card-v12.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
             sizes="(min-width: 640px) 576px, 420px"
