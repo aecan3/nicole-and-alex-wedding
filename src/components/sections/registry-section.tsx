@@ -45,9 +45,20 @@ import { Reveal } from "@/components/reveal";
 // is what left the wide cream margins in your screenshot - that cap is
 // dropped (max-w-none) so it now fills out to the section's own px-4 page
 // gutter on every phone width, same as the rest of the page's content.
+//
+// Round 2: you flagged dead space above/below the plate on both
+// breakpoints, plus wanted mobile another 20% bigger again. The vertical
+// py-20/py-28 is cut roughly in half (py-10/py-14) on both. On mobile the
+// image was already filling the page's normal side gutter, so there was
+// no room left to grow within it - dropped the section's own left/right
+// padding on mobile only (px-0, sm:px-4 restores it on desktop) so the
+// card now bleeds edge-to-edge instead. That's a real but modest gain
+// (~9% wider, screen-width-limited) - full 20% isn't physically possible
+// on mobile without the image overflowing the viewport, so this is as
+// large as it can go edge-to-edge; flag if you had something else in mind.
 export function RegistrySection() {
   return (
-    <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
+    <section id="registry" className="scroll-mt-24 px-0 sm:px-4 py-10 sm:py-14">
       <Reveal>
         <div className="relative mx-auto aspect-[2944/4416] w-full max-w-none sm:max-w-[692px]">
           <Image

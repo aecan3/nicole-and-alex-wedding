@@ -45,6 +45,22 @@ const stays: Stay[] = [
     note: "Use discount code ‘GetNicoles10%’ for direct bookings only over the phone.",
     position: [-37.415, 144.559] as [number, number],
   },
+  {
+    name: "Gisborne Motel",
+    // Same richer treatment as the two above (addressLines + Apple Maps
+    // link with real coordinates, phoneHref). No discount code for this
+    // one - I couldn't find any arrangement with them, so rather than
+    // invent one the note below is just a plain description. Address,
+    // phone and coordinates confirmed off the motel's own site
+    // (gisbornemotel.com.au) plus matching entries on Booking.com/Expedia.
+    addressLines: ["106 Sheedy Road", "Gisborne VIC 3437"],
+    mapsUrl: "https://maps.apple.com/?ll=-37.49754,144.60439&q=Gisborne%20Motel",
+    phone: "03 5428 2139",
+    phoneHref: "tel:0354282139",
+    website: "https://gisbornemotel.com.au/",
+    note: "A straightforward, well-located motel in the Gisborne township, a short drive from the venue.",
+    position: [-37.49754, 144.60439] as [number, number],
+  },
 ];
 
 // Small inline icons for the address/phone rows below — kept as plain
