@@ -56,9 +56,17 @@ import { Reveal } from "@/components/reveal";
 // (~9% wider, screen-width-limited) - full 20% isn't physically possible
 // on mobile without the image overflowing the viewport, so this is as
 // large as it can go edge-to-edge; flag if you had something else in mind.
+//
+// Round 3: still too much space per your screenshot - cut py-10/py-14
+// down further to py-4/py-8 (16px/32px), about a quarter of the original.
+// Note: your screenshot's side margins still matched the *old* px-4/
+// max-w-420 numbers almost exactly, which means that screenshot was very
+// likely a cached view from before round 2 actually redeployed, not a
+// bug in the round 2 fix - worth a hard refresh to confirm the sides are
+// already flush before judging this round.
 export function RegistrySection() {
   return (
-    <section id="registry" className="scroll-mt-24 px-0 sm:px-4 py-10 sm:py-14">
+    <section id="registry" className="scroll-mt-24 px-0 sm:px-4 py-4 sm:py-8">
       <Reveal>
         <div className="relative mx-auto aspect-[2944/4416] w-full max-w-none sm:max-w-[692px]">
           <Image
