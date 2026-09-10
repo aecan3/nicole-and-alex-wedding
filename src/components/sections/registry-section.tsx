@@ -38,16 +38,23 @@ import { Reveal } from "@/components/reveal";
 // -v12: swapped in the correct photo of the card (same treatment as -v11 -
 // brightness cutout, hard alpha edge, same centred footprint) - this one's
 // ink is already burgundy, not the dark brown -v11 had.
+//
+// Sizing: you said it was hard to read - on desktop the box was capped at
+// 576px (sm:max-w-xl), bumped 20% to 692px. On mobile it was capped at a
+// flat 420px regardless of how much wider the screen actually was, which
+// is what left the wide cream margins in your screenshot - that cap is
+// dropped (max-w-none) so it now fills out to the section's own px-4 page
+// gutter on every phone width, same as the rest of the page's content.
 export function RegistrySection() {
   return (
     <section id="registry" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
-        <div className="relative mx-auto aspect-[2944/4416] w-full max-w-[420px] sm:max-w-xl">
+        <div className="relative mx-auto aspect-[2944/4416] w-full max-w-none sm:max-w-[692px]">
           <Image
             src="/gallery/gifts-plate-card-v12.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
-            sizes="(min-width: 640px) 576px, 420px"
+            sizes="(min-width: 640px) 692px, 100vw"
             className="object-contain select-none pointer-events-none"
           />
         </div>
