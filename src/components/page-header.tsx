@@ -11,14 +11,18 @@ export function PageHeader({
   // Script caps read optically smaller than lowercase at the same px, so a
   // short heading like "Rsvp" needs a bump to carry the same weight as the
   // word-based titles. Default matches every other section.
-  titleSize = "text-4xl sm:text-6xl",
+  titleSize = "text-[2.625rem] sm:text-[4.125rem]",
+  // Vertical padding, overridable per section. RSVP sits on a photo
+  // backdrop and needs to start higher in its box than the flat sections.
+  padding = "pt-20 pb-10",
 }: {
   title: string;
   kicker?: string;
   titleSize?: string;
+  padding?: string;
 }) {
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-20 pb-10 text-center">
+    <div className={`mx-auto max-w-3xl px-6 ${padding} text-center`}>
       <Reveal>
         {kicker && (
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">{kicker}</p>

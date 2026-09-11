@@ -366,9 +366,13 @@ export function RsvpSection() {
           sat in a big empty gap above the photo rather than filling it.
           sm:mt-0 leaves tablet/desktop (already tuned via sm:pt-24 above)
           untouched. */}
-      <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-24 -mt-14 sm:mt-0">
+      <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6 -mt-14 sm:mt-0">
         <div className="sm:max-w-md">
-          <PageHeader kicker="By 24 January 2027" title="Rsvp" />
+          <PageHeader
+            kicker="By 24 January 2027"
+            title="Rsvp"
+            padding="pt-10 pb-6"
+          />
           <div className="mx-auto max-w-md px-6 pb-24 sm:mx-0 sm:px-0">
         {/* Stage 1: search */}
         {!confirmingParty && !previousReview && !party && (
