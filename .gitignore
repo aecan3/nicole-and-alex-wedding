@@ -45,3 +45,6 @@ push-to-github.bat
 
 # Claude session screenshots
 Claude outputs/
+
+# github token, never commit
+gh-token.txt
