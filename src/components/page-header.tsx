@@ -12,7 +12,7 @@ export function PageHeader({ title, kicker }: { title: string; kicker?: string }
         {kicker && (
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">{kicker}</p>
         )}
-        <h2 className="font-display text-4xl sm:text-6xl text-burgundy-600 tracking-tight">{title}</h2>
+        <h2 className="font-heading text-4xl sm:text-6xl text-burgundy-600 tracking-tight">{title}</h2>
         <div className="mx-auto mt-6 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
       </Reveal>
     </div>

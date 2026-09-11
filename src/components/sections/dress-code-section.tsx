@@ -71,7 +71,7 @@ export function DressCodeSection() {
         <div className="relative z-10 mx-auto max-w-xl px-6 py-20 sm:py-28 text-center">
           <Reveal>
             <p className="kicker text-base sm:text-lg text-gold-400 mb-3">Dress Code</p>
-            <h2 className="font-display text-4xl sm:text-6xl text-cream-100 tracking-tight">
+            <h2 className="font-heading text-4xl sm:text-6xl text-cream-100 tracking-tight">
               Formal Attire
             </h2>
             <div className="mx-auto mt-6 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />

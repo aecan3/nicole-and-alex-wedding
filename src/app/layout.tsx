@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Beau_Rivage, Cormorant_Garamond, Inter } from "next/font/google";
+import { Playfair_Display, Cormorant_Garamond, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SiteNav, Monogram } from "@/components/nav";
 
@@ -9,11 +10,21 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
-// Matches the calligraphy on the printed invitations.
-const beauRivage = Beau_Rivage({
-  variable: "--font-beau-rivage",
-  weight: "400",
-  subsets: ["latin"],
+// Bickham Script Pro replaces Beau Rivage (couple's names on the hero) and
+// is also used for each section's main title (PageHeader's heading, plus
+// Dress Code's own equivalent heading) - a self-hosted licensed font file
+// you supplied directly, not a Google Font, since it isn't on Google Fonts.
+// Everything smaller (hotel names, FAQ questions, timetable event titles,
+// countdown numbers, RSVP labels, Our Story's sub-heading) stays Playfair
+// Display, per your instruction to only touch the largest text per section.
+const bickhamScript = localFont({
+  src: [
+    { path: "../fonts/bickham-script-pro/BickhamScriptPro-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../fonts/bickham-script-pro/BickhamScriptPro-Semibold.ttf", weight: "600", style: "normal" },
+    { path: "../fonts/bickham-script-pro/BickhamScriptPro-Bold.ttf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-bickham",
+  display: "swap",
 });
 
 const cormorant = Cormorant_Garamond({
@@ -50,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${beauRivage.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${playfair.variable} ${bickhamScript.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream-100 text-burgundy-600">
         {/* Soft warm vignette, framing every screen like light falling across
