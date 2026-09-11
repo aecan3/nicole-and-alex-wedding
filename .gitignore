@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local helper, not part of the site
+push-to-github.bat
+
+# Claude session screenshots
+Claude outputs/
