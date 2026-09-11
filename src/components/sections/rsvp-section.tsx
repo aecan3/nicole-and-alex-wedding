@@ -368,11 +368,7 @@ export function RsvpSection() {
           untouched. */}
       <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-24 -mt-14 sm:mt-0">
         <div className="sm:max-w-md">
-          <PageHeader
-            kicker="By 24 January 2027"
-            title="Rsvp"
-            titleSize="text-5xl sm:text-7xl"
-          />
+          <PageHeader kicker="By 24 January 2027" title="Rsvp" />
           <div className="mx-auto max-w-md px-6 pb-24 sm:mx-0 sm:px-0">
         {/* Stage 1: search */}
         {!confirmingParty && !previousReview && !party && (
