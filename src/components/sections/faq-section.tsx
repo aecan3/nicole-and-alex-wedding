@@ -78,7 +78,7 @@ const faqs: FaqItem[] = [
 export function FaqSection() {
   return (
     <section id="faq" className="scroll-mt-24">
-      <PageHeader kicker="Any questions?" title="Q&A" />
+      <PageHeader kicker="Q&A" title="Any Questions?" />
       <div className="mx-auto max-w-2xl px-6 pb-20">
         <FaqAccordion items={faqs} />
       </div>

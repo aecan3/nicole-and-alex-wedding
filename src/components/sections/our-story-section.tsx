@@ -81,7 +81,7 @@ export function OurStorySection() {
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
             Every Love Story has a
           </p>
-          <h3 className="font-display text-2xl sm:text-3xl text-burgundy-600">
+          <h3 className="font-heading text-3xl sm:text-[2.625rem] text-burgundy-600">
             Third Wheel
           </h3>
           <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
