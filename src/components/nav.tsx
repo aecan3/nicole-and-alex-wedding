@@ -97,8 +97,11 @@ export function SiteNav() {
       }`}
     >
       <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-6 sm:px-10 py-5 2xl:py-6 flex items-center justify-between">
-        <AnchorLink href="#home" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
-          <Monogram className="h-8 w-8 2xl:h-9 2xl:w-9 shrink-0 brightness-0 invert" />
+        {/* The monogram used to sit to the left of the wordmark here. It was
+            removed so the lettering alone carries the brand in the bar; the
+            wordmark now starts at the container's left edge where the
+            monogram did. Monogram is still exported for the footer. */}
+        <AnchorLink href="#home" onClick={closeMenu} className="group flex items-center text-cream-100">
           {/* Same lettering asset as the hero, scaled down, so the nav lockup
               matches the names on the opening screen. Sized by width to sit
               level with the monogram; the alt text keeps the link readable. */}
