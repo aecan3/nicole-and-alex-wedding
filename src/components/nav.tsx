@@ -99,7 +99,17 @@ export function SiteNav() {
       <div className="mx-auto max-w-6xl 2xl:max-w-7xl px-6 sm:px-10 py-5 2xl:py-6 flex items-center justify-between">
         <AnchorLink href="#home" onClick={closeMenu} className="group flex items-center gap-3 text-cream-100">
           <Monogram className="h-8 w-8 2xl:h-9 2xl:w-9 shrink-0 brightness-0 invert" />
-          <span className="font-serif italic text-lg 2xl:text-xl tracking-wide">Nicole &amp; Alex</span>
+          {/* Same lettering asset as the hero, scaled down, so the nav lockup
+              matches the names on the opening screen. Sized by width to sit
+              level with the monogram; the alt text keeps the link readable. */}
+          <Image
+            src="/brand/nicole-and-alex.png"
+            alt="Nicole & Alex"
+            width={2027}
+            height={368}
+            priority
+            className="h-auto w-[150px] 2xl:w-[172px]"
+          />
         </AnchorLink>
 
         {/* Desktop nav */}

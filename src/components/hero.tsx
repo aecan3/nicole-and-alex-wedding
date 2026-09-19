@@ -71,9 +71,19 @@ export function Hero({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="font-script text-6xl sm:text-8xl 2xl:text-9xl text-cream-100 leading-[1.25] mt-5 px-2"
+        className="mt-5 px-2"
       >
-        Nicole &amp; Alex
+        {/* The couple's names are a supplied lettering asset rather than live
+            type, so the exact script from the invitation carries over. The alt
+            text is what gives this <h1> its accessible name. */}
+        <Image
+          src="/brand/nicole-and-alex.png"
+          alt="Nicole & Alex"
+          width={2027}
+          height={368}
+          priority
+          className="mx-auto h-auto w-[78vw] max-w-[560px]"
+        />
       </motion.h1>
 
       <motion.div
