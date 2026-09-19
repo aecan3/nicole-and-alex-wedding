@@ -108,7 +108,7 @@ export function SiteNav() {
             width={2027}
             height={368}
             priority
-            className="h-auto w-[180px] 2xl:w-[205px]"
+            className="h-auto w-[112px] 2xl:w-[128px]"
           />
         </AnchorLink>
 
