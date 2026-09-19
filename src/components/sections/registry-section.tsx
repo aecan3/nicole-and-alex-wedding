@@ -79,14 +79,21 @@ import { Reveal } from "@/components/reveal";
 // oversized canvas.
 export function RegistrySection() {
   return (
-    <section id="registry" className="scroll-mt-24 px-0 sm:px-4 py-4 sm:py-8">
+    <section id="registry" className="scroll-mt-24 px-6 py-12 sm:py-16">
+      {/* Sized to sit with the welcome-note card rather than dominate it.
+          The note renders at min(100vw-48px, 704px); this caps at 500px on
+          desktop so the two read as a pair instead of one being 1.8x the
+          height of the other, and uses the same px-6 gutter on mobile so
+          both are inset by the same amount instead of this one going
+          full-bleed. 500px also keeps the source (743px wide) from being
+          upscaled as hard as it was at 692px. */}
       <Reveal>
-        <div className="relative mx-auto aspect-[2579/3351] w-full max-w-none sm:max-w-[692px]">
+        <div className="relative mx-auto aspect-[743/1019] w-full max-w-[500px]">
           <Image
-            src="/gallery/gifts-plate-card-v13.png"
+            src="/gallery/gifts-plate-card-v14.png"
             alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
             fill
-            sizes="(min-width: 640px) 692px, 100vw"
+            sizes="(min-width: 640px) 500px, calc(100vw - 48px)"
             className="object-contain select-none pointer-events-none"
           />
         </div>
