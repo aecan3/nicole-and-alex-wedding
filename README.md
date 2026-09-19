@@ -1,3 +1,11 @@
+Nicole & Alex's wedding site. One continuously-scrolling page, deployed on Vercel.
+
+Pushing to `main` triggers a deploy. `push-to-github.bat` in the project root stages,
+commits and pushes in one step, and writes its output to `Claude outputs/push-log.txt`.
+Both are gitignored.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
