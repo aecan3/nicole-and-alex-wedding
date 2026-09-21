@@ -36,7 +36,7 @@ const faqs: FaqItem[] = [
   },
   {
     q: "Who should I get in touch with if I have questions?",
-    a: "Reach out to Alex (the groom) on 0423 340 677.",
+    a: "Reach out to Alex on 0423 340 677.",
   },
 ];
 
