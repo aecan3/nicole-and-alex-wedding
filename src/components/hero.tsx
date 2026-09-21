@@ -49,11 +49,11 @@ export function Hero({
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <Image
-          src="/brand/monogram.svg"
+          src="/brand/monogram-na.png"
           alt="N & A monogram"
-          width={112}
-          height={112}
-          className="mx-auto mb-8 h-24 w-24 sm:h-28 sm:w-28 2xl:h-32 2xl:w-32 brightness-0 invert"
+          width={900}
+          height={669}
+          className="mx-auto mb-8 h-[60px] w-auto sm:h-[70px] 2xl:h-20"
           priority
         />
       </motion.div>

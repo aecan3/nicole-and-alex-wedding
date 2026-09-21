@@ -229,10 +229,10 @@ function NavLink({ href, label }: { href: `#${string}`; label: string }) {
 export function Monogram({ className = "h-40 w-40" }: { className?: string }) {
   return (
     <Image
-      src="/brand/monogram.svg"
+      src="/brand/monogram-na.png"
       alt="N & A monogram"
-      width={220}
-      height={220}
+      width={900}
+      height={669}
       className={className}
       priority
     />

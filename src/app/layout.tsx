@@ -90,7 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             line this used to carry has moved off — the footer is just the
             monogram now, centered, same on mobile and desktop. */}
         <footer className="mt-auto bg-burgundy-900 py-4 px-6 flex items-center justify-center">
-          <Monogram className="h-8 w-8 brightness-0 invert" />
+          <Monogram className="h-8 w-auto" />
         </footer>
       </body>
     </html>
