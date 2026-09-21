@@ -5,6 +5,7 @@ import { OurStorySection } from "@/components/sections/our-story-section";
 import { VenueSection } from "@/components/sections/venue-section";
 import { TimetableSection } from "@/components/sections/timetable-section";
 import { WhereToStaySection } from "@/components/sections/where-to-stay-section";
+import { TravelSection } from "@/components/sections/travel-section";
 import { DressCodeSection } from "@/components/sections/dress-code-section";
 import { RegistrySection } from "@/components/sections/registry-section";
 import { FaqSection } from "@/components/sections/faq-section";
@@ -81,6 +82,7 @@ export default function Home() {
       <VenueSection />
       <TimetableSection />
       <WhereToStaySection />
+      <TravelSection />
 
       <SectionSeal />
 
