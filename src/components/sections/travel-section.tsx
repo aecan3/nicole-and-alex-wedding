@@ -8,18 +8,11 @@ export function TravelSection() {
         <div>
           <div className="mx-auto max-w-2xl space-y-5 text-center text-base leading-relaxed text-burgundy-600">
             <p>
-              A guest shuttle will run through the Macedon and Gisborne areas to and from the venue,
-              with pickup times and locations confirmed closer to the date. Please let us know if you
-              need a seat when you RSVP.
-            </p>
-            <p>
-              If you&apos;re arranging your own transport, taxis and rideshares are limited in the
-              area, so please book well ahead.
-            </p>
-            <p>
-              Free parking is available on site, and cars can stay overnight as long as
-              they&apos;re collected by 10:00 am the next day.
-            </p>
+            A guest shuttle will run through Macedon and Gisborne. Please request a seat when you
+            RSVP, and pickup details will follow closer to the date. If arranging your own transport,
+            taxis and rideshares are limited in the area, so please pre-book early. Free on-site
+            parking is available, and cars can stay overnight until 10:00 am the next day.
+          </p>
           </div>
         </div>
       </div>

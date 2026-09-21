@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
-import { Reveal } from "@/components/reveal";
 
 export function VenueSection() {
   return (
@@ -89,7 +88,7 @@ export function VenueSection() {
           <PageHeader title="Alora Macedon" />
 
         <div className="mx-auto max-w-3xl px-6 pt-10 pb-20 text-center">
-          <Reveal>
+          <div>
             <p className="text-lg leading-relaxed">
               Our ceremony and reception will be held at Alora Macedon, a
               Tuscan-inspired estate set among rolling hills at the base of
@@ -97,8 +96,8 @@ export function VenueSection() {
               romantic light, the private grounds offer a beautiful, intimate
               backdrop for our day.
             </p>
-          </Reveal>
-          <Reveal delay={0.15}>
+          </div>
+          <div>
             <div className="mt-10 text-center">
               <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">Address</p>
               {/* The previous ll=/q= link used the venue marker's coordinates
@@ -121,7 +120,7 @@ export function VenueSection() {
                 </a>
               </p>
             </div>
-          </Reveal>
+          </div>
         </div>
         </div>
       </section>
