@@ -10,6 +10,7 @@ import { RegistrySection } from "@/components/sections/registry-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { RsvpSection } from "@/components/sections/rsvp-section";
 import { CountdownSection } from "@/components/sections/countdown-section";
+import { SectionSeal } from "@/components/section-seal";
 
 export default function Home() {
   return (
@@ -39,7 +40,7 @@ export default function Home() {
           the original, subtler pairing. New width/height match the new
           card's own aspect ratio (1218x864 vs the old 1166x896) so
           next/image doesn't stretch it. */}
-      <section className="bg-burgundy-900 px-6 py-28 sm:py-36 text-center">
+      <section className="bg-burgundy-900 px-6 pt-28 pb-[88px] sm:pt-36 sm:pb-28 text-center">
         <Reveal>
           <Image
             src="/decor/invitation-card-v3.png"
@@ -73,6 +74,8 @@ export default function Home() {
           />
         </Reveal>
       </section>
+
+      <SectionSeal />
 
       <OurStorySection />
       <VenueSection />
