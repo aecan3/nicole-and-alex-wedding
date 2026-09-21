@@ -83,7 +83,7 @@ export function DressCodeSection() {
               <br />
               Think floor-length dresses, elegant eveningwear,{" "}
               <br className="hidden sm:block" />
-              or a tailored suit with a tie.
+              or a tailored suit paired with a necktie or bowtie.
             </p>
           </div>
         </div>

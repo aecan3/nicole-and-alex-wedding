@@ -97,26 +97,29 @@ export function WhereToStaySection() {
       <div className="px-6 pb-20">
         <div className="mx-auto max-w-2xl">
           <p className="text-center leading-relaxed">
-            The Macedon Ranges fill up quickly, so we&rsquo;d suggest booking early.
-            Accommodation is mostly clustered around Macedon, Gisborne and New
-            Gisborne, all a short drive from the venue.
-          </p>
-          {/* taupe-600 is the site's secondary/label colour (kickers, timestamps,
-              small headings elsewhere) — used here to set the shuttle/rental
-              logistics apart from the recommendation above. */}
-          <p className="mt-4 text-sm text-center leading-relaxed text-taupe-600">
-            A shuttle bus will be provided for guests staying at the locations
-            below.
-            <br />
-            For house or cottage rentals, explore{" "}
+            Accommodation in the Macedon Ranges fills up quickly, so we suggest
+            booking early. Below are a few hotel recommendations, or you can
+            check{" "}
             <a href="https://www.airbnb.com.au/mount-macedon-australia/stays" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Airbnb
             </a>{" "}
-            or{" "}
+            and{" "}
             <a href="https://relaxholidayrentals.com.au/" target="_blank" rel="noopener noreferrer" className="underline hover:text-burgundy-600">
               Relax Holiday Rentals
-            </a>
-            .
+            </a>{" "}
+            for house and cottage options.
+          </p>
+          {/* The shuttle note is something guests have to act on (request a
+              seat when they RSVP), so it stays at full body colour rather than
+              the muted taupe it used to use. It's set apart instead by the
+              gold rule the section headings use and the italic serif of the
+              kickers, so it reads as a distinct note without looking like
+              small print. */}
+          <div className="mx-auto mt-8 mb-4 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
+          <p className="kicker text-center text-[1.1875rem] leading-normal">
+            A guest shuttle will run through the Macedon and Gisborne areas.
+            Please indicate if you need a seat when you RSVP, and exact pickup
+            locations and times will be confirmed closer to the date.
           </p>
         </div>
 

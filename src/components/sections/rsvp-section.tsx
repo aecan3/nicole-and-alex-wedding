@@ -369,7 +369,7 @@ export function RsvpSection() {
       <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6 -mt-14 sm:mt-0">
         <div className="sm:max-w-md">
           <PageHeader
-            kicker="By 24 January 2027"
+            kicker="By 17 January 2027"
             title="Rsvp"
             padding="pt-10 pb-6"
           />
