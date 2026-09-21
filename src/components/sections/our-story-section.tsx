@@ -51,7 +51,7 @@ export function OurStorySection() {
       <PageHeader kicker="How it all began" title="Our Story" />
       <div className="mx-auto max-w-4xl px-6 pb-24">
         <Reveal className="text-center max-w-xl mx-auto">
-          <p className="leading-relaxed text-burgundy-600/80">
+          <p className="leading-relaxed text-burgundy-600">
             Our first date at a little antique bar on a Tuesday night was the
             beginning of our forever. A few years later, during a special
             trip to Fiji, Alex popped the question (with a couple of
@@ -84,7 +84,7 @@ export function OurStorySection() {
           <h3 className="font-heading text-[2.625rem] sm:text-[4.125rem] text-burgundy-600 tracking-tight">
             Third Wheel
           </h3>
-          <p className="mt-4 leading-relaxed text-burgundy-600/80 max-w-lg mx-auto">
+          <p className="mt-4 leading-relaxed text-burgundy-600 max-w-lg mx-auto">
             Ours just happens to have four legs, a lot of opinions and
             unconditional love.
           </p>
