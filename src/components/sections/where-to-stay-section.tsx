@@ -109,18 +109,6 @@ export function WhereToStaySection() {
             </a>{" "}
             for house and cottage options.
           </p>
-          {/* The shuttle note is something guests have to act on (request a
-              seat when they RSVP), so it stays at full body colour rather than
-              the muted taupe it used to use. It's set apart instead by the
-              gold rule the section headings use and the italic serif of the
-              kickers, so it reads as a distinct note without looking like
-              small print. */}
-          <div className="mx-auto mt-8 mb-4 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
-          <p className="kicker text-center text-[1.1875rem] leading-normal">
-            A guest shuttle will run through the Macedon and Gisborne areas.
-            Please indicate if you need a seat when you RSVP, and exact pickup
-            locations and times will be confirmed closer to the date.
-          </p>
         </div>
 
         {/* Each hotel used to be a plain stacked text block separated by a
@@ -135,7 +123,7 @@ export function WhereToStaySection() {
             does, instead of one flat tone. The "Visit website" pill reuses
             the exact taupe button used for RSVP/nav CTAs, so it still
             reads as a real, familiar button rather than a new style. */}
-        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2 lg:max-w-6xl lg:grid-cols-3">
           {stays.map((s) => {
             const lines = s.addressLines;
             return (
@@ -143,7 +131,7 @@ export function WhereToStaySection() {
                 key={s.name}
                 className="group relative flex flex-col rounded-sm border border-gold-400/40 bg-[linear-gradient(155deg,var(--color-cream-100),var(--color-cream-300))] p-7 pb-6 shadow-[0_1px_3px_rgba(58,15,24,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/75 hover:shadow-[0_10px_24px_-8px_rgba(58,15,24,0.18)]"
               >
-                <h3 className="font-display text-xl text-burgundy-600">{s.name}</h3>
+                <h3 className="font-display text-xl lg:text-lg xl:text-xl text-burgundy-600">{s.name}</h3>
                 <div className="mb-4 mt-3 h-px w-11 bg-gradient-to-r from-gold-400 to-transparent" />
 
                 <div className="mb-4 flex flex-col gap-1.5">

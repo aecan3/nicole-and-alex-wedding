@@ -81,6 +81,9 @@ export default function Home() {
       <VenueSection />
       <TimetableSection />
       <WhereToStaySection />
+
+      <SectionSeal />
+
       <DressCodeSection />
       <RegistrySection />
       <FaqSection />

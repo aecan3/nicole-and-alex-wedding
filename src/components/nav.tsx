@@ -116,7 +116,7 @@ export function SiteNav() {
         </AnchorLink>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-x-7 2xl:gap-x-8 font-serif text-[13px] 2xl:text-[15px] tracking-[0.08em] text-cream-100/90">
+        <nav className="hidden lg:flex items-center gap-x-4 xl:gap-x-7 2xl:gap-x-8 font-serif text-[13px] 2xl:text-[15px] tracking-[0.08em] text-cream-100/90">
           {links.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
