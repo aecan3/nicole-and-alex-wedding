@@ -50,7 +50,7 @@ export function OurStorySection() {
     <section id="our-story" className="scroll-mt-24">
       <PageHeader kicker="How it all began" title="Our Story" />
       <div className="mx-auto max-w-4xl px-6 pb-24">
-        <Reveal className="text-center max-w-xl mx-auto">
+        <div className="text-center max-w-xl mx-auto">
           <p className="leading-relaxed text-burgundy-600">
             Our first date at a little antique bar on a Tuesday night was the
             beginning of our forever. A few years later, during a special
@@ -61,7 +61,7 @@ export function OurStorySection() {
             building together. We&rsquo;re so excited for our future
             adventures ahead, and many more mid-week cocktails.
           </p>
-        </Reveal>
+        </div>
         <Reveal delay={0.15} className="mt-14">
           {/* The gallery's videos autoplay as soon as they mount — fine when
               this was the whole page and already in view, not fine when
@@ -77,18 +77,20 @@ export function OurStorySection() {
           </InView>
         </Reveal>
 
-        <Reveal delay={0.1} className="mt-24 text-center">
+        <div className="mt-24 text-center">
+          <Reveal>
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
             Every Love Story has a
           </p>
           <h3 className="font-heading text-[2.625rem] sm:text-[4.125rem] text-burgundy-600 tracking-tight">
             Third Wheel
           </h3>
+          </Reveal>
           <p className="mt-4 leading-relaxed text-burgundy-600 max-w-lg mx-auto">
             Ours just happens to have four legs, a lot of opinions and
             unconditional love.
           </p>
-        </Reveal>
+        </div>
         <Reveal delay={0.2} className="mt-10">
           {/* riley-framed-v2.png adds a synthesised drop shadow (the
               original cutout had none) behind the frame, matching the

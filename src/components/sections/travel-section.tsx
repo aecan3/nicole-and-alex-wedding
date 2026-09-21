@@ -1,12 +1,11 @@
 import { PageHeader } from "@/components/page-header";
-import { Reveal } from "@/components/reveal";
 
 export function TravelSection() {
   return (
     <section id="travel" className="scroll-mt-24">
       <PageHeader title="Travel" titleSize="text-[2.25rem] sm:text-[3.25rem]" padding="pt-0 pb-8" />
       <div className="px-6 pb-20">
-        <Reveal>
+        <div>
           <div className="mx-auto max-w-2xl space-y-5 text-center text-base leading-relaxed text-burgundy-600">
             <p>
               A guest shuttle will run through the Macedon and Gisborne areas to and from the venue,
@@ -22,7 +21,7 @@ export function TravelSection() {
               they&apos;re collected by 10:00 am the next day.
             </p>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
