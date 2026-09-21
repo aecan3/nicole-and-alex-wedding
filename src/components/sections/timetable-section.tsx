@@ -13,8 +13,8 @@ const listVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: 80 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
 };
 
 const events = [
@@ -114,7 +114,7 @@ export function TimetableSection() {
             className="space-y-10"
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: false, margin: "-80px" }}
             variants={listVariants}
           >
             {events.map((e) => (
