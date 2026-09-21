@@ -3,7 +3,7 @@
 // Matches every section's `scroll-mt-24` (6rem) so the sticky header never
 // covers a jumped-to section's top content.
 const NAV_OFFSET = 96;
-const MAX_DURATION_MS = 2500;
+const MAX_DURATION_MS = 1500;
 
 // Bumped on every call so an in-flight animation's own rAF loop can tell
 // it's been superseded and stop. Without this, clicking a second nav link
@@ -67,16 +67,26 @@ export function scrollToSection(id: string) {
     return;
   }
 
+  // Stop as soon as the user scrolls themselves, so we never fight them.
+  let cancelled = false;
+  const cancel = () => {
+    cancelled = true;
+    for (const ev of ["wheel", "touchstart", "keydown", "mousedown"]) window.removeEventListener(ev, cancel);
+  };
+  for (const ev of ["wheel", "touchstart", "keydown", "mousedown"]) window.addEventListener(ev, cancel, { passive: true });
+
   const start = performance.now();
   function step(now: number) {
-    if (myToken !== activeToken) return; // a newer click took over
+    if (cancelled || myToken !== activeToken) return cancel(); // user took over or newer click
     const target = clamp(rawTarget());
     const dy = target - window.scrollY;
     if (Math.abs(dy) < 1 || now - start > MAX_DURATION_MS) {
       jumpTo(target);
-      return;
+      return cancel();
     }
-    jumpTo(window.scrollY + dy * 0.2);
+    // Move at least 2px so sub-pixel steps can't stall the loop.
+    const move = Math.sign(dy) * Math.max(2, Math.abs(dy) * 0.2);
+    jumpTo(Math.abs(move) >= Math.abs(dy) ? target : window.scrollY + move);
     requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
