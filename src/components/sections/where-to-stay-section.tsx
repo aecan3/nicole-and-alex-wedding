@@ -129,13 +129,13 @@ export function WhereToStaySection() {
             return (
               <div
                 key={s.name}
-                className="group relative flex flex-col rounded-sm border border-gold-400/40 bg-[linear-gradient(155deg,var(--color-cream-100),var(--color-cream-300))] p-7 pb-6 shadow-[0_1px_3px_rgba(58,15,24,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/75 hover:shadow-[0_10px_24px_-8px_rgba(58,15,24,0.18)]"
+                className="group relative flex flex-col rounded-sm border border-gold-400/40 bg-[linear-gradient(155deg,var(--color-cream-100),var(--color-cream-300))] p-6 pb-5 shadow-[0_1px_3px_rgba(58,15,24,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/75 hover:shadow-[0_10px_24px_-8px_rgba(58,15,24,0.18)]"
               >
-                <h3 className="font-display text-xl lg:text-lg xl:text-xl text-burgundy-600">{s.name}</h3>
+                <h3 className="font-display text-lg lg:text-base xl:text-lg text-burgundy-600">{s.name}</h3>
                 <div className="mb-4 mt-3 h-px w-11 bg-gradient-to-r from-gold-400 to-transparent" />
 
                 <div className="mb-4 flex flex-col gap-1.5">
-                  <div className="flex items-start gap-2 text-sm text-burgundy-600">
+                  <div className="flex items-start gap-2 text-[13px] text-burgundy-600">
                     <PinIcon />
                     {lines ? (
                       <a
@@ -155,7 +155,7 @@ export function WhereToStaySection() {
                       <span>{s.address}</span>
                     )}
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-burgundy-600">
+                  <div className="flex items-start gap-2 text-[13px] text-burgundy-600">
                     <PhoneIcon />
                     {s.phoneHref ? (
                       <a
@@ -170,7 +170,7 @@ export function WhereToStaySection() {
                   </div>
                 </div>
 
-                <p className="mb-5 font-serif text-base italic leading-[1.5] text-taupe-600">
+                <p className="mb-4 font-serif text-[15px] italic leading-[1.5] text-taupe-600">
                   {s.note}
                 </p>
 
@@ -178,7 +178,7 @@ export function WhereToStaySection() {
                   href={s.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-taupe-600 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.2em] text-cream-100 transition-all duration-200 hover:gap-2.5 hover:bg-[#77604f]"
+                  className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-taupe-600 px-4 py-2 text-[10.5px] font-medium uppercase tracking-[0.2em] text-cream-100 transition-all duration-200 hover:gap-2.5 hover:bg-[#77604f]"
                 >
                   Visit website
                   <ArrowUpRightIcon />
