@@ -66,30 +66,22 @@ function RsvpBackground() {
     <>
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-[0.32] pointer-events-none select-none sm:hidden"
+        className="absolute inset-0 pointer-events-none select-none sm:hidden"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa-mobile-wash.jpg')",
           backgroundSize: "auto 118%",
           backgroundPosition: "78% 75%",
           backgroundRepeat: "no-repeat",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
         }}
       />
       <div
         aria-hidden="true"
-        className="hidden sm:block absolute inset-0 opacity-[0.28] pointer-events-none select-none"
+        className="hidden sm:block absolute inset-0 pointer-events-none select-none"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa-wash.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "60% 65%",
           backgroundRepeat: "no-repeat",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
         }}
       />
     </>
@@ -366,14 +358,14 @@ export function RsvpSection() {
           sat in a big empty gap above the photo rather than filling it.
           sm:mt-0 leaves tablet/desktop (already tuned via sm:pt-24 above)
           untouched. */}
-      <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6 -mt-14 sm:mt-0">
-        <div className="sm:max-w-md">
+      <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
+        <div className="mx-5 mt-8 bg-cream-100/[0.93] shadow-[0_10px_40px_rgba(0,0,0,0.18)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
           <PageHeader
             kicker="By 17 January 2027"
             title="Rsvp"
             padding="pt-10 pb-6"
           />
-          <div className="mx-auto max-w-md px-6 pb-24 sm:mx-0 sm:px-0">
+          <div className="mx-auto max-w-md px-6 pb-10 sm:mx-0 sm:px-0">
         {/* Stage 1: search */}
         {!confirmingParty && !previousReview && !party && (
           <>

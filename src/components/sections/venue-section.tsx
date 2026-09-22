@@ -54,19 +54,15 @@ export function VenueSection() {
           already approved and is explicitly not to be touched. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 sm:hidden opacity-[0.28] pointer-events-none"
+          className="absolute inset-x-0 top-0 h-[260px] sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-mobile-wash.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundImage: "url('/gallery/venue-aerial-wash.jpg')",
+            backgroundSize: "auto 108%",
+            backgroundPosition: "78% 25%",
             backgroundRepeat: "no-repeat",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-            maskImage:
-              "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
           }}
         />
-        <div className="hidden sm:block absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-[1024/442] w-full">
+        <div className="hidden sm:block absolute inset-0 overflow-hidden">
           <Image
             src="/gallery/venue-aerial-wash.jpg"
             alt=""
@@ -74,22 +70,16 @@ export function VenueSection() {
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover opacity-[0.28] pointer-events-none select-none"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-              maskImage:
-                "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-            }}
+            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_45%]"
           />
         </div>
 
-        <div className="relative z-10">
-          <PageHeader title="Alora Macedon" />
+        <div className="relative z-10 pt-[260px] sm:pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+          <PageHeader title="Alora Macedon" padding="pt-12 pb-8 sm:pt-10 sm:pb-2" />
 
-        <div className="mx-auto max-w-3xl px-6 pt-10 pb-20 text-center">
+        <div className="mx-auto max-w-3xl px-6 pt-2 pb-20 text-center sm:px-10 sm:pt-3 sm:pb-10">
           <div>
-            <p className="text-lg leading-relaxed">
+            <p className="text-lg sm:text-base leading-relaxed">
               Our ceremony and reception will be held at Alora Macedon, a
               Tuscan-inspired estate set among rolling hills at the base of
               Mount Macedon, about 60 minutes from Melbourne. Filled with
