@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
 
 export type MediaItem = {
   type: "image" | "video";
@@ -30,7 +29,6 @@ export type MediaItem = {
  * another one.
  */
 export function Gallery({ items }: { items: MediaItem[] }) {
-  const [open, setOpen] = useState<number | null>(null);
   const [cols, setCols] = useState(3);
 
   useEffect(() => {
@@ -51,10 +49,9 @@ export function Gallery({ items }: { items: MediaItem[] }) {
         {columns.map((col, ci) => (
           <div key={ci} className="flex-1 flex flex-col gap-3 sm:gap-4">
             {col.map(({ item, i }) => (
-              <button
+              <div
                 key={item.src + i}
-                onClick={() => setOpen(i)}
-                className="group relative block w-full overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
+                className="relative block w-full overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
               >
                 {item.type === "image" ? (
                   <Image
@@ -63,7 +60,7 @@ export function Gallery({ items }: { items: MediaItem[] }) {
                     width={item.width}
                     height={item.height}
                     sizes="(max-width: 640px) 50vw, 33vw"
-                    className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="w-full h-auto object-cover"
                   />
                 ) : (
                   <>
@@ -78,46 +75,13 @@ export function Gallery({ items }: { items: MediaItem[] }) {
                       className="w-full h-auto object-cover"
                       style={{ aspectRatio: `${item.width} / ${item.height}` }}
                     />
-                    <span className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-burgundy-950/60 text-cream-100 text-xs backdrop-blur-sm">
-                      ▶
-                    </span>
                   </>
                 )}
-              </button>
+              </div>
             ))}
           </div>
         ))}
       </div>
-
-      <AnimatePresence>
-        {open !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-burgundy-950/95 backdrop-blur-sm flex items-center justify-center p-6"
-            onClick={() => setOpen(null)}
-          >
-            {items[open].type === "image" ? (
-              <Image
-                src={items[open].src}
-                alt={items[open].alt ?? ""}
-                width={items[open].width}
-                height={items[open].height}
-                className="max-h-[85vh] max-w-full w-auto h-auto object-contain"
-              />
-            ) : (
-              <video
-                src={items[open].src}
-                controls
-                autoPlay
-                className="max-h-[85vh] max-w-full"
-                onClick={(e) => e.stopPropagation()}
-              />
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

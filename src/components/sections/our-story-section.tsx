@@ -40,7 +40,7 @@ const photos = [
   // skew, then barely moved further at 1.15 — not a gradual amplification,
   // a filter quirk). -v3 drops the saturation param entirely; contrast/
   // brightness/gamma alone still gives the same corrected punch.
-  { type: "video" as const, src: "/gallery/couple-sold-sign-v3.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
+  { type: "video" as const, src: "/gallery/couple-sold-sign-v4.mp4", alt: "Sold sign on their new home", width: 720, height: 1280 },
   { type: "video" as const, src: "/gallery/proposal.mp4", alt: "The proposal", width: 720, height: 1280 },
 ];
 
@@ -82,7 +82,7 @@ export function OurStorySection() {
           <p className="kicker text-base sm:text-lg text-taupe-600 mb-3">
             Every Love Story has a
           </p>
-          <h3 className="font-heading text-[2.625rem] sm:text-[4.125rem] text-burgundy-600 tracking-tight">
+          <h3 className="font-heading text-[2.625rem] sm:text-[4.125rem] text-burgundy-600 tracking-tight [word-spacing:-0.04em]">
             Third Wheel
           </h3>
           </Reveal>
