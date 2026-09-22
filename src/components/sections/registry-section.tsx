@@ -88,14 +88,24 @@ export function RegistrySection() {
           full-bleed. 500px also keeps the source (743px wide) from being
           upscaled as hard as it was at 692px. */}
       <Reveal>
-        <div className="relative mx-auto aspect-[743/1019] w-full max-w-[500px]">
+        <div className="@container relative mx-auto aspect-[823/1099] w-full max-w-[554px]">
           <Image
-            src="/gallery/gifts-plate-card-v14.png"
-            alt="With love — a quick note on gifts. Your presence is the greatest gift of all. For those who'd still like to give, we will have a wishing well available for contributions towards our future together."
+            src="/gallery/gifts-plate-card-v16.png"
+            alt=""
+            aria-hidden="true"
             fill
-            sizes="(min-width: 640px) 500px, calc(100vw - 48px)"
+            sizes="(min-width: 640px) 554px, calc(100vw - 48px)"
             className="object-contain select-none pointer-events-none"
           />
+          {/* Live text on the card so it stays sharp. Box matches the card in the image. */}
+          <div className="absolute left-[26.25%] top-[22.75%] flex h-[54.4%] w-[49%] flex-col items-center px-[2.7cqw] pt-[8.1cqw] text-center text-burgundy-900">
+            <p className="kicker text-[3.07cqw]">With love</p>
+            <h2 className="mt-[3.6cqw] font-heading text-[6.86cqw] leading-tight">A quick note on gifts</h2>
+            <p className="mt-[6.3cqw] font-serif text-[3.52cqw] italic leading-[1.45]">
+              Your presence is the greatest gift of all. For those who&rsquo;d still like to give,
+              we will have a wishing well available for contributions towards our future together.
+            </p>
+          </div>
         </div>
       </Reveal>
     </section>
