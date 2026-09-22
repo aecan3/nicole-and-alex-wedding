@@ -43,9 +43,11 @@ export default function Home() {
           next/image doesn't stretch it. */}
       <section className="bg-burgundy-900 px-6 pt-28 pb-[88px] sm:pt-36 sm:pb-28 text-center">
         <Reveal>
+          <div className="@container relative mx-auto w-[min(calc(100vw-48px),704px)]">
           <Image
-            src="/decor/invitation-card-v3.png"
-            alt="Together with our families, we joyfully invite you to our wedding celebration. Thank you for being part of one of the most meaningful moments of our lives. We cannot wait to celebrate love, laughter and unforgettable memories with you. Forever grateful, Nicole &amp; Alex"
+            src="/decor/invitation-card-v4.png"
+            alt=""
+            aria-hidden="true"
             width={1218}
             height={864}
             /* Rendered width is min(100vw-48px, 704px) — 48px matches this
@@ -62,7 +64,7 @@ export default function Home() {
                ~3840px-wide file meant for a 4K desktop monitor down to a
                ~300px-wide display. */
             sizes="(min-width: 752px) 704px, calc(100vw - 48px)"
-            className="mx-auto h-auto w-[min(calc(100vw-48px),704px)]"
+            className="h-auto w-full"
             /* Inline style rather than a Tailwind drop-shadow-[] utility —
                Tailwind's drop-shadow utilities don't stack (each one just
                replaces the filter's --tw-drop-shadow variable), and this
@@ -73,6 +75,18 @@ export default function Home() {
                 "drop-shadow(0 3px 6px rgba(0,0,0,0.35)) drop-shadow(0 22px 38px rgba(0,0,0,0.4))",
             }}
           />
+          {/* Live text on the card so it stays sharp. Box matches the card's plain centre. */}
+          <div className="absolute left-[13.5%] top-[19.9%] flex h-[61.1%] w-[74.3%] flex-col items-center justify-center px-[1cqw] text-center font-serif italic text-burgundy-900">
+            <p className="text-[max(10.5px,2.6cqw)]">Together with our families,</p>
+            <p className="mt-[3.2cqw] text-[max(11.5px,2.75cqw)] leading-[1.45] sm:leading-[1.55]">
+              We joyfully invite you to our wedding celebration. Thank you for being part of one of
+              the most meaningful moments of our lives. We cannot wait to celebrate love, laughter
+              and unforgettable memories with you.
+            </p>
+            <p className="mt-[3.2cqw] text-[max(10.5px,2.6cqw)]">Forever grateful,</p>
+            <p className="mt-[0.6cqw] font-heading not-italic text-[max(20px,5.2cqw)] leading-tight">Nicole &amp; Alex</p>
+          </div>
+          </div>
         </Reveal>
       </section>
 
