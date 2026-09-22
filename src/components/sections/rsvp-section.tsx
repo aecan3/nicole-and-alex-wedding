@@ -68,17 +68,19 @@ function RsvpBackground() {
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none select-none sm:hidden"
         style={{
-          backgroundImage: "url('/gallery/rsvp-villa-mobile-wash.jpg')",
-          backgroundSize: "auto 118%",
-          backgroundPosition: "78% 75%",
+          backgroundImage: "url('/gallery/rsvp-villa.jpg')",
+          backgroundSize: "auto 62%",
+          backgroundPosition: "68% 100%",
           backgroundRepeat: "no-repeat",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 30%, black 42%)",
+          maskImage: "linear-gradient(to bottom, transparent 30%, black 42%)",
         }}
       />
       <div
         aria-hidden="true"
         className="hidden sm:block absolute inset-0 pointer-events-none select-none"
         style={{
-          backgroundImage: "url('/gallery/rsvp-villa-wash.jpg')",
+          backgroundImage: "url('/gallery/rsvp-villa.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "60% 65%",
           backgroundRepeat: "no-repeat",

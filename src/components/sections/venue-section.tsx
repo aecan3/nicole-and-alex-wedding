@@ -56,7 +56,7 @@ export function VenueSection() {
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-[260px] sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-aerial-wash.jpg')",
+            backgroundImage: "url('/gallery/venue-aerial.jpg')",
             backgroundSize: "auto 108%",
             backgroundPosition: "78% 25%",
             backgroundRepeat: "no-repeat",
@@ -64,7 +64,7 @@ export function VenueSection() {
         />
         <div className="hidden sm:block absolute inset-0 overflow-hidden">
           <Image
-            src="/gallery/venue-aerial-wash.jpg"
+            src="/gallery/venue-aerial.jpg"
             alt=""
             aria-hidden="true"
             fill
