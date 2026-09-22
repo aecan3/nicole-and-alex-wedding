@@ -70,7 +70,7 @@ export function VenueSection() {
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_45%]"
+            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_45%] opacity-[0.62] blur-[1px]"
           />
         </div>
 

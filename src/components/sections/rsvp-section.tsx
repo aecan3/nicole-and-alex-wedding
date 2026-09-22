@@ -78,9 +78,9 @@ function RsvpBackground() {
       />
       <div
         aria-hidden="true"
-        className="hidden sm:block absolute inset-0 pointer-events-none select-none"
+        className="hidden sm:block absolute inset-0 opacity-[0.62] pointer-events-none select-none"
         style={{
-          backgroundImage: "url('/gallery/rsvp-villa.jpg')",
+          backgroundImage: "url('/gallery/rsvp-villa-hd.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "60% 65%",
           backgroundRepeat: "no-repeat",
