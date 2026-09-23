@@ -6,7 +6,7 @@ export function DressCodeSection() {
       <div className="relative overflow-hidden bg-burgundy-900">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[url('/gallery/burgundy-emboss-seamless.jpg')] bg-repeat bg-center bg-[length:240px_auto] sm:bg-[length:420px_auto] pointer-events-none select-none"
+          className="absolute inset-0 bg-[url('/gallery/burgundy-emboss-seamless.jpg')] bg-repeat bg-center bg-[length:300px_auto] sm:bg-[length:420px_auto] pointer-events-none select-none"
         />
         <div className="relative z-10 mx-auto max-w-xl px-6 py-20 sm:py-28 text-center">
           <Reveal>
