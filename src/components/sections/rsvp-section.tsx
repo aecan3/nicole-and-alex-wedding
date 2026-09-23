@@ -361,7 +361,7 @@ export function RsvpSection() {
           sm:mt-0 leaves tablet/desktop (already tuned via sm:pt-24 above)
           untouched. */}
       <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
-        <div className="mx-5 mt-4 bg-cream-100/[0.93] shadow-[0_10px_40px_rgba(0,0,0,0.18)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
+        <div className="mx-5 mt-4 bg-cream-100/[0.93] shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
           <PageHeader
             kicker="By 17 January 2027"
             title="Rsvp"

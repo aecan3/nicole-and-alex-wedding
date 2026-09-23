@@ -2,7 +2,7 @@
 
 // Matches every section's `scroll-mt-24` (6rem) so the sticky header never
 // covers a jumped-to section's top content.
-const NAV_OFFSET = 96;
+const NAV_OFFSET = 78;
 const MAX_DURATION_MS = 1500;
 
 // Bumped on every call so an in-flight animation's own rAF loop can tell
