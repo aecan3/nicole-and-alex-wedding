@@ -17,26 +17,41 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
 };
 
-const events = [
+const days = [
   {
-    time: "3:30pm",
-    title: "Guest Arrival",
-    detail: "Please arrive by 3:30pm to settle in before our ceremony commences at 4:00pm.",
+    label: "Thursday 11 March",
+    events: [
+      {
+        time: "3:30pm",
+        title: "Guest Arrival",
+        detail: "Please arrive by 3:30pm to settle in before our ceremony commences at 4:00pm.",
+      },
+      {
+        time: "4:00pm",
+        title: "The Ceremony",
+        detail: "We exchange vows at The Vista, framed by views of Mount Macedon.",
+      },
+      {
+        time: "5:00pm",
+        title: "Aperitivo Hour",
+        detail: "Sip and savour as the sun sets over the grounds.",
+      },
+      {
+        time: "6:30pm – Midnight",
+        title: "The Reception",
+        detail: "An evening of dinner, toasts, and dancing under the stars in the Glass Atrium.",
+      },
+    ],
   },
   {
-    time: "4:00pm",
-    title: "The Ceremony",
-    detail: "We exchange vows at The Vista, framed by views of Mount Macedon.",
-  },
-  {
-    time: "5:00pm",
-    title: "Aperitivo Hour",
-    detail: "Sip and savour as the sun sets over the grounds.",
-  },
-  {
-    time: "6:30pm – Midnight",
-    title: "The Reception",
-    detail: "An evening of dinner, toasts, and dancing under the stars in the Glass Atrium.",
+    label: "Friday 12 March",
+    events: [
+      {
+        time: "From 11:30am",
+        title: "Post-Wedding Debrief",
+        detail: "If you&rsquo;re still in the area, we&rsquo;d love to see you at the local pub, Baringo Food &amp; Wine Co. in New Gisborne, for a drink and a debrief.",
+      },
+    ],
   },
 ];
 
@@ -108,27 +123,32 @@ export function TimetableSection() {
       />
 
       <div className="relative z-10">
-        <PageHeader kicker="Thursday 11 March 2027" title="Timetable" />
+        <PageHeader kicker="11 &amp; 12 March 2027" title="Timetable" />
         <div className="mx-auto max-w-2xl px-6 pb-20">
-          <motion.ol
-            className="space-y-10"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: false, margin: "-80px" }}
-            variants={listVariants}
-          >
-            {events.map((e) => (
-              <motion.li
-                key={e.title}
-                variants={itemVariants}
-                className="border-l-2 border-gold-400 pl-6"
+          {days.map((day, di) => (
+            <div key={day.label} className={di === 0 ? "" : "mt-14"}>
+              <p className="kicker mb-7 text-center text-lg text-taupe-600">{day.label}</p>
+              <motion.ol
+                className="space-y-10"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: false, margin: "-80px" }}
+                variants={listVariants}
               >
-                <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">{e.time}</p>
-                <h3 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h3>
-                <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
-              </motion.li>
-            ))}
-          </motion.ol>
+                {day.events.map((e) => (
+                  <motion.li
+                    key={e.title}
+                    variants={itemVariants}
+                    className="border-l-2 border-gold-400 pl-6"
+                  >
+                    <p className="text-xs uppercase tracking-[0.2em] text-taupe-600">{e.time}</p>
+                    <h3 className="font-display text-2xl text-burgundy-600 mt-1">{e.title}</h3>
+                    <p className="mt-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: e.detail }} />
+                  </motion.li>
+                ))}
+              </motion.ol>
+            </div>
+          ))}
         </div>
         {/* Deliberately shorter than the watermark's own rendered height at
             this bg-size, rather than matching it exactly: since the image
@@ -142,7 +162,7 @@ export function TimetableSection() {
             emulation) — so this is tuned smaller than the minimum a same-
             device screenshot required, to leave margin for that gap
             between emulated and real mobile Safari/Chrome rendering. */}
-        <div aria-hidden="true" className="h-[16vw] sm:h-[12vw]" />
+        <div aria-hidden="true" className="h-[22vw] sm:h-[15vw]" />
       </div>
     </section>
   );
