@@ -54,14 +54,14 @@ export function VenueSection() {
           already approved and is explicitly not to be touched. */}
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[320px] sm:hidden pointer-events-none"
+          className="absolute inset-0 sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-tall.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "50% 74%",
+            backgroundImage: "url('/gallery/venue-tall2.jpg')",
+            backgroundSize: "114% auto",
+            backgroundPosition: "72% 100%",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
+            maskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
             backgroundRepeat: "no-repeat",
-            WebkitMaskImage: "linear-gradient(to bottom, black 74%, transparent 92%)",
-            maskImage: "linear-gradient(to bottom, black 74%, transparent 92%)",
           }}
         />
         <div className="hidden sm:block absolute inset-0 overflow-hidden">
@@ -76,10 +76,10 @@ export function VenueSection() {
           />
         </div>
 
-        <div className="relative z-10 pt-[300px] sm:pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_8px_28px_rgba(74,21,33,0.10)]">
+        <div className="relative z-10 pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_8px_28px_rgba(74,21,33,0.10)]">
           {/* Mobile: same cream panel as the RSVP form, so the section closes off
               before the timetable instead of bleeding into it. */}
-          <div className="mx-5 mt-6 mb-12 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
+          <div className="mx-5 mt-2 mb-64 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
           <PageHeader title="Alora Macedon" padding="pt-12 pb-8 sm:pt-10 sm:pb-2" />
 
         <div className="mx-auto max-w-3xl px-6 pt-2 pb-14 text-center sm:px-10 sm:pt-3 sm:pb-10">
