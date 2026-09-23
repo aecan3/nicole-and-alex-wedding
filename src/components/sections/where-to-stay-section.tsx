@@ -58,7 +58,7 @@ const stays: Stay[] = [
     phone: "03 5428 2139",
     phoneHref: "tel:0354282139",
     website: "https://gisbornemotel.com.au/",
-    note: "A straightforward, well-located motel in the Gisborne township, a short drive from the venue.",
+    note: "A well-located motel in the Gisborne township, a short drive from the venue.",
     position: [-37.49754, 144.60439] as [number, number],
   },
 ];
