@@ -49,6 +49,23 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png" }],
   },
   description: "Join us as we celebrate our wedding at Alora Macedon, New Gisborne.",
+  // Card shown when the link is shared in messages/chat apps.
+  metadataBase: new URL("https://nicoleandalexwedding.com"),
+  openGraph: {
+    title: "Nicole & Alex | 11 March 2027",
+    description: "Join us as we celebrate our wedding at Alora Macedon, New Gisborne.",
+    url: "https://nicoleandalexwedding.com",
+    siteName: "Nicole & Alex",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nicole & Alex | 11 March 2027",
+    description: "Join us as we celebrate our wedding at Alora Macedon, New Gisborne.",
+    images: ["/og-image.jpg"],
+  },
   robots: { index: false, follow: false },
 };
 
