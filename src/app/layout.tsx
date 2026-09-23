@@ -41,6 +41,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Nicole & Alex | 11 March 2027",
+  // Safari looks for these at the site root rather than picking up the
+  // App Router's generated tags, which is why it still showed Vercel's icon.
+  icons: {
+    icon: [{ url: "/favicon.ico" }],
+    shortcut: ["/favicon.ico"],
+    apple: [{ url: "/apple-touch-icon.png" }],
+  },
   description: "Join us as we celebrate our wedding at Alora Macedon, New Gisborne.",
   robots: { index: false, follow: false },
 };
