@@ -58,9 +58,9 @@ export function VenueSection() {
           style={{
             backgroundImage: "url('/gallery/venue-wide.jpg')",
             backgroundSize: "154% auto",
-            backgroundPosition: "52% 100%",
-            WebkitMaskImage: "linear-gradient(to top, black 300px, transparent 430px)",
-            maskImage: "linear-gradient(to top, black 300px, transparent 430px)",
+            backgroundPosition: "52% calc(100% + 70px)",
+            WebkitMaskImage: "linear-gradient(to top, black 250px, transparent 378px)",
+            maskImage: "linear-gradient(to top, black 250px, transparent 378px)",
             backgroundRepeat: "no-repeat",
           }}
         />
