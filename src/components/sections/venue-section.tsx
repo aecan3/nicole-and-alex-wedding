@@ -66,13 +66,13 @@ export function VenueSection() {
         />
         <div className="hidden sm:block absolute inset-0 overflow-hidden">
           <Image
-            src="/gallery/venue-wide.jpg"
+            src="/gallery/venue-aerial.jpg"
             alt=""
             aria-hidden="true"
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover pointer-events-none select-none scale-[1.12] origin-[12%_45%] opacity-[0.62] blur-[1px]"
+            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_15%] opacity-[0.62] blur-[1px]"
           />
         </div>
 
