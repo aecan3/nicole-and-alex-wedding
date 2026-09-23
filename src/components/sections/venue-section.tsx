@@ -56,9 +56,9 @@ export function VenueSection() {
           aria-hidden="true"
           className="absolute inset-0 sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-tall2.jpg')",
-            backgroundSize: "114% auto",
-            backgroundPosition: "72% 100%",
+            backgroundImage: "url('/gallery/venue-tall.jpg')",
+            backgroundSize: "128% auto",
+            backgroundPosition: "60% 100%",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
             maskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
             backgroundRepeat: "no-repeat",
