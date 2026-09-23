@@ -93,7 +93,7 @@ function ArrowUpRightIcon() {
 export function WhereToStaySection() {
   return (
     <section id="where-to-stay" className="scroll-mt-24">
-      <PageHeader kicker="A few recommendations" title="Where to Stay" />
+      <PageHeader kicker="Accommodation &amp; Travel" title="Where to Stay" />
       <div className="px-6 pb-20">
         <div className="mx-auto max-w-2xl">
           <p className="text-center leading-relaxed">
