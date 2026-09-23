@@ -56,9 +56,9 @@ export function VenueSection() {
           aria-hidden="true"
           className="absolute inset-0 sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-tall.jpg')",
-            backgroundSize: "128% auto",
-            backgroundPosition: "60% 100%",
+            backgroundImage: "url('/gallery/venue-wide.jpg')",
+            backgroundSize: "154% auto",
+            backgroundPosition: "52% 100%",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
             maskImage: "linear-gradient(to bottom, transparent 44%, black 58%)",
             backgroundRepeat: "no-repeat",
@@ -72,14 +72,14 @@ export function VenueSection() {
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_15%] opacity-[0.62] blur-[1px]"
+            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_15%] opacity-[0.62]"
           />
         </div>
 
         <div className="relative z-10 pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_8px_28px_rgba(74,21,33,0.10)]">
           {/* Mobile: same cream panel as the RSVP form, so the section closes off
               before the timetable instead of bleeding into it. */}
-          <div className="mx-5 mt-2 mb-64 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
+          <div className="mx-5 mt-4 mb-64 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
           <PageHeader title="Alora Macedon" padding="pt-12 pb-8 sm:pt-10 sm:pb-2" />
 
         <div className="mx-auto max-w-3xl px-6 pt-2 pb-14 text-center sm:px-10 sm:pt-3 sm:pb-10">
