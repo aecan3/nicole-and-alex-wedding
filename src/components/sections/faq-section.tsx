@@ -8,7 +8,7 @@ const faqs: FaqItem[] = [
   },
   {
     q: "Is there a shuttle bus?",
-    a: "A guest shuttle will run through the Macedon and Gisborne areas to and from the venue. Exact pickup locations and times will be confirmed closer to the date. Please indicate if you need a seat when you RSVP so we can finalise numbers.",
+    a: "A guest shuttle will run through Macedon and Gisborne. Please request a seat when you RSVP, and pickup details will be emailed to you closer to the date.",
   },
   {
     q: "Are children welcome?",
