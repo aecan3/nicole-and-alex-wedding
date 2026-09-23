@@ -79,6 +79,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   minimumScale: 1,
   userScalable: true,
+  // Drives the tinted panel iMessage and other apps draw under a shared link.
+  themeColor: "#4a1521",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
