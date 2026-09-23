@@ -1,16 +1,44 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PageHeader } from "@/components/page-header";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const listVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.18, delayChildren: 0.1 },
-  },
-};
+// Items stagger in the direction you're scrolling: top-down on the way
+// down, bottom-up on the way back, so the motion never fights the scroll.
+function listVariants(direction: 1 | -1) {
+  return {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.18, delayChildren: 0.1, staggerDirection: direction },
+    },
+  };
+}
+
+function useScrollDirection(): 1 | -1 {
+  const [direction, setDirection] = useState<1 | -1>(1);
+  useEffect(() => {
+    let last = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (Math.abs(y - last) > 4) {
+          setDirection(y > last ? 1 : -1);
+          last = y;
+        }
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return direction;
+}
 
 const itemVariants = {
   hidden: { opacity: 0, y: 12 },
@@ -56,6 +84,8 @@ const days = [
 ];
 
 export function TimetableSection() {
+  const direction = useScrollDirection();
+
   return (
     <section id="timetable" className="relative overflow-hidden scroll-mt-24">
       {/* The atrium line-art watermark this section inherited from Venue,
@@ -133,7 +163,7 @@ export function TimetableSection() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: false, margin: "-80px" }}
-                variants={listVariants}
+                variants={listVariants(direction)}
               >
                 {day.events.map((e) => (
                   <motion.li
