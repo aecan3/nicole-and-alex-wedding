@@ -54,30 +54,32 @@ export function VenueSection() {
           already approved and is explicitly not to be touched. */}
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[260px] sm:hidden pointer-events-none"
+          className="absolute inset-x-0 top-0 h-[320px] sm:hidden pointer-events-none"
           style={{
-            backgroundImage: "url('/gallery/venue-aerial.jpg')",
-            backgroundSize: "auto 108%",
-            backgroundPosition: "78% 25%",
+            backgroundImage: "url('/gallery/venue-tall.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "50% 74%",
             backgroundRepeat: "no-repeat",
+            WebkitMaskImage: "linear-gradient(to bottom, black 74%, transparent 92%)",
+            maskImage: "linear-gradient(to bottom, black 74%, transparent 92%)",
           }}
         />
         <div className="hidden sm:block absolute inset-0 overflow-hidden">
           <Image
-            src="/gallery/venue-aerial.jpg"
+            src="/gallery/venue-wide.jpg"
             alt=""
             aria-hidden="true"
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover pointer-events-none select-none scale-[1.15] origin-[0_45%] opacity-[0.62] blur-[1px]"
+            className="object-cover pointer-events-none select-none scale-[1.12] origin-[12%_45%] opacity-[0.62] blur-[1px]"
           />
         </div>
 
-        <div className="relative z-10 pt-[260px] sm:pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_8px_28px_rgba(74,21,33,0.10)]">
+        <div className="relative z-10 pt-[300px] sm:pt-0 sm:mx-auto sm:my-[110px] sm:max-w-[600px] sm:bg-cream-100/[0.93] sm:shadow-[0_8px_28px_rgba(74,21,33,0.10)]">
           {/* Mobile: same cream panel as the RSVP form, so the section closes off
               before the timetable instead of bleeding into it. */}
-          <div className="mx-5 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
+          <div className="mx-5 mt-6 mb-12 bg-cream-100/[0.93] pb-2 shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-0 sm:bg-transparent sm:pb-0 sm:shadow-none">
           <PageHeader title="Alora Macedon" padding="pt-12 pb-8 sm:pt-10 sm:pb-2" />
 
         <div className="mx-auto max-w-3xl px-6 pt-2 pb-14 text-center sm:px-10 sm:pt-3 sm:pb-10">
