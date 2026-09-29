@@ -12,7 +12,7 @@ const BUS_LABELS: Record<string, string> = {
   black_forest_motel: "Pick up from Black Forest Motel",
   gisborne_motel: "Pick up from Gisborne Motel",
   no: "Making their own way there",
-  not_booked_yet: "Shuttle needed — accommodation not booked yet",
+  not_booked_yet: "Shuttle needed, accommodation not booked yet",
 };
 
 export function busLabel(value: string): string {
@@ -157,9 +157,7 @@ ${shuttleBlock}
               <td style="padding: 0 40px 40px; text-align:center; border-top:1px solid #e3d3b2;">
                 <img src="${SITE_URL}/brand/monogram-burgundy.png" alt="" width="54" style="display:block; margin:26px auto 0; width:54px; height:auto;" />
                 <p style="margin:16px 0 0; font-family:${body}; font-size:12px; color:#8c7361;">
-                  Please do not reply to this email. For any questions, contact Alex at
-                  <a href="mailto:alex.cann@outlook.com" style="color:#8c7361;">alex.cann@outlook.com</a>
-                  or 0423 340 677.
+                  For any questions, reply to this email or contact Alex on 0423 340 677.
                 </p>
               </td>
             </tr>

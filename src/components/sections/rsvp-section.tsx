@@ -21,9 +21,9 @@ type Response = {
 
 const BUS_OPTIONS = [
   { value: "", label: "Select an option" },
-  { value: "macedon_ranges_hotel_spa", label: "Yes — pick up from Macedon Ranges Hotel & Spa" },
-  { value: "black_forest_motel", label: "Yes — pick up from Black Forest Motel" },
-  { value: "gisborne_motel", label: "Yes — pick up from Gisborne Motel" },
+  { value: "macedon_ranges_hotel_spa", label: "Yes, pick up from Macedon Ranges Hotel & Spa" },
+  { value: "black_forest_motel", label: "Yes, pick up from Black Forest Motel" },
+  { value: "gisborne_motel", label: "Yes, pick up from Gisborne Motel" },
   { value: "no", label: "No, we'll make our own way there" },
   { value: "not_booked_yet", label: "We'll need the bus, but haven't booked accommodation yet" },
 ];
@@ -146,6 +146,13 @@ export function RsvpSection() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [configError, setConfigError] = useState<string | null>(null);
+
+  // On a phone the thank-you card is much shorter than the form, so bring it back into view
+  useEffect(() => {
+    if (submitStatus === "done") {
+      document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [submitStatus]);
 
   // Guards against a slower, earlier request landing after a faster, later
   // one — otherwise fast typing can flash a stale result set right after
