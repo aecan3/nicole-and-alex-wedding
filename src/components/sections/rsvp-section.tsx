@@ -320,13 +320,20 @@ export function RsvpSection() {
       // there.
       <section id="rsvp" className="relative min-h-svh sm:min-h-[70vh] scroll-mt-24 overflow-hidden">
         <RsvpBackground />
-        <div className="relative z-10">
-          <PageHeader kicker="Thank you" title="RSVP Received" />
-          <div className="mx-auto max-w-xl px-6 pb-24 text-center">
-            <p className="leading-relaxed">
-              Thanks so much for letting us know — we can&rsquo;t wait to celebrate
-              with you on 11 March 2027.
-            </p>
+        {/* Same cream card and position as the form, so the thank-you sits where they just replied */}
+        <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
+          <div className="mx-5 mt-4 bg-cream-100/[0.93] shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
+            <PageHeader
+              kicker="By 17 January 2027"
+              title="Rsvp"
+              padding="pt-10 pb-6"
+            />
+            {/* Same wording as the confirmation email */}
+            <div className="mx-auto max-w-md px-6 pb-12 text-center sm:px-0">
+              <p className="leading-relaxed">
+                Thank you for letting us know! Your response has been warmly&nbsp;received.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -545,16 +552,18 @@ export function RsvpSection() {
                     Regretfully declines
                   </label>
                 </div>
-                {responses[m.id]?.attending === "yes" && (
-                  <input
+                {/* Always rendered so the card doesn't change height (and rescale the photo) when toggling */}
+                <input
                     placeholder="Dietary requirements (optional)"
+                    aria-hidden={responses[m.id]?.attending !== "yes"}
+                    tabIndex={responses[m.id]?.attending === "yes" ? 0 : -1}
+                    disabled={responses[m.id]?.attending !== "yes"}
                     value={responses[m.id]?.dietary ?? ""}
                     onChange={(e) =>
                       setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], dietary: e.target.value } }))
                     }
-                    className="border-b border-burgundy-800/30 bg-transparent py-1.5 text-sm focus:outline-none focus:border-burgundy-800"
+                    className={`border-b border-burgundy-800/30 bg-transparent py-1.5 text-sm focus:outline-none focus:border-burgundy-800 ${responses[m.id]?.attending === "yes" ? "" : "invisible"}`}
                   />
-                )}
               </fieldset>
             ))}
 
