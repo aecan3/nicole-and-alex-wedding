@@ -124,6 +124,14 @@ export function RsvpSection() {
   // do, which is what actually reveals the RSVP form.
   const [confirmingParty, setConfirmingParty] = useState<PartyMember[] | null>(null);
 
+  // The name picked from search, waiting on the postcode check before anything about the household is shown
+  const [unlocking, setUnlocking] = useState<Match | null>(null);
+  const [postcode, setPostcode] = useState("");
+  const [postcodeError, setPostcodeError] = useState<string | null>(null);
+  const [checkingPostcode, setCheckingPostcode] = useState(false);
+  // Sent again with every submit_rsvp call, which checks it server-side too
+  const [verifiedPostcode, setVerifiedPostcode] = useState("");
+
   // Set instead of `party` when the confirmed household has already
   // responded (rsvp_status isn't "pending" for at least one member) — shows
   // what's on file and asks whether to keep it or go through the form again,
@@ -193,14 +201,38 @@ export function RsvpSection() {
     await runSearch(trimmed);
   }
 
-  async function selectSelf(id: string) {
+  function selectSelf(m: Match) {
     setConfigError(null);
+    setPostcode("");
+    setPostcodeError(null);
+    setUnlocking(m);
+  }
+
+  async function handlePostcode(e: React.FormEvent) {
+    e.preventDefault();
+    if (!unlocking || !postcode.trim()) return;
+    setCheckingPostcode(true);
+    setPostcodeError(null);
     try {
-      const { data, error } = await getSupabase().rpc("get_party", { invitee_id: id });
+      const { data, error } = await getSupabase().rpc("get_party", {
+        invitee_id: unlocking.id,
+        p_postcode: postcode,
+      });
       if (error) throw error;
-      setConfirmingParty(data ?? []);
+      const result = data as { status: string; members?: PartyMember[] };
+      if (result.status === "ok") {
+        setVerifiedPostcode(postcode);
+        setConfirmingParty(result.members ?? []);
+        setUnlocking(null);
+      } else if (result.status === "locked") {
+        setPostcodeError("Too many tries. Please wait 15 minutes, or get in touch with Alex on 0423 340 677.");
+      } else {
+        setPostcodeError("That postcode doesn\u2019t match our records. Please try again.");
+      }
     } catch (err) {
-      setConfigError(errorMessage(err));
+      setPostcodeError(errorMessage(err));
+    } finally {
+      setCheckingPostcode(false);
     }
   }
 
@@ -273,11 +305,15 @@ export function RsvpSection() {
             p_email: email,
             p_bus_pickup: busPickup,
             p_message: message || null,
+            p_postcode: verifiedPostcode,
           })
         )
       );
       const firstError = results.find((r) => r.error)?.error;
       if (firstError) throw firstError;
+      if (results.some((r) => r.data !== "ok")) {
+        throw new Error("We couldn\u2019t save your RSVP. Please search your name again, or get in touch with Alex on 0423 340 677.");
+      }
       setSubmitStatus("done");
 
       // Best-effort confirmation email. The RSVP is already saved above, so
@@ -376,7 +412,7 @@ export function RsvpSection() {
           />
           <div className="mx-auto max-w-md px-6 pb-10 sm:mx-0 sm:px-0">
         {/* Stage 1: search */}
-        {!confirmingParty && !previousReview && !party && (
+        {!unlocking && !confirmingParty && !previousReview && !party && (
           <>
             <form onSubmit={handleSearch} className="flex flex-col gap-3">
               <label className="flex flex-col gap-1 text-sm">
@@ -418,7 +454,7 @@ export function RsvpSection() {
                 {matches.map((m) => (
                   <button
                     key={m.id}
-                    onClick={() => selectSelf(m.id)}
+                    onClick={() => selectSelf(m)}
                     className="text-left border border-gold-400/50 rounded-lg px-4 py-3 hover:bg-cream-200 transition-colors"
                   >
                     {m.full_name}
@@ -429,6 +465,41 @@ export function RsvpSection() {
 
             <HelpLink />
           </>
+        )}
+
+        {/* Stage 1.5: postcode check before any household details are shown */}
+        {unlocking && (
+          <form onSubmit={handlePostcode} className="flex flex-col gap-4">
+            <p className="font-display text-lg text-burgundy-600">{unlocking.full_name}</p>
+            <label className="flex flex-col gap-1 text-sm">
+              Enter your postcode to continue
+              <input
+                value={postcode}
+                onChange={(e) => setPostcode(e.target.value)}
+                autoComplete="postal-code"
+                autoFocus
+                className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+              />
+            </label>
+            {postcodeError && <p className="text-sm text-red-700">{postcodeError}</p>}
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={checkingPostcode}
+                className="rounded-full bg-taupe-600 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors disabled:opacity-50"
+              >
+                {checkingPostcode ? "Checking..." : "Continue"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setUnlocking(null)}
+                className="rounded-full border border-burgundy-800/40 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-cream-200 transition-colors"
+              >
+                Back
+              </button>
+            </div>
+            <HelpLink />
+          </form>
         )}
 
         {/* Stage 2: confirm the household before showing the form */}

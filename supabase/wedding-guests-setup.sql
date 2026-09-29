@@ -1,3 +1,6 @@
+-- WARNING: superseded by rsvp-postcode-check.sql. If you ever re-run this file,
+-- run rsvp-postcode-check.sql straight after, or RSVPs won't need a postcode.
+
 -- Wedding RSVP: table + guest list in one go. Paste into the Supabase SQL Editor and click Run.
 -- Safe to run more than once.
 
