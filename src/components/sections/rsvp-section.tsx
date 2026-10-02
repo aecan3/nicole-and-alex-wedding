@@ -69,14 +69,15 @@ function RsvpBackground() {
     <>
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-[115svh] pointer-events-none select-none sm:hidden"
+        className="absolute inset-x-0 top-0 h-[110svh] pointer-events-none select-none sm:hidden"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa.jpg')",
-          backgroundSize: "auto 52%",
-          backgroundPosition: "66% 100%",
+          // Photo starts about 40% down, just under the shorter cards, so they sit on it rather than float above it
+          backgroundSize: "auto 55%",
+          backgroundPosition: "66% 88%",
           backgroundRepeat: "no-repeat",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 52%, black 62%, black 90%, transparent)",
-          maskImage: "linear-gradient(to bottom, transparent 52%, black 62%, black 90%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 40%, black 49%, black 90%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent 40%, black 49%, black 90%, transparent)",
         }}
       />
       <div
@@ -404,7 +405,7 @@ export function RsvpSection() {
       // content of its own, so there's always page below RSVP regardless
       // of its own height, making the full-viewport floor unnecessary
       // there.
-      <section id="rsvp" className="relative min-h-[115svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
+      <section id="rsvp" className="relative min-h-[110svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
         <RsvpBackground />
         {/* Same cream card and position as the form, so the thank-you sits where they just replied */}
         <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
@@ -434,7 +435,7 @@ export function RsvpSection() {
     // same reasoning applies here, and matters even more for this branch
     // since it's the one guests actually land on when clicking RSVP in the
     // nav.
-    <section id="rsvp" className="relative min-h-[115svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
+    <section id="rsvp" className="relative min-h-[110svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
       <RsvpBackground />
       {/* mx-auto max-w-6xl gives the section the same outer width as the
           rest of the site; the sm:max-w-md column inside it isn't itself

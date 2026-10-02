@@ -124,7 +124,7 @@ export function SiteNav() {
 
         <AnchorLink
           href="#rsvp"
-          className="hidden lg:inline-block rounded-full bg-taupe-600 px-6 2xl:px-8 py-2 2xl:py-2.5 text-[11px] 2xl:text-xs tracking-[0.2em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
+          className="hidden lg:inline-block rounded-full bg-taupe-600 shadow-[0_6px_20px_rgba(0,0,0,0.3)] px-6 2xl:px-8 py-2 2xl:py-2.5 text-[11px] 2xl:text-xs tracking-[0.2em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
         >
           RSVP
         </AnchorLink>
@@ -198,12 +198,12 @@ export function SiteNav() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ delay: 0.06 + links.length * 0.045, duration: 0.5, ease: EASE }}
-              className="mt-4"
+              className="mt-8"
             >
               <AnchorLink
                 href="#rsvp"
                 onClick={closeMenu}
-                className="inline-block rounded-full bg-taupe-600 px-10 py-3 text-xs tracking-[0.25em] uppercase text-cream-100 hover:bg-[#77604f] transition-colors duration-300"
+                className="inline-block rounded-full bg-taupe-600 px-14 py-4 text-sm font-medium tracking-[0.25em] uppercase text-cream-100 shadow-[0_6px_20px_rgba(0,0,0,0.3)] hover:bg-[#77604f] transition-colors duration-300"
               >
                 RSVP
               </AnchorLink>
