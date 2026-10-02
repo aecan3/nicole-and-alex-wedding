@@ -148,6 +148,7 @@ export function RsvpSection() {
   const [email, setEmail] = useState("");
   const [busPickup, setBusPickup] = useState("");
   const [message, setMessage] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [configError, setConfigError] = useState<string | null>(null);
@@ -191,14 +192,14 @@ export function RsvpSection() {
   // setState synchronously in its own body.
   useEffect(() => {
     const trimmed = query.trim();
-    if (trimmed.length < 2) return;
+    if (trimmed.length < 3) return;
     const handle = setTimeout(() => runSearch(trimmed), 350);
     return () => clearTimeout(handle);
   }, [query, runSearch]);
 
   function handleQueryChange(value: string) {
     setQuery(value);
-    if (value.trim().length < 2) {
+    if (value.trim().length < 3) {
       latestQueryRef.current = "";
       setMatches([]);
       setSearched(false);
@@ -429,12 +430,30 @@ export function RsvpSection() {
             <form onSubmit={handleSearch} className="flex flex-col gap-3">
               <label className="flex flex-col gap-1 text-sm">
                 Find your invitation
-                <input
-                  value={query}
-                  onChange={(e) => handleQueryChange(e.target.value)}
-                  placeholder="Type your full name"
-                  className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
-                />
+                <span className="relative flex flex-col">
+                  <input
+                    value={query}
+                    onChange={(e) => handleQueryChange(e.target.value)}
+                    placeholder="Type your full name"
+                    autoComplete="off"
+                    className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+                  />
+                  {/* Matches float over the card as a dropdown, so the card doesn't grow while typing */}
+                  {matches.length > 0 && (
+                    <span className="absolute left-0 right-0 top-full z-20 mt-1 flex flex-col overflow-hidden rounded-lg border border-gold-400/50 bg-cream-100 shadow-[0_8px_24px_rgba(74,21,33,0.12)]">
+                      {matches.slice(0, 5).map((m) => (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => selectSelf(m)}
+                          className="border-b border-gold-400/25 px-4 py-2.5 text-left text-base last:border-b-0 hover:bg-cream-200 transition-colors"
+                        >
+                          {m.full_name}
+                        </button>
+                      ))}
+                    </span>
+                  )}
+                </span>
               </label>
               <button
                 type="submit"
@@ -460,20 +479,6 @@ export function RsvpSection() {
               </p>
             )}
 
-            {matches.length > 0 && (
-              <div className="mt-6 flex flex-col gap-2">
-                <p className="text-sm text-burgundy-600/80">Is this you?</p>
-                {matches.map((m) => (
-                  <button
-                    key={m.id}
-                    onClick={() => selectSelf(m)}
-                    className="text-left border border-gold-400/50 rounded-lg px-4 py-3 hover:bg-cream-200 transition-colors"
-                  >
-                    {m.full_name}
-                  </button>
-                ))}
-              </div>
-            )}
 
             <HelpLink />
           </>
@@ -610,43 +615,44 @@ export function RsvpSection() {
             {party.map((m) => (
               <fieldset key={m.id} className="border-t border-gold-400/40 pt-4 flex flex-col gap-2">
                 <legend className="font-display text-lg text-burgundy-600">{m.full_name}</legend>
-                <div className="flex gap-6 text-sm">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`attending-${m.id}`}
-                      required
-                      checked={responses[m.id]?.attending === "yes"}
-                      onChange={() =>
-                        setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: "yes" } }))
-                      }
-                    />
-                    Joyfully accepts
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`attending-${m.id}`}
-                      checked={responses[m.id]?.attending === "no"}
-                      onChange={() =>
-                        setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: "no" } }))
-                      }
-                    />
-                    Regretfully declines
-                  </label>
+                {/* Pill toggles, side by side so each guest stays on one row on a phone */}
+                <div className="flex gap-2 text-sm">
+                  {([["yes", "Accept"], ["no", "Decline"]] as const).map(([val, label]) => {
+                    const on = responses[m.id]?.attending === val;
+                    return (
+                      <label
+                        key={val}
+                        className={`relative flex-1 cursor-pointer rounded-full border px-4 py-2 text-center tracking-[0.12em] uppercase text-xs transition-colors ${
+                          on
+                            ? "border-taupe-600 bg-taupe-600 text-cream-100"
+                            : "border-burgundy-800/30 text-burgundy-600 hover:bg-cream-200"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name={`attending-${m.id}`}
+                          required
+                          checked={on}
+                          onChange={() =>
+                            setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: val } }))
+                          }
+                          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        />
+                        {label}
+                      </label>
+                    );
+                  })}
                 </div>
-                {/* Always rendered so the card doesn't change height (and rescale the photo) when toggling */}
-                <input
+                {responses[m.id]?.attending === "yes" && (
+                  <input
                     placeholder="Dietary requirements (optional)"
-                    aria-hidden={responses[m.id]?.attending !== "yes"}
-                    tabIndex={responses[m.id]?.attending === "yes" ? 0 : -1}
-                    disabled={responses[m.id]?.attending !== "yes"}
                     value={responses[m.id]?.dietary ?? ""}
                     onChange={(e) =>
                       setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], dietary: e.target.value } }))
                     }
-                    className={`border-b border-burgundy-800/30 bg-transparent py-1.5 text-sm focus:outline-none focus:border-burgundy-800 ${responses[m.id]?.attending === "yes" ? "" : "invisible"}`}
+                    className="border-b border-burgundy-800/30 bg-transparent py-1.5 text-sm focus:outline-none focus:border-burgundy-800"
                   />
+                )}
               </fieldset>
             ))}
 
@@ -678,15 +684,27 @@ export function RsvpSection() {
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
-              Message for us (optional)
-              <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={3}
-                className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
-              />
-            </label>
+            {/* Message box stays tucked away until asked for (or already has something in it) */}
+            {showMessage || message ? (
+              <label className="flex flex-col gap-1 text-sm">
+                Message for us (optional)
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={3}
+                  autoFocus={showMessage && !message}
+                  className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+                />
+              </label>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowMessage(true)}
+                className="self-start text-sm text-burgundy-600 underline underline-offset-4 decoration-gold-400 hover:text-burgundy-800"
+              >
+                + Add a message for us
+              </button>
+            )}
 
             <button
               type="submit"
