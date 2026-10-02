@@ -69,7 +69,7 @@ function RsvpBackground() {
     <>
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-svh pointer-events-none select-none sm:hidden"
+        className="absolute inset-x-0 top-0 h-[115svh] pointer-events-none select-none sm:hidden"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa.jpg')",
           backgroundSize: "auto 52%",
@@ -81,7 +81,7 @@ function RsvpBackground() {
       />
       <div
         aria-hidden="true"
-        className="hidden sm:block absolute inset-x-0 top-0 h-[max(70vh,600px)] opacity-[0.62] pointer-events-none select-none"
+        className="hidden sm:block absolute inset-x-0 top-0 h-[max(85vh,780px)] opacity-[0.62] pointer-events-none select-none"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa-hd.jpg')",
           backgroundSize: "cover",
@@ -111,10 +111,21 @@ function rankMatches(list: Match[], q: string): Match[] {
 // A quiet, always-available way out if the search can't find someone or
 // anything on this page misbehaves — shown at the bottom of every stage
 // rather than only after an error, so it's never a dead end.
-function HelpLink() {
+function HelpLink({ onBack }: { onBack?: () => void }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="mt-10 text-center">
+    <div className="mt-10 flex flex-col items-center gap-4 text-center">
+      {/* Fine-print Back on its own line above Need help, on every step after the search */}
+      {onBack && (
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-xs uppercase tracking-[0.15em] text-burgundy-600/60 hover:text-burgundy-600"
+        >
+          &larr; Back
+        </button>
+      )}
+      <div>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -127,6 +138,7 @@ function HelpLink() {
           Reach out to Alex on 0423 340 677 and we&rsquo;ll sort it out.
         </p>
       )}
+      </div>
     </div>
   );
 }
@@ -296,6 +308,13 @@ export function RsvpSection() {
     setConfirmingParty(null);
   }
 
+  // From the form, step back to "Is that your household?"
+  function backFromForm() {
+    if (!party) return;
+    setConfirmingParty(party);
+    setParty(null);
+  }
+
   function rejectParty() {
     // Back to the match list — not back to a blank search, since the name
     // they typed was probably right and it's just the wrong match.
@@ -380,7 +399,7 @@ export function RsvpSection() {
       // content of its own, so there's always page below RSVP regardless
       // of its own height, making the full-viewport floor unnecessary
       // there.
-      <section id="rsvp" className="relative min-h-svh sm:min-h-[max(70vh,600px)] scroll-mt-24 overflow-hidden">
+      <section id="rsvp" className="relative min-h-[115svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
         <RsvpBackground />
         {/* Same cream card and position as the form, so the thank-you sits where they just replied */}
         <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
@@ -407,7 +426,7 @@ export function RsvpSection() {
     // same reasoning applies here, and matters even more for this branch
     // since it's the one guests actually land on when clicking RSVP in the
     // nav.
-    <section id="rsvp" className="relative min-h-svh sm:min-h-[max(70vh,600px)] scroll-mt-24 overflow-hidden">
+    <section id="rsvp" className="relative min-h-[115svh] sm:min-h-[max(85vh,780px)] scroll-mt-24 overflow-hidden">
       <RsvpBackground />
       {/* mx-auto max-w-6xl gives the section the same outer width as the
           rest of the site; the sm:max-w-md column inside it isn't itself
@@ -520,15 +539,8 @@ export function RsvpSection() {
               >
                 {checkingPostcode ? "Checking..." : "Continue"}
               </button>
-              <button
-                type="button"
-                onClick={() => setUnlocking(null)}
-                className="rounded-full border border-burgundy-800/40 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-cream-200 transition-colors"
-              >
-                Back
-              </button>
             </div>
-            <HelpLink />
+            <HelpLink onBack={() => setUnlocking(null)} />
           </form>
         )}
 
@@ -563,7 +575,7 @@ export function RsvpSection() {
                 Not quite
               </button>
             </div>
-            <HelpLink />
+            <HelpLink onBack={rejectParty} />
           </div>
         )}
 
@@ -615,18 +627,15 @@ export function RsvpSection() {
                 Update my RSVP
               </button>
             </div>
-            <HelpLink />
+            <HelpLink onBack={() => setPreviousReview(null)} />
           </div>
         )}
 
         {/* Stage 3: the actual RSVP form */}
         {party && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <p className="text-sm text-burgundy-600/80">
-              Please respond for everyone in your party.
-            </p>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {party.map((m) => (
-              <fieldset key={m.id} className="border-t border-gold-400/40 pt-4 flex flex-col gap-2">
+              <fieldset key={m.id} className="border-t border-gold-400/40 pt-3 flex flex-col gap-2">
                 <legend className="font-display text-lg text-burgundy-600">{m.full_name}</legend>
                 {/* Pill toggles, side by side so each guest stays on one row on a phone */}
                 <div className="flex gap-2 text-sm">
@@ -669,7 +678,7 @@ export function RsvpSection() {
               </fieldset>
             ))}
 
-            <label className="flex flex-col gap-1 text-sm border-t border-gold-400/40 pt-4">
+            <label className="flex flex-col gap-1 text-sm border-t border-gold-400/40 pt-3">
               Email address
               <input
                 type="email"
@@ -731,7 +740,7 @@ export function RsvpSection() {
                 {submitError ?? "Something went wrong sending that — mind trying again?"}
               </p>
             )}
-            <HelpLink />
+            <HelpLink onBack={backFromForm} />
           </form>
         )}
           </div>
