@@ -295,6 +295,8 @@ export function RsvpSection() {
     setEmail(shared?.email ?? "");
     setBusPickup(shared?.bus_pickup ?? "");
     setMessage(shared?.message ?? "");
+    // Message box starts tucked away again each time the form is opened
+    setShowMessage(false);
   }
 
   function confirmParty() {
