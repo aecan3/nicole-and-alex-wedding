@@ -95,6 +95,19 @@ function RsvpBackground() {
   );
 }
 
+// Best matches first: names starting with what was typed, then names with a
+// word starting with it, then anything else containing it.
+function rankMatches(list: Match[], q: string): Match[] {
+  const t = q.trim().toLowerCase();
+  const score = (name: string) => {
+    const n = name.toLowerCase();
+    if (n.startsWith(t)) return 0;
+    if (n.split(/\s+/).some((w) => w.startsWith(t))) return 1;
+    return 2;
+  };
+  return [...list].sort((a, b) => score(a.full_name) - score(b.full_name) || a.full_name.localeCompare(b.full_name));
+}
+
 // A quiet, always-available way out if the search can't find someone or
 // anything on this page misbehaves — shown at the bottom of every stage
 // rather than only after an error, so it's never a dead end.
@@ -440,8 +453,8 @@ export function RsvpSection() {
                   />
                   {/* Matches float over the card as a dropdown, so the card doesn't grow while typing */}
                   {matches.length > 0 && (
-                    <span className="absolute left-0 right-0 top-full z-20 mt-1 flex flex-col overflow-hidden rounded-lg border border-gold-400/50 bg-cream-100 shadow-[0_8px_24px_rgba(74,21,33,0.12)]">
-                      {matches.slice(0, 5).map((m) => (
+                    <span className="absolute left-0 right-0 top-full z-20 mt-1 flex max-h-56 flex-col overflow-y-auto rounded-lg border border-gold-400/50 bg-cream-100 shadow-[0_8px_24px_rgba(74,21,33,0.12)]">
+                      {rankMatches(matches, query).map((m) => (
                         <button
                           key={m.id}
                           type="button"
