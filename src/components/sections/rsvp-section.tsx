@@ -295,9 +295,11 @@ export function RsvpSection() {
     const shared = members.find((m) => m.email || m.bus_pickup || m.message);
     setEmail(shared?.email ?? "");
     setBusPickup(shared?.bus_pickup ?? "");
-    setMessage((shared?.message ?? "").trim());
-    // Message box starts tucked away again each time the form is opened
-    setShowMessage(false);
+    const savedMessage = (shared?.message ?? "").trim();
+    setMessage(savedMessage);
+    // Box starts closed each time the form opens, unless there's a saved message.
+    // Once open it stays open, even if they delete everything in it.
+    setShowMessage(savedMessage !== "");
   }
 
   function confirmParty() {
@@ -716,7 +718,7 @@ export function RsvpSection() {
             </label>
 
             {/* Message box stays tucked away until asked for (or already has something in it) */}
-            {showMessage || message.trim() ? (
+            {showMessage ? (
               <label className="flex flex-col gap-1 text-sm">
                 Message for us (optional)
                 <textarea
