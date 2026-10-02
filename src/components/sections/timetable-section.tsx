@@ -153,7 +153,7 @@ export function TimetableSection() {
       />
 
       <div className="relative z-10">
-        <PageHeader kicker="11 &amp; 12 March 2027" title="Timetable" />
+        <PageHeader title="Timetable" />
         <div className="mx-auto max-w-2xl px-6 pb-20">
           {days.map((day, di) => (
             <div key={day.label} className={di === 0 ? "" : "mt-14"}>
