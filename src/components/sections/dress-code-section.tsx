@@ -17,8 +17,8 @@ export function DressCodeSection() {
             <div className="mx-auto mt-6 h-px w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
           </Reveal>
           <p className="mt-10 leading-relaxed text-cream-200">
-            We ask that guests join us in formal attire. Think floor-length dresses, elegant
-            eveningwear, or a tailored suit paired with a necktie or bowtie.
+            We&rsquo;d love to see you in your finest. Think floor-length gowns, elegant
+            eveningwear, and dark tailored suits paired with a necktie or bowtie.
           </p>
         </div>
       </div>

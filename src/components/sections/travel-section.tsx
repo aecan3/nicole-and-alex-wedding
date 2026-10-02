@@ -7,7 +7,7 @@ const ITEMS = [
   },
   {
     label: "Own Transport",
-    text: "If arranging your own transport, taxis and rideshares are limited in the area, so please pre-book early. Free on-site parking is available, and cars can stay overnight until 10:00 AM the next day.",
+    text: "Taxis and rideshares are limited in the area, so please pre-book early. Free on-site parking is available and cars can stay overnight until 10:00 AM the next day.",
   },
 ];
 
