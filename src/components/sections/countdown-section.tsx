@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 
-// Ceremony start (see the Timetable section: "4:00pm"), in the venue's own
+// Ceremony start (see the Timetable section: "4:00 PM"), in the venue's own
 // timezone — Victoria is still on daylight saving in mid-March (DST doesn't
 // end until the first Sunday of April), so this is a fixed +11:00 offset
 // rather than "local time", which would otherwise silently drift by an hour

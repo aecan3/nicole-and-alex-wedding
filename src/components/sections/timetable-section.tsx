@@ -50,22 +50,22 @@ const days = [
     label: "Thursday 11 March",
     events: [
       {
-        time: "3:30pm",
+        time: "3:30 PM",
         title: "Guest Arrival",
-        detail: "Please arrive by 3:30pm to settle in before our ceremony commences at 4:00pm.",
+        detail: "Please arrive by 3:30 PM to settle in and find your seat before the ceremony begins.",
       },
       {
-        time: "4:00pm",
+        time: "4:00 PM",
         title: "The Ceremony",
         detail: "We exchange vows at The Vista, framed by views of Mount Macedon.",
       },
       {
-        time: "5:00pm",
+        time: "5:00 PM",
         title: "Aperitivo Hour",
         detail: "Sip and savour as the sun sets over the grounds.",
       },
       {
-        time: "6:30pm – Midnight",
+        time: "6:30 PM – Midnight",
         title: "The Reception",
         detail: "An evening of dinner, toasts, and dancing under the stars in the Glass Atrium.",
       },
@@ -75,9 +75,9 @@ const days = [
     label: "Friday 12 March",
     events: [
       {
-        time: "From 11:30am",
+        time: "From 11:30 AM",
         title: "Post-Wedding Debrief",
-        detail: "If you&rsquo;re still in the area, we&rsquo;d love to see you at the local pub, Baringo Food &amp; Wine Co. in New Gisborne, for a drink and a debrief.",
+        detail: "If you&rsquo;re still in the area, join us at Baringo Food &amp; Wine Co. in New Gisborne for a drink and a debrief!",
       },
     ],
   },

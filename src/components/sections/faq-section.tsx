@@ -16,7 +16,7 @@ const faqs: FaqItem[] = [
   },
   {
     q: "Where can I park?",
-    a: "There is plenty of free parking available on site at Alora Macedon. Cars can be left overnight if needed and must be picked up by 10:00 am the next day.",
+    a: "There is plenty of free parking available on site at Alora Macedon. Cars can be left overnight if needed and must be picked up by 10:00 AM the next day.",
   },
   {
     q: "Is there help getting around the venue?",
