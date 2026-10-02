@@ -294,7 +294,7 @@ export function RsvpSection() {
     const shared = members.find((m) => m.email || m.bus_pickup || m.message);
     setEmail(shared?.email ?? "");
     setBusPickup(shared?.bus_pickup ?? "");
-    setMessage(shared?.message ?? "");
+    setMessage((shared?.message ?? "").trim());
     // Message box starts tucked away again each time the form is opened
     setShowMessage(false);
   }
@@ -352,7 +352,7 @@ export function RsvpSection() {
             p_dietary: responses[m.id]?.dietary || null,
             p_email: email,
             p_bus_pickup: busPickup,
-            p_message: message || null,
+            p_message: message.trim() || null,
             p_postcode: verifiedPostcode,
           })
         )
@@ -378,7 +378,7 @@ export function RsvpSection() {
             dietary: responses[m.id]?.dietary || null,
           })),
           busPickup,
-          message: message || null,
+          message: message.trim() || null,
         }),
       }).catch(() => {});
     } catch (err) {
@@ -710,7 +710,7 @@ export function RsvpSection() {
             </label>
 
             {/* Message box stays tucked away until asked for (or already has something in it) */}
-            {showMessage || message ? (
+            {showMessage || message.trim() ? (
               <label className="flex flex-col gap-1 text-sm">
                 Message for us (optional)
                 <textarea
