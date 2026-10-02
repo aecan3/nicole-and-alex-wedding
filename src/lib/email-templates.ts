@@ -38,8 +38,11 @@ export function confirmationEmailHtml(params: {
   party: ConfirmationPerson[];
   busPickup: string;
   message?: string | null;
+  updated?: boolean;
 }): string {
-  const { party, busPickup, message } = params;
+  const { party, busPickup, message, updated } = params;
+  // Same email for a changed RSVP, just headed "Updated"
+  const heading = updated ? "RSVP Updated" : "RSVP Confirmed";
 
   // Site fonts, with the stacks email clients actually have. Bickham (the
   // script face used for headings on the site) can't be webfonted reliably,
@@ -92,7 +95,7 @@ export function confirmationEmailHtml(params: {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RSVP Confirmed</title>
+    <title>${heading}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:wght@400&family=Inter:wght@400;500&display=swap" />
     <!--[if mso]>
     <style>* { font-family: Georgia, 'Times New Roman', serif !important; }</style>
@@ -110,7 +113,7 @@ export function confirmationEmailHtml(params: {
                   Thursday 11 March 2027
                 </p>
                 <h1 style="margin:0; font-family:${display}; font-size:30px; font-weight:400; color:#7a3540; letter-spacing:0.5px;">
-                  RSVP Confirmed
+                  ${heading}
                 </h1>
                 <table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px auto 0;">
                   <tr><td style="width:80px; height:1px; background-color:#c9a876; font-size:0; line-height:0;">&nbsp;</td></tr>

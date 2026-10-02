@@ -379,6 +379,8 @@ export function RsvpSection() {
           })),
           busPickup,
           message: message.trim() || null,
+          // Anyone in the household already replied before, so this is a change
+          updated: party.some((m) => m.rsvp_status !== "pending"),
         }),
       }).catch(() => {});
     } catch (err) {

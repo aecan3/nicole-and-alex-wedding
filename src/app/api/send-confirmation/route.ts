@@ -13,6 +13,7 @@ type ConfirmationPayload = {
   party: ConfirmationPerson[];
   busPickup: string;
   message?: string | null;
+  updated?: boolean;
 };
 
 function isValidPayload(body: unknown): body is ConfirmationPayload {
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { email, party, busPickup, message } = body;
+  const { email, party, busPickup, message, updated } = body;
 
   try {
     const resend = new Resend(apiKey);
@@ -74,8 +75,8 @@ export async function POST(req: NextRequest) {
       replyTo: COUPLE,
       // Alex and Nicole get a hidden copy of every confirmation
       bcc: COUPLE,
-      subject: "RSVP confirmed — Nicole & Alex, 11 March 2027",
-      html: confirmationEmailHtml({ party, busPickup, message }),
+      subject: `${updated ? "RSVP updated" : "RSVP confirmed"} — Nicole & Alex, 11 March 2027`,
+      html: confirmationEmailHtml({ party, busPickup, message, updated: updated === true }),
     });
     if (error) throw error;
     return NextResponse.json({ sent: true });
