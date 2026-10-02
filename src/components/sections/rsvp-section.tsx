@@ -62,31 +62,33 @@ function errorMessage(err: unknown): string {
 // proportions are close enough to that photo's that cover crops
 // comparatively little, and it's already reading well.
 function RsvpBackground() {
+  // The photo is a fixed-size block at the top of the section. When the card
+  // grows past it, the card hangs off the bottom onto the cream, and the photo
+  // itself never resizes. A short fade softens the photo's bottom edge.
   return (
     <>
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none select-none sm:hidden"
+        className="absolute inset-x-0 top-0 h-svh pointer-events-none select-none sm:hidden"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa.jpg')",
-          // Sized and faded off the screen height, not the section's, so the photo doesn't grow as the card does
-          backgroundSize: "auto 52svh",
+          backgroundSize: "auto 52%",
           backgroundPosition: "66% 100%",
           backgroundRepeat: "no-repeat",
-          WebkitMaskImage: "linear-gradient(to top, black 38svh, transparent 48svh)",
-          maskImage: "linear-gradient(to top, black 38svh, transparent 48svh)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 52%, black 62%, black 90%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent 52%, black 62%, black 90%, transparent)",
         }}
       />
       <div
         aria-hidden="true"
-        className="hidden sm:block absolute inset-0 opacity-[0.62] pointer-events-none select-none"
+        className="hidden sm:block absolute inset-x-0 top-0 h-[max(70vh,600px)] opacity-[0.62] pointer-events-none select-none"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa-hd.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "60% 65%",
           backgroundRepeat: "no-repeat",
-          // Pinned to the window, so the photo stays the same size however tall the card gets
-          backgroundAttachment: "fixed",
+          WebkitMaskImage: "linear-gradient(to bottom, black 88%, transparent)",
+          maskImage: "linear-gradient(to bottom, black 88%, transparent)",
         }}
       />
     </>
@@ -364,7 +366,7 @@ export function RsvpSection() {
       // content of its own, so there's always page below RSVP regardless
       // of its own height, making the full-viewport floor unnecessary
       // there.
-      <section id="rsvp" className="relative min-h-svh sm:min-h-[70vh] scroll-mt-24 overflow-hidden">
+      <section id="rsvp" className="relative min-h-svh sm:min-h-[max(70vh,600px)] scroll-mt-24 overflow-hidden">
         <RsvpBackground />
         {/* Same cream card and position as the form, so the thank-you sits where they just replied */}
         <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
@@ -391,7 +393,7 @@ export function RsvpSection() {
     // same reasoning applies here, and matters even more for this branch
     // since it's the one guests actually land on when clicking RSVP in the
     // nav.
-    <section id="rsvp" className="relative min-h-svh sm:min-h-[70vh] scroll-mt-24 overflow-hidden">
+    <section id="rsvp" className="relative min-h-svh sm:min-h-[max(70vh,600px)] scroll-mt-24 overflow-hidden">
       <RsvpBackground />
       {/* mx-auto max-w-6xl gives the section the same outer width as the
           rest of the site; the sm:max-w-md column inside it isn't itself
