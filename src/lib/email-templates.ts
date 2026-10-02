@@ -39,8 +39,10 @@ export function confirmationEmailHtml(params: {
   busPickup: string;
   message?: string | null;
   updated?: boolean;
+  // Small line above the card on Alex and Nicole's own copy
+  copyNote?: string;
 }): string {
-  const { party, busPickup, message, updated } = params;
+  const { party, busPickup, message, updated, copyNote } = params;
   // Same email for a changed RSVP, just headed "Updated"
   const heading = updated ? "RSVP Updated" : "RSVP Confirmed";
 
@@ -105,6 +107,7 @@ export function confirmationEmailHtml(params: {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#ece0cc;">
       <tr>
         <td align="center" style="padding: 40px 16px;">
+          ${copyNote ? `<p style="max-width:560px; margin:0 auto 14px; font-family:${body}; font-size:13px; color:#8c7361; text-align:center;">${escapeHtml(copyNote)}</p>` : ""}
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px; background-color:#faf6ee; border:1px solid #e3d3b2; border-radius:6px;">
             <tr>
               <td style="padding: 48px 40px 0; text-align:center;">
@@ -170,4 +173,30 @@ ${shuttleBlock}
     </table>
   </body>
 </html>`;
+}
+
+// Plain-text version sent alongside the HTML; spam filters trust emails that have one
+export function confirmationEmailText(params: {
+  party: ConfirmationPerson[];
+  busPickup: string;
+  message?: string | null;
+  updated?: boolean;
+  copyNote?: string;
+}): string {
+  const { party, busPickup, message, updated, copyNote } = params;
+  const lines: string[] = [];
+  if (copyNote) lines.push(copyNote, "");
+  lines.push(updated ? "RSVP Updated" : "RSVP Confirmed", "Nicole & Alex, Thursday 11 March 2027", "");
+  lines.push("Thank you for letting us know! Your response has been warmly received.", "");
+  lines.push("Your responses");
+  for (const p of party) {
+    const status = p.attending ? "Joyfully attending" : "Regretfully declines";
+    const dietary = p.attending && p.dietary ? ` (${p.dietary})` : "";
+    lines.push(`- ${p.name}: ${status}${dietary}`);
+  }
+  if (busPickup && busPickup !== "no") lines.push("", `Shuttle: ${busLabel(busPickup)}`);
+  if (message) lines.push("", `Your message to us: "${message}"`);
+  lines.push("", `Visit the website: ${SITE_URL}`, `Need to update your RSVP? ${SITE_URL}/#rsvp`);
+  lines.push("", "For any questions, reply to this email or contact Alex on 0423 340 677.");
+  return lines.join("\n");
 }

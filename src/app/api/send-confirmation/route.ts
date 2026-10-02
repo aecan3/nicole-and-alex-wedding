@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { confirmationEmailHtml, type ConfirmationPerson } from "@/lib/email-templates";
+import { confirmationEmailHtml, confirmationEmailText, type ConfirmationPerson } from "@/lib/email-templates";
 
 // Sends the RSVP confirmation email. Deliberately separate from the RPC
 // calls in src/components/sections/rsvp-section.tsx, which write straight to
@@ -65,20 +65,34 @@ export async function POST(req: NextRequest) {
   try {
     const resend = new Resend(apiKey);
     const fromAddress = process.env.RESEND_FROM_EMAIL || "Nicole & Alex <rsvp@mail.nicoleandalexwedding.com>";
+    const isUpdate = updated === true;
+    const content = { party, busPickup, message, updated: isUpdate };
+
+    // 1. The guest's email: only their address, replies come to both of us
     const { error } = await resend.emails.send({
       from: fromAddress,
       to: email,
-      // The email tells guests not to reply (the sending address isn't a
-      // real inbox) and points them to Alex's email/mobile instead — this
-      // is just a safety net so a reply sent anyway still lands somewhere
-      // real rather than disappearing.
       replyTo: COUPLE,
-      // Alex and Nicole get a hidden copy of every confirmation
-      bcc: COUPLE,
-      subject: `${updated ? "RSVP updated" : "RSVP confirmed"} — Nicole & Alex, 11 March 2027`,
-      html: confirmationEmailHtml({ party, busPickup, message, updated: updated === true }),
+      subject: `${isUpdate ? "RSVP updated" : "RSVP confirmed"}: Nicole & Alex, 11 March 2027`,
+      html: confirmationEmailHtml(content),
+      text: confirmationEmailText(content),
     });
     if (error) throw error;
+
+    // 2. Our own copy, sent separately and addressed to us (not BCC, which Outlook tends to junk).
+    // The guest's address is never on this one, and replying to it goes to the guest.
+    const names = party.map((p) => p.name).join(", ");
+    const copyNote = `Copy of the ${isUpdate ? "updated " : ""}RSVP from ${names} (sent to ${email})`;
+    const copy = await resend.emails.send({
+      from: fromAddress,
+      to: COUPLE,
+      replyTo: email,
+      subject: `${isUpdate ? "Updated RSVP" : "New RSVP"}: ${names}`,
+      html: confirmationEmailHtml({ ...content, copyNote }),
+      text: confirmationEmailText({ ...content, copyNote }),
+    });
+    if (copy.error) console.error("Guest email sent, but our copy failed:", copy.error);
+
     return NextResponse.json({ sent: true });
   } catch (err) {
     console.error("Failed to send RSVP confirmation email:", err);

@@ -419,6 +419,9 @@ export function RsvpSection() {
               <p className="leading-relaxed">
                 Thank you for letting us know! Your response has been warmly&nbsp;received.
               </p>
+              <p className="mt-4 text-sm text-burgundy-600/70">
+                A confirmation is on its way to your inbox. If you can&rsquo;t see it, check your junk folder.
+              </p>
             </div>
           </div>
         </div>
