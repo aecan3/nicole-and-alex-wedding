@@ -69,11 +69,12 @@ function RsvpBackground() {
         className="absolute inset-0 pointer-events-none select-none sm:hidden"
         style={{
           backgroundImage: "url('/gallery/rsvp-villa.jpg')",
-          backgroundSize: "auto 52%",
+          // Sized and faded off the screen height, not the section's, so the photo doesn't grow as the card does
+          backgroundSize: "auto 52svh",
           backgroundPosition: "66% 100%",
           backgroundRepeat: "no-repeat",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 52%, black 62%)",
-          maskImage: "linear-gradient(to bottom, transparent 52%, black 62%)",
+          WebkitMaskImage: "linear-gradient(to top, black 38svh, transparent 48svh)",
+          maskImage: "linear-gradient(to top, black 38svh, transparent 48svh)",
         }}
       />
       <div
@@ -84,6 +85,8 @@ function RsvpBackground() {
           backgroundSize: "cover",
           backgroundPosition: "60% 65%",
           backgroundRepeat: "no-repeat",
+          // Pinned to the window, so the photo stays the same size however tall the card gets
+          backgroundAttachment: "fixed",
         }}
       />
     </>
