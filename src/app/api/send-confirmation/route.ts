@@ -33,6 +33,9 @@ function isValidPayload(body: unknown): body is ConfirmationPayload {
   );
 }
 
+// Replies and copies go to both of us
+const COUPLE = ["alex.cann@outlook.com", "nicole.c.fernando@gmail.com"];
+
 export async function POST(req: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
 
@@ -68,7 +71,9 @@ export async function POST(req: NextRequest) {
       // real inbox) and points them to Alex's email/mobile instead — this
       // is just a safety net so a reply sent anyway still lands somewhere
       // real rather than disappearing.
-      replyTo: process.env.RESEND_REPLY_TO || "alex.cann@outlook.com",
+      replyTo: COUPLE,
+      // Alex and Nicole get a hidden copy of every confirmation
+      bcc: COUPLE,
       subject: "RSVP confirmed — Nicole & Alex, 11 March 2027",
       html: confirmationEmailHtml({ party, busPickup, message }),
     });
