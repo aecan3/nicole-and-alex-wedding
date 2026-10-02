@@ -111,10 +111,11 @@ function rankMatches(list: Match[], q: string): Match[] {
 // A quiet, always-available way out if the search can't find someone or
 // anything on this page misbehaves — shown at the bottom of every stage
 // rather than only after an error, so it's never a dead end.
-function HelpLink({ onBack }: { onBack?: () => void }) {
+// `spacing` tops up the parent's own gap so every step ends up with the same 40px above these links
+function HelpLink({ onBack, spacing = "mt-6" }: { onBack?: () => void; spacing?: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="mt-10 flex flex-col items-center gap-4 text-center">
+    <div className={`${spacing} flex flex-col items-center gap-2 text-center`}>
       {/* Fine-print Back on its own line above Need help, on every step after the search */}
       {onBack && (
         <button
@@ -512,7 +513,7 @@ export function RsvpSection() {
             )}
 
 
-            <HelpLink />
+            <HelpLink spacing="mt-10" />
           </>
         )}
 
@@ -633,7 +634,7 @@ export function RsvpSection() {
 
         {/* Stage 3: the actual RSVP form */}
         {party && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             {party.map((m) => (
               <fieldset key={m.id} className="border-t border-gold-400/40 pt-3 flex flex-col gap-2">
                 <legend className="font-display text-lg text-burgundy-600">{m.full_name}</legend>
@@ -740,7 +741,7 @@ export function RsvpSection() {
                 {submitError ?? "Something went wrong sending that — mind trying again?"}
               </p>
             )}
-            <HelpLink onBack={backFromForm} />
+            <HelpLink onBack={backFromForm} spacing="mt-5" />
           </form>
         )}
           </div>
