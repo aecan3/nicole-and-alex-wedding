@@ -4,7 +4,7 @@ import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 const faqs: FaqItem[] = [
   {
     q: "When should I RSVP by?",
-    a: "We kindly request your response by Sunday, 17 January 2027 to help us confirm our final arrangements.",
+    a: "We kindly request your response by Thursday, 14 January 2027 to help us confirm our final arrangements.",
   },
   {
     q: "Is there a shuttle bus?",

@@ -367,7 +367,7 @@ export function RsvpSection() {
         <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
           <div className="mx-5 mt-4 bg-cream-100/[0.93] shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
             <PageHeader
-              kicker="By 17 January 2027"
+              kicker="By 14 January 2027"
               title="Rsvp"
               padding="pt-10 pb-6"
             />
@@ -413,7 +413,7 @@ export function RsvpSection() {
       <div className="relative z-10 mx-auto max-w-6xl sm:px-10 sm:pt-6">
         <div className="mx-5 mt-4 bg-cream-100/[0.93] shadow-[0_8px_28px_rgba(74,21,33,0.10)] sm:mx-0 sm:my-14 sm:max-w-[420px] sm:px-9">
           <PageHeader
-            kicker="By 17 January 2027"
+            kicker="By 14 January 2027"
             title="Rsvp"
             padding="pt-10 pb-6"
           />
