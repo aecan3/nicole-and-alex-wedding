@@ -42,7 +42,7 @@ const stays: Stay[] = [
     phone: "03 5426 1600",
     phoneHref: "tel:0354261600",
     website: "https://www.blackforestmotel.com.au/",
-    note: "Use discount code ‘GetNicoles10%’ for direct bookings only over the phone.",
+    note: "Use code ‘GetNicoles10%’ for 10% off when booking directly over the phone.",
     position: [-37.415, 144.559] as [number, number],
   },
   {
