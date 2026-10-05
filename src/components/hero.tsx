@@ -119,13 +119,21 @@ export function Hero({
         </AnchorLink>
       </motion.div>
 
+      {/* Fades in with the RSVP button, then keeps its gentle bounce */}
       <motion.div
-        className="absolute bottom-8 flex flex-col items-center gap-2 text-cream-100/50"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+        className="absolute bottom-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.95, duration: 0.9 }}
       >
-        <span className="text-[10px] tracking-[0.35em] uppercase">Scroll</span>
-        <span className="h-6 w-px bg-cream-100/40" />
+        <motion.div
+          className="flex flex-col items-center gap-2 text-cream-100/50"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+        >
+          <span className="text-[10px] tracking-[0.35em] uppercase">Scroll</span>
+          <span className="h-6 w-px bg-cream-100/40" />
+        </motion.div>
       </motion.div>
     </section>
   );
