@@ -42,7 +42,7 @@ function errorMessage(err: unknown): string {
   if (err && typeof err === "object" && "message" in err && typeof (err as { message: unknown }).message === "string") {
     return (err as { message: string }).message;
   }
-  return "Something went wrong — please try again shortly.";
+  return "Something went wrong. Please try again shortly.";
 }
 
 // The same warm duotone-wash-behind-text treatment used on the Venue and
@@ -517,7 +517,7 @@ export function RsvpSection() {
                 ordinary typos. */}
             {!configError && searched && matches.length === 0 && (
               <p className="mt-6 text-sm text-burgundy-600/80">
-                Couldn&rsquo;t find that name — try a different spelling, or get in
+                Couldn&rsquo;t find that name. Try a different spelling, or get in
                 touch with Alex on 0423 340 677.
               </p>
             )}
@@ -595,7 +595,7 @@ export function RsvpSection() {
         {previousReview && (
           <div className="flex flex-col gap-4">
             <p className="text-sm text-burgundy-600/80">
-              Looks like we&rsquo;ve already got your RSVP — here&rsquo;s what&rsquo;s on file:
+              Looks like we&rsquo;ve already got your RSVP. Here&rsquo;s what&rsquo;s on file:
             </p>
             <div className="flex flex-col gap-2">
               {previousReview.map((m) => (
@@ -748,7 +748,7 @@ export function RsvpSection() {
             </button>
             {submitStatus === "error" && (
               <p className="text-sm text-red-700 text-center">
-                {submitError ?? "Something went wrong sending that — mind trying again?"}
+                {submitError ?? "Something went wrong sending that. Mind trying again?"}
               </p>
             )}
             <HelpLink onBack={backFromForm} spacing="mt-5" />

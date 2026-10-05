@@ -29,7 +29,7 @@ const stays: Stay[] = [
     phone: "03 5426 4044",
     phoneHref: "tel:0354264044",
     website: "https://macedonrangeshotelspa.mydirectstay.com/",
-    note: "Use code ‘WEDDING’ to apply a 5% discount code when booking directly.",
+    note: "Use code ‘WEDDING’ for 5% off when booking directly.",
     position: [-37.411854, 144.542473] as [number, number],
   },
   {
