@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 export type MediaItem = {
@@ -29,64 +29,100 @@ export type MediaItem = {
  * another one.
  */
 export function Gallery({ items }: { items: MediaItem[] }) {
-  const [cols, setCols] = useState(3);
-
-  useEffect(() => {
-    const update = () => setCols(window.innerWidth < 640 ? 2 : 3);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   if (items.length === 0) return null;
-
-  const columns: { item: MediaItem; i: number }[][] = Array.from({ length: cols }, () => []);
-  items.forEach((item, i) => columns[i % cols].push({ item, i }));
-
+  // Both layouts are in the page from the start (CSS picks one), so nothing
+  // changes height after load and scrolling past never jumps.
   return (
     <>
-      <div className="flex gap-3 sm:gap-4">
-        {columns.map((col, ci) => (
-          <div key={ci} className="flex-1 flex flex-col gap-3 sm:gap-4">
-            {col.map(({ item, i }) => (
-              <div
-                key={item.src + i}
-                className="relative block w-full overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
-              >
-                {item.type === "image" ? (
-                  <Image
-                    src={item.src}
-                    alt={item.alt ?? ""}
-                    width={item.width}
-                    height={item.height}
-                    sizes="(max-width: 640px) 50vw, 33vw"
-                    className="w-full h-auto object-cover"
-                  />
-                ) : (
-                  <>
-                    <video
-                      src={item.src}
-                      width={item.width}
-                      height={item.height}
-                      muted
-                      loop
-                      autoPlay
-                      playsInline
-                      className="w-full h-auto object-cover"
-                      style={{ aspectRatio: `${item.width} / ${item.height}` }}
-                    />
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
+      <div className="flex gap-3 sm:hidden">
+        <Columns items={items} cols={2} />
+      </div>
+      <div className="hidden sm:flex sm:gap-4">
+        <Columns items={items} cols={3} />
       </div>
     </>
   );
 }
 
-/** Tasteful stand-in grid shown before real photos/videos are uploaded. */
+function Columns({ items, cols }: { items: MediaItem[]; cols: number }) {
+  const columns: { item: MediaItem; i: number }[][] = Array.from({ length: cols }, () => []);
+  items.forEach((item, i) => columns[i % cols].push({ item, i }));
+  return (
+    <>
+      {columns.map((col, ci) => (
+        <div key={ci} className="flex-1 flex flex-col gap-3 sm:gap-4">
+          {col.map(({ item, i }) => (
+            <div
+              key={item.src + i}
+              className="relative block w-full overflow-hidden rounded-sm bg-burgundy-900/5 shadow-[0_1px_3px_rgba(58,15,24,0.08)]"
+            >
+              {item.type === "image" ? (
+                <Image
+                  src={item.src}
+                  alt={item.alt ?? ""}
+                  width={item.width}
+                  height={item.height}
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className="w-full h-auto object-cover"
+                />
+              ) : (
+                <LazyVideo item={item} />
+              )}
+            </div>
+          ))}
+        </div>
+      ))}
+    </>
+  );
+}
+
+// Holds its exact size from the start, and only loads and plays once it's near the screen
+function LazyVideo({ item }: { item: MediaItem }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || near) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near]);
+
+  // Some phones won't autoplay a video whose source arrives late, so nudge it
+  useEffect(() => {
+    if (near) ref.current?.play().catch(() => {});
+  }, [near]);
+
+  return (
+    <video
+      ref={ref}
+      src={near ? item.src : undefined}
+      width={item.width}
+      height={item.height}
+      muted
+      loop
+      autoPlay
+      playsInline
+      preload="none"
+      className="w-full h-auto object-cover"
+      style={{ aspectRatio: `${item.width} / ${item.height}` }}
+    />
+  );
+}
+
 export function GalleryPlaceholder({ count = 6 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">

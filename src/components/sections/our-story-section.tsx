@@ -2,7 +2,6 @@ import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Gallery } from "@/components/gallery";
-import { InView } from "@/components/in-view";
 
 // Order matters: Gallery lays these out round-robin into columns (index i
 // goes to column i % columnCount), so this list IS the grid, top to bottom,
@@ -63,18 +62,9 @@ export function OurStorySection() {
           </p>
         </div>
         <Reveal delay={0.15} className="mt-14">
-          {/* The gallery's videos autoplay as soon as they mount — fine when
-              this was the whole page and already in view, not fine when
-              it's one of nine sections that would otherwise all mount at
-              once. InView defers mounting until scrolled near, so it still
-              autoplays "as soon as you land on it," just like before.
-              (The dog gallery below is plain images with no autoplay
-              concern, so it's rendered eagerly rather than going through
-              InView — one less lazy-mount for a nav-click scroll to race
-              past and shift layout under.) */}
-          <InView>
-            <Gallery items={photos} />
-          </InView>
+          {/* Rendered straight away with its full height so nothing below it
+              shifts while scrolling; the videos inside only load when near. */}
+          <Gallery items={photos} />
         </Reveal>
 
         <div className="mt-24 text-center">
