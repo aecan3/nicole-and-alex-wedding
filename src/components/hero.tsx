@@ -14,9 +14,11 @@ export function Hero({
   videoSrc?: string;
 }) {
   return (
+    // Height is the screen minus the sticky nav, so the Scroll cue is visible on first load;
+    // pb-16 keeps the text clear of it and lifts the block slightly
     <section
       id="home"
-      className="relative min-h-[100svh] flex flex-col items-center justify-center text-center overflow-hidden px-6"
+      className="relative min-h-[calc(100svh-76px)] 2xl:min-h-[calc(100svh-88px)] flex flex-col items-center justify-center text-center overflow-hidden px-6 pb-16"
     >
       {/* Background */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-b from-burgundy-950 via-burgundy-800 to-burgundy-900" />
