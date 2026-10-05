@@ -384,6 +384,8 @@ export function RsvpSection() {
           message: message.trim() || null,
           // Anyone in the household already replied before, so this is a change
           updated: party.some((m) => m.rsvp_status !== "pending"),
+          inviteeId: party[0]?.id,
+          postcode: verifiedPostcode,
         }),
       }).catch(() => {});
     } catch (err) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createClient } from "@supabase/supabase-js";
 import { confirmationEmailHtml, confirmationEmailText, type ConfirmationPerson } from "@/lib/email-templates";
 
 // Sends the RSVP confirmation email. Deliberately separate from the RPC
@@ -14,7 +15,27 @@ type ConfirmationPayload = {
   busPickup: string;
   message?: string | null;
   updated?: boolean;
+  // Lets us record in Supabase whether the email went out
+  inviteeId?: string;
+  postcode?: string;
 };
+
+// Saves 'sent' or 'failed' against the household. Best effort: never throws.
+async function recordConfirmation(body: ConfirmationPayload, status: "sent" | "failed") {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key || !body.inviteeId || !body.postcode) return;
+  try {
+    const { error } = await createClient(url, key).rpc("record_confirmation", {
+      invitee_id: body.inviteeId,
+      p_postcode: body.postcode,
+      p_status: status,
+    });
+    if (error) console.error("Couldn't record confirmation status:", error);
+  } catch (err) {
+    console.error("Couldn't record confirmation status:", err);
+  }
+}
 
 function isValidPayload(body: unknown): body is ConfirmationPayload {
   if (!body || typeof body !== "object") return false;
@@ -38,17 +59,6 @@ function isValidPayload(body: unknown): body is ConfirmationPayload {
 const COUPLE = ["alex.cann@outlook.com", "nicole.c.fernando@gmail.com"];
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.RESEND_API_KEY;
-
-  // The RSVP is already written to Supabase by the time the browser calls
-  // this route (see handleSubmit in src/components/sections/rsvp-section.tsx),
-  // so a missing key here should never look like the RSVP itself failed — it
-  // just means no confirmation email goes out this time. Respond 200 either
-  // way; the page ignores this response.
-  if (!apiKey) {
-    return NextResponse.json({ sent: false, reason: "not_configured" });
-  }
-
   let body: unknown;
   try {
     body = await req.json();
@@ -58,6 +68,14 @@ export async function POST(req: NextRequest) {
 
   if (!isValidPayload(body)) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  // The RSVP is already saved by the time this runs, so nothing here ever
+  // affects what the guest sees. Every outcome is recorded in Supabase.
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    await recordConfirmation(body, "failed");
+    return NextResponse.json({ sent: false, reason: "not_configured" });
   }
 
   const { email, party, busPickup, message, updated } = body;
@@ -78,24 +96,31 @@ export async function POST(req: NextRequest) {
       text: confirmationEmailText(content),
     });
     if (error) throw error;
+    await recordConfirmation(body, "sent");
 
     // 2. Our own copy, sent separately and addressed to us (not BCC, which Outlook tends to junk).
     // The guest's address is never on this one, and replying to it goes to the guest.
     const names = party.map((p) => p.name).join(", ");
     const copyNote = `Copy of the ${isUpdate ? "updated " : ""}RSVP from ${names} (sent to ${email})`;
-    const copy = await resend.emails.send({
-      from: fromAddress,
-      to: COUPLE,
-      replyTo: email,
-      subject: `${isUpdate ? "Updated RSVP" : "New RSVP"}: ${names}`,
-      html: confirmationEmailHtml({ ...content, copyNote }),
-      text: confirmationEmailText({ ...content, copyNote }),
-    });
-    if (copy.error) console.error("Guest email sent, but our copy failed:", copy.error);
+    // Wrapped on its own so a failed copy never marks the guest's email as failed
+    try {
+      const copy = await resend.emails.send({
+        from: fromAddress,
+        to: COUPLE,
+        replyTo: email,
+        subject: `${isUpdate ? "Updated RSVP" : "New RSVP"}: ${names}`,
+        html: confirmationEmailHtml({ ...content, copyNote }),
+        text: confirmationEmailText({ ...content, copyNote }),
+      });
+      if (copy.error) console.error("Guest email sent, but our copy failed:", copy.error);
+    } catch (copyErr) {
+      console.error("Guest email sent, but our copy failed:", copyErr);
+    }
 
     return NextResponse.json({ sent: true });
   } catch (err) {
     console.error("Failed to send RSVP confirmation email:", err);
+    await recordConfirmation(body, "failed");
     return NextResponse.json({ sent: false, error: "send_failed" });
   }
 }
