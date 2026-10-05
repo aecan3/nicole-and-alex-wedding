@@ -15,7 +15,8 @@ export function Hero({
 }) {
   return (
     // Height is the screen minus the sticky nav, so the Scroll cue is visible on first load;
-    // pb-16 keeps the text clear of it and lifts the block slightly
+    // pb-16 keeps the text clear of it and lifts the block slightly.
+    // On short laptop windows (under 780px tall) the spacing and names tighten so Scroll still fits
     <section
       id="home"
       className="relative min-h-[calc(100svh-76px)] 2xl:min-h-[calc(100svh-88px)] flex flex-col items-center justify-center text-center overflow-hidden px-6 pb-16"
@@ -55,7 +56,7 @@ export function Hero({
           alt="N & A monogram"
           width={900}
           height={669}
-          className="mx-auto mb-8 h-[60px] w-auto sm:h-[70px] 2xl:h-20"
+          className="mx-auto mb-8 h-[60px] w-auto sm:h-[70px] 2xl:h-20 [@media(min-width:640px)_and_(max-height:780px)]:mb-5 [@media(min-width:640px)_and_(max-height:780px)]:h-[56px]"
           priority
         />
       </motion.div>
@@ -73,7 +74,7 @@ export function Hero({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-5 px-2"
+        className="mt-5 px-2 [@media(min-width:640px)_and_(max-height:780px)]:mt-3"
       >
         {/* The couple's names are a supplied lettering asset rather than live
             type, so the exact script from the invitation carries over. The alt
@@ -84,7 +85,7 @@ export function Hero({
           width={2027}
           height={368}
           priority
-          className="mx-auto h-auto w-[78vw] max-w-[560px]"
+          className="mx-auto h-auto w-[78vw] max-w-[560px] [@media(min-width:640px)_and_(max-height:780px)]:max-w-[440px]"
         />
       </motion.h1>
 
@@ -92,7 +93,7 @@ export function Hero({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.75, duration: 0.9 }}
-        className="mt-9 flex flex-col items-center gap-2"
+        className="mt-9 flex flex-col items-center gap-2 [@media(min-width:640px)_and_(max-height:780px)]:mt-6"
       >
         <div className="flex items-center gap-3 text-cream-100">
           <span className="h-px w-8 bg-gold-300/50" />
@@ -113,7 +114,7 @@ export function Hero({
       >
         <AnchorLink
           href="#rsvp"
-          className="mt-11 inline-block rounded-full bg-taupe-600 shadow-[0_6px_20px_rgba(0,0,0,0.3)] text-cream-100 px-11 py-3.5 2xl:px-14 2xl:py-4 text-sm 2xl:text-base tracking-[0.25em] uppercase transition-all duration-300 hover:bg-[#77604f] hover:shadow-[0_0_30px_rgba(140,115,97,0.35)]"
+          className="mt-11 [@media(min-width:640px)_and_(max-height:780px)]:mt-7 inline-block rounded-full bg-taupe-600 shadow-[0_6px_20px_rgba(0,0,0,0.3)] text-cream-100 px-11 py-3.5 2xl:px-14 2xl:py-4 text-sm 2xl:text-base tracking-[0.25em] uppercase transition-all duration-300 hover:bg-[#77604f] hover:shadow-[0_0_30px_rgba(140,115,97,0.35)]"
         >
           RSVP
         </AnchorLink>
