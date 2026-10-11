@@ -129,7 +129,6 @@ from (values
   ('Glenda Rebeiro', '3150'),
   ('Hillary Rebeiro', '3150'),
   ('Olpha Andris', '3152'),
-  ('Frank Andris', '3152'),
   ('Sarah Ribeiro', '3187'),
   ('Arnaldo Ribeiro', '3187'),
   ('Romina Vaz', '3170'),
