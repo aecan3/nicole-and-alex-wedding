@@ -132,7 +132,7 @@ export function confirmationEmailHtml(params: {
             </tr>
             <tr>
               <td style="padding: 32px 40px 0;">
-                <p style="margin:0 0 14px; font-family:${body}; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#8c7361;">Your responses</p>
+                <p style="margin:0 0 14px; font-family:${body}; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#8c7361;">${party.length === 1 ? "Your response" : "Your responses"}</p>
                 ${peopleRows}
               </td>
             </tr>
@@ -188,7 +188,7 @@ export function confirmationEmailText(params: {
   if (copyNote) lines.push(copyNote, "");
   lines.push(updated ? "RSVP Updated" : "RSVP Confirmed", "Nicole & Alex, Thursday 11 March 2027", "");
   lines.push("Thank you for letting us know! Your response has been warmly received.", "");
-  lines.push("Your responses");
+  lines.push(party.length === 1 ? "Your response" : "Your responses");
   for (const p of party) {
     const status = p.attending ? "Joyfully attending" : "Regretfully declines";
     const dietary = p.attending && p.dietary ? ` (${p.dietary})` : "";

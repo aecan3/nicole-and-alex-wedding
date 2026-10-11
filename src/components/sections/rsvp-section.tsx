@@ -28,9 +28,15 @@ const BUS_OPTIONS = [
   { value: "not_booked_yet", label: "We'll need the bus, but haven't booked accommodation yet" },
 ];
 
-function busLabelFor(value: string | null | undefined): string | null {
+// "I'll / my" wording when the household is one person
+function busOptionsFor(solo: boolean) {
+  if (!solo) return BUS_OPTIONS;
+  return BUS_OPTIONS.map((o) => ({ ...o, label: o.label.replace("we'll make our", "I'll make my").replace("We'll", "I'll") }));
+}
+
+function busLabelFor(value: string | null | undefined, solo = false): string | null {
   if (!value) return null;
-  return BUS_OPTIONS.find((o) => o.value === value)?.label ?? null;
+  return busOptionsFor(solo).find((o) => o.value === value)?.label ?? null;
 }
 
 // supabase-js doesn't throw on a failed RPC call (missing function, RLS
@@ -571,14 +577,14 @@ export function RsvpSection() {
                 </p>
               ))}
             </div>
-            <p className="text-sm text-burgundy-600/80">Is that your household?</p>
+            <p className="text-sm text-burgundy-600/80">{confirmingParty.length === 1 ? "Is that you?" : "Is that your household?"}</p>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={confirmParty}
                 className="rounded-full bg-taupe-600 text-cream-100 px-8 py-2.5 text-sm tracking-[0.2em] uppercase hover:bg-[#77604f] transition-colors"
               >
-                Yes, that&rsquo;s us
+                {confirmingParty.length === 1 ? "Yes, that\u2019s me" : "Yes, that\u2019s us"}
               </button>
               <button
                 type="button"
@@ -610,11 +616,11 @@ export function RsvpSection() {
                 </div>
               ))}
             </div>
-            {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup) && (
+            {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup, previousReview.length === 1) && (
               <p className="text-sm text-burgundy-600/80">
                 Bus pickup:{" "}
                 <span className="text-burgundy-600">
-                  {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup)}
+                  {busLabelFor(previousReview.find((m) => m.bus_pickup)?.bus_pickup, previousReview.length === 1)}
                 </span>
               </p>
             )}
@@ -711,7 +717,7 @@ export function RsvpSection() {
                 onChange={(e) => setBusPickup(e.target.value)}
                 className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
               >
-                {BUS_OPTIONS.map((o) => (
+                {busOptionsFor(party.length === 1).map((o) => (
                   <option key={o.value} value={o.value} disabled={o.value === ""}>
                     {o.label}
                   </option>
