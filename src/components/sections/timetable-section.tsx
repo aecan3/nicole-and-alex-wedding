@@ -77,7 +77,7 @@ const days = [
       {
         time: "From 11:30 AM",
         title: "Post-Wedding Debrief",
-        detail: "If you&rsquo;re still in the area, join us at Baringo Food &amp; Wine Co. in New Gisborne for a drink and a debrief!",
+        detail: "If you&rsquo;re still in the area, we&rsquo;d love to see you again the next day at Baringo Food &amp; Wine Co. in New Gisborne.",
       },
     ],
   },
