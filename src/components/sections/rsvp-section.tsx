@@ -184,6 +184,8 @@ export function RsvpSection() {
   const [showMessage, setShowMessage] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Our own checks, so the messages look the same on every browser
+  const [fieldErrors, setFieldErrors] = useState<{ attending?: string; email?: string; bus?: string }>({});
   const [configError, setConfigError] = useState<string | null>(null);
 
   // On a phone the thank-you card is much shorter than the form, so bring it back into view
@@ -350,6 +352,15 @@ export function RsvpSection() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!party) return;
+    const anyAttending = party.some((m) => responses[m.id]?.attending === "yes");
+    const errs: { attending?: string; email?: string; bus?: string } = {};
+    if (party.some((m) => !responses[m.id]?.attending)) {
+      errs.attending = party.length === 1 ? "Please accept or decline." : "Please accept or decline for everyone.";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) errs.email = "Please enter a valid email address.";
+    if (anyAttending && !busPickup) errs.bus = "Please choose an option.";
+    setFieldErrors(errs);
+    if (Object.keys(errs).length) return;
     setSubmitStatus("submitting");
     try {
       const sb = getSupabase();
@@ -359,7 +370,7 @@ export function RsvpSection() {
             invitee_id: m.id,
             p_status: responses[m.id]?.attending === "yes" ? "attending" : "declined",
             p_dietary: responses[m.id]?.dietary || null,
-            p_email: email,
+            p_email: email.trim(),
             p_bus_pickup: busPickup,
             p_message: message.trim() || null,
             p_postcode: verifiedPostcode,
@@ -380,7 +391,7 @@ export function RsvpSection() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
+          email: email.trim(),
           party: party.map((m) => ({
             name: m.full_name,
             attending: responses[m.id]?.attending === "yes",
@@ -652,7 +663,7 @@ export function RsvpSection() {
 
         {/* Stage 3: the actual RSVP form */}
         {party && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
             {party.map((m) => (
               <fieldset key={m.id} className="border-t border-gold-400/40 pt-3 flex flex-col gap-2">
                 <legend className="font-display text-lg text-burgundy-600">{m.full_name}</legend>
@@ -674,9 +685,10 @@ export function RsvpSection() {
                           name={`attending-${m.id}`}
                           required
                           checked={on}
-                          onChange={() =>
-                            setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: val } }))
-                          }
+                          onChange={() => {
+                            setResponses((r) => ({ ...r, [m.id]: { ...r[m.id], attending: val } }));
+                            setFieldErrors((f) => ({ ...f, attending: undefined }));
+                          }}
                           className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                         />
                         {label}
@@ -696,6 +708,7 @@ export function RsvpSection() {
                 )}
               </fieldset>
             ))}
+            {fieldErrors.attending && <p className="-mt-3 text-sm text-red-700">{fieldErrors.attending}</p>}
 
             <label className="flex flex-col gap-1 text-sm border-t border-gold-400/40 pt-3">
               Email address
@@ -703,10 +716,14 @@ export function RsvpSection() {
                 type="email"
                 required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setFieldErrors((f) => ({ ...f, email: undefined }));
+                }}
                 placeholder="you@example.com"
-                className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+                className={`border-b bg-transparent py-2 focus:outline-none focus:border-burgundy-800 ${fieldErrors.email ? "border-red-700" : "border-burgundy-800/30"}`}
               />
+              {fieldErrors.email && <span className="text-red-700">{fieldErrors.email}</span>}
             </label>
 
             <label className="flex flex-col gap-1 text-sm">
@@ -714,8 +731,11 @@ export function RsvpSection() {
               <select
                 required
                 value={busPickup}
-                onChange={(e) => setBusPickup(e.target.value)}
-                className="border-b border-burgundy-800/30 bg-transparent py-2 focus:outline-none focus:border-burgundy-800"
+                onChange={(e) => {
+                  setBusPickup(e.target.value);
+                  setFieldErrors((f) => ({ ...f, bus: undefined }));
+                }}
+                className={`border-b bg-transparent py-2 focus:outline-none focus:border-burgundy-800 ${fieldErrors.bus ? "border-red-700" : "border-burgundy-800/30"}`}
               >
                 {busOptionsFor(party.length === 1).map((o) => (
                   <option key={o.value} value={o.value} disabled={o.value === ""}>
@@ -723,6 +743,7 @@ export function RsvpSection() {
                   </option>
                 ))}
               </select>
+              {fieldErrors.bus && <span className="text-red-700">{fieldErrors.bus}</span>}
             </label>
 
             {/* Message box stays tucked away until asked for (or already has something in it) */}
