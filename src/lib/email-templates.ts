@@ -11,7 +11,7 @@ const BUS_LABELS: Record<string, string> = {
   macedon_ranges_hotel_spa: "Pick up from Macedon Ranges Hotel & Spa",
   black_forest_motel: "Pick up from Black Forest Motel",
   gisborne_motel: "Pick up from Gisborne Motel",
-  no: "Making their own way there",
+  no: "Not needed, making own way there",
   not_booked_yet: "Shuttle needed, accommodation not booked yet",
 };
 
@@ -70,9 +70,9 @@ export function confirmationEmailHtml(params: {
     })
     .join("");
 
-  // Only shown when they actually asked for a seat — "no" and a blank answer
-  // leave the row out entirely.
-  const shuttleBlock = busPickup && busPickup !== "no"
+  // Shown whenever there's an answer, "no" included. Blank only happens when
+  // the whole household declined (the question isn't asked), so no row then.
+  const shuttleBlock = busPickup
     ? `
         <tr>
           <td style="padding: 22px 40px 0;">
@@ -194,7 +194,7 @@ export function confirmationEmailText(params: {
     const dietary = p.attending && p.dietary ? ` (${p.dietary})` : "";
     lines.push(`- ${p.name}: ${status}${dietary}`);
   }
-  if (busPickup && busPickup !== "no") lines.push("", `Shuttle: ${busLabel(busPickup)}`);
+  if (busPickup) lines.push("", `Shuttle: ${busLabel(busPickup)}`);
   if (message) lines.push("", `Your message to us: "${message}"`);
   lines.push("", `Visit the website: ${SITE_URL}`, `Need to update your RSVP? ${SITE_URL}/#rsvp`);
   lines.push("", "For any questions, reply to this email or contact Alex on 0423 340 677.");
